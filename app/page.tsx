@@ -92,12 +92,15 @@ export default function DashboardPage() {
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <blockquote className="rounded-xl bg-[var(--leaf-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink">
-                  <p className="font-semibold">Jeremiah 29:11–13 (KJV)</p>
+                  <p className="font-semibold">Jeremiah 29:11–13</p>
                   <p className="mt-1.5">“For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end. Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you. And ye shall seek me, and find me, when ye shall search for me with all your heart.”</p>
                 </blockquote>
-                <blockquote className="rounded-xl bg-[var(--gold-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink">
+                <blockquote
+                  className="rounded-xl bg-[var(--gold-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink"
+                  style={{ fontFamily: '"Times New Roman", Times, serif' }}
+                >
                   <p className="font-semibold">Yeremia 29:11–13 (Dangme)</p>
-                  <p className="mt-1.5">“[11] Yi mi nɛ i to ngɛ nyɛ he ɔ, imi nɔ kake too pɛ lɛ i le; i to nɛ ma ha nɛ nyɛ he mi nɛ jɔ nyɛ, se pi kaa ma hao nyɛ. Ní kpakpahi nɛ nyɛ ngɛ blɔ hyɛe ɔ, i to nɛ ma ha nyɛ. [12] Jamɛ a be ɔ, ke nyɛ tsɛ mi nɛ nyɛ fa kue ha mi ɔ, ma bu nyɛ tue. [13] Nyɛ ma hla ye se blɔ, nɛ nyɛ maa na mi. Ke nyɛ ngɔ nyɛ tsui tsuo kɛ hla ye se blɔ ɔ,”</p>
+                  <p className="mt-1.5">“Yi mi nɛ i to ngɛ nyɛ he ɔ, imi nɔ kake too pɛ lɛ i le; i to nɛ ma ha nɛ nyɛ he mi nɛ jɔ nyɛ, se pi kaa ma hao nyɛ. Ní kpakpahi nɛ nyɛ ngɛ blɔ hyɛe ɔ, i to nɛ ma ha nyɛ. Jamɛ a be ɔ, ke nyɛ tsɛ mi nɛ nyɛ fa kue ha mi ɔ, ma bu nyɛ tue. Nyɛ ma hla ye se blɔ, nɛ nyɛ maa na mi. Ke nyɛ ngɔ nyɛ tsui tsuo kɛ hla ye se blɔ ɔ,”</p>
                 </blockquote>
               </div>
             </div>
@@ -342,7 +345,7 @@ export default function DashboardPage() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <h2 id="offline-heading" className="font-display text-lg font-semibold leading-tight">
-                    {installed ? 'Installed — ready for offline study' : 'Take her with you on your phone'}
+                    {installed ? 'Installed — ready for offline study' : 'Take it with you on your phone'}
                   </h2>
                   <p className="mt-1 text-[0.78rem] leading-relaxed text-muted">
                     {installed

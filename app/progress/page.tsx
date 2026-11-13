@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
@@ -15,11 +15,11 @@ import type { Mood } from '@/lib/types';
 import { cn } from '@/lib/cn';
 
 const moodFace: Record<Mood, string> = {
-  hopeful: 'â—¡',
+  hopeful: '◡',
   steady: '•',
-  tender: 'â—ž',
+  tender: '◞',
   tired: '–',
-  anxious: 'â—Ÿ',
+  anxious: '◟',
 };
 
 function sumRange(
@@ -53,7 +53,7 @@ function Delta({ value, suffix = '', baseline }: { value: number; suffix?: strin
           : 'inline-flex items-center gap-0.5 text-[0.68rem] font-semibold text-muted'
       }
     >
-      {positive ? '+' : 'âˆ’'}
+      {positive ? '+' : '−'}
       {Math.abs(value)}
       {suffix} vs last week
     </span>

@@ -172,10 +172,6 @@ export default function SettingsPage() {
   }
 
   async function testConnection() {
-    if (!ai.apiKey.trim() && !ai.proxyUrl.trim()) {
-      setTest({ status: 'error', message: 'Add an API key or a proxy URL first.' });
-      return;
-    }
     setTest({ status: 'working', message: 'Sending one small test message…' });
     try {
       const reply = await askTutor({
@@ -190,9 +186,13 @@ export default function SettingsPage() {
       });
       setTest({ status: 'ok', message: reply.slice(0, 180) });
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'The service could not be reached.';
       setTest({
         status: 'error',
-        message: error instanceof Error ? error.message : 'The service could not be reached.',
+        message:
+          message === 'NO_KEY'
+            ? 'No AI connection is available. Add a key or proxy URL below, or check that this build includes one.'
+            : message,
       });
     }
   }
@@ -393,13 +393,13 @@ export default function SettingsPage() {
                 checked={state.settings.voiceReplies}
                 onChange={(value) => updateSettings({ voiceReplies: value })}
                 label="Read Jacob’s replies aloud"
-                hint="Jacob can speak with a sweet female voice. Online, the AI providers are tried first; offline, your device voice is used."
+                hint="Jacob can speak with a sweet female voice. Online, the app’s AI voice is tried first; offline, your device voice is used."
               />
               <div className="rounded-xl border border-line bg-elev p-3">
                 <p className="text-[0.8rem] font-semibold text-ink">Speaking voice</p>
                 <p className="mt-0.5 text-[0.68rem] leading-relaxed text-muted">
-                  Pick how Jacob sounds. Provider voices need a connection and a working key; the device voice
-                  is the automatic fallback.
+                  Pick how Jacob sounds. Provider voices use the app’s AI connection; the device voice is the
+                  automatic fallback.
                 </p>
                 <div className="mt-2 grid gap-1.5 sm:grid-cols-2">
                   {VOICE_STYLES.map((style) => {
@@ -453,36 +453,17 @@ export default function SettingsPage() {
             id="ai-heading"
             icon={<Icon name="spark" size={19} />}
             title="Jacob’s AI"
-            description="The tutor works offline with a saved guide. Add a provider key for a deeper back-and-forth. Keys are stored in this browser only."
+            description="Jacob uses the connected AI when online and the saved guide when offline. A key or proxy here is optional and overrides the included connection."
           >
-            <div className="rounded-xl border border-[var(--gold)]/30 bg-[var(--gold-soft)]/60 p-3 text-[0.78rem] leading-relaxed text-soft">
+            <div className="rounded-xl border border-[var(--leaf)]/30 bg-[var(--leaf-soft)]/60 p-3 text-[0.78rem] leading-relaxed text-soft">
               <p className="flex items-center gap-1.5 font-semibold text-ink">
-                <Icon name="shield" size={14} className="text-[var(--gold-ink)]" />
-                Read this before adding a key
+                <Icon name="spark" size={14} className="text-leaf" />
+                Live AI is connected
               </p>
               <p className="mt-1">
-                This is a static, offline-first app. A key saved here can be read by anyone with access to this
-                browser profile. Do not use a shared device. For a public deployment, point the app at a small
-                server-side proxy instead of shipping a key. Never paste a key into a site you do not trust.
-              </p>
-            </div>
-
-            <div className="mt-3 rounded-xl border border-line bg-elev p-3 text-[0.76rem] leading-relaxed text-soft">
-              <p className="font-semibold text-ink">Set up on Angel’s phone (one time)</p>
-              <ol className="mt-1.5 list-decimal space-y-1 pl-4">
-                <li>
-                  Open <strong>console.groq.com</strong> and copy a Groq API key.
-                </li>
-                <li>
-                  Choose <strong>Groq</strong> below, paste the key, and press <strong>Save AI settings</strong>.
-                </li>
-                <li>
-                  Press <strong>Test connection</strong>. The key stays on this phone only.
-                </li>
-              </ol>
-              <p className="mt-1.5 text-[0.7rem] text-muted">
-                For the sweet provider voice, accept the Orpheus text-to-speech terms once in the Groq console.
-                If it has not been accepted, Jacob automatically uses the phone voice instead.
+                Jacob can already answer online with the key included in this app. Anyone who opens the app
+                link can use that connection, so share the link carefully. Adding your own key below is
+                optional and overrides it on this device only.
               </p>
             </div>
 
@@ -533,7 +514,7 @@ export default function SettingsPage() {
 
             <div className="mt-3">
               <label htmlFor="ai-key" className="label">
-                API key
+                API key <span className="font-normal text-muted">(optional override)</span>
               </label>
               <div className="flex gap-2">
                 <input
@@ -643,10 +624,10 @@ export default function SettingsPage() {
             )}
 
             <p className="mt-3 text-[0.7rem] leading-relaxed text-muted">
-              <strong className="text-ink">Online when connected, offline when needed:</strong> if you are
-              online and a key (or proxy) is set, Jacob uses the live AI. If you are offline or the service
-              cannot be reached, he falls back to the guide saved on this device. Without a key, the offline
-              guide still works.
+              <strong className="text-ink">Online when connected, offline when needed:</strong> when you are
+              online, Jacob uses the live AI. If you are offline or the service cannot be reached, he falls back
+              to the guide saved on this device. A key or proxy you add here overrides the included connection
+              on this device.
             </p>
           </Panel>
 
@@ -665,9 +646,9 @@ export default function SettingsPage() {
                     : canInstall
                       ? 'Your browser is ready to install Auntie Angel as an app.'
                       : isIos
-                        ? 'On iPhone or iPad: Share â†’ Add to Home Screen.'
+                        ? 'On iPhone or iPad: Share → Add to Home Screen.'
                         : isSafari
-                          ? 'In Safari: File â†’ Add to Dock, or Share â†’ Add to Home Screen.'
+                          ? 'In Safari: File → Add to Dock, or Share → Add to Home Screen.'
                           : 'Look for “Install app” in your browser menu. Installation is optional.'}
                 </p>
               </div>

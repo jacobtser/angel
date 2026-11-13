@@ -86,8 +86,8 @@ npm run build
 
 This runs:
 
-1. `next build` â†’ outputs static site to `out/`
-2. `node scripts/generate-precache.mjs` â†’ injects build hash/precache list into `out/sw.js`
+1. `next build` → outputs static site to `out/`
+2. `node scripts/generate-precache.mjs` → injects build hash/precache list into `out/sw.js`
 
 ### Preview the production build
 
@@ -122,7 +122,7 @@ Jacob is **Socratic-first**: it asks/hints/scaffolds before giving full answers.
 
 - **Online when connected (if configured):** when the device is online and a provider key/proxy is set, Jacob uses the live AI for fuller, context-aware help.
 - **Offline fallback (always available):** when offline, or if the live service cannot be reached, Jacob uses the on-device guide so study can continue.
-- **Direct provider call (optional):** learner can add/select a provider and key in **Settings â†’ Jacob’s AI**. Supported providers include Groq, OpenRouter, DeepSeek, OpenAI, Anthropic, and Google Gemini. Keys/settings are stored in that browser’s local storage.
+- **Direct provider call (optional):** learner can add/select a provider and key in **Settings → Jacob’s AI**. Supported providers include Groq, OpenRouter, DeepSeek, OpenAI, Anthropic, and Google Gemini. Keys/settings are stored in that browser’s local storage.
 - **Proxy mode (recommended for shared/public use):** set a proxy URL in Settings; if provided, the app sends requests to the proxy instead of calling providers directly.
 - **Personal build convenience:** for this local/personal app, keys present in `.env`/`.env.local` (e.g. `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `DEEPSEEK_API_KEY` or `NEXT_PUBLIC_*` equivalents) can be embedded at build time via `next.config.mjs` to preconfigure the tutor. Do not use embedded keys in a public/shared deployment.
 

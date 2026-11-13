@@ -7,10 +7,12 @@ const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
   images: { unoptimized: true },
-  // Personal/local convenience: keys present in env at build time can be exposed
-  // to the client bundle so Jacob works out of the box for this private build.
-  // For public/production deployments, do NOT ship secrets to the client;
-  // use a server-side proxy and configure only the proxy URL in Settings.
+  // Personal build: the owner's keys are present at build time and are exposed
+  // to the client bundle so Jacob works out of the box for Angel with no setup.
+  // This is a deliberate trade-off for this private app: the keys are visible
+  // to anyone who inspects the deployed bundle, so only the Groq key is wired
+  // by default and the app warns users in Settings. To stop sharing the key,
+  // remove these env vars (or point the app at a server-side proxy) and rebuild.
   env: {
     NEXT_PUBLIC_GROQ_API_KEY:
       process.env.NEXT_PUBLIC_GROQ_API_KEY || process.env.GROQ_API_KEY || '',

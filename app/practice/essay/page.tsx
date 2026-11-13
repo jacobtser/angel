@@ -6,7 +6,7 @@ import { Icon } from '@/components/ui/Icon';
 import { RichText } from '@/components/tutor/RichText';
 import { useAppStore } from '@/lib/store';
 import { usePwa } from '@/components/providers/PwaProvider';
-import { askTutor, localTutorReply } from '@/lib/tutor';
+import { askTutor, hasIncludedAi, localTutorReply } from '@/lib/tutor';
 
 const prompts = [
   'Narrative: Write a story that ends with the words, "I wished I had listened."',
@@ -31,6 +31,11 @@ const checklist = [
 export default function EssayCoachPage() {
   const { state } = useAppStore();
   const { online } = usePwa();
+  const aiReady =
+    online &&
+    Boolean(
+      state.settings.ai.apiKey.trim() || state.settings.ai.proxyUrl.trim() || hasIncludedAi(),
+    );
   const [prompt, setPrompt] = useState(prompts[0]);
   const [custom, setCustom] = useState('');
   const [essay, setEssay] = useState('');
@@ -62,12 +67,12 @@ export default function EssayCoachPage() {
       label: 'Essay coach',
       topicTitle: 'Essay writing (Paper 2)',
       question: `Essay question: ${activePrompt}\n\nStudent draft:\n${text.slice(0, 6000)}`,
-      learnerName: state.profile.name || 'Jacob',
+      learnerName: state.profile.name || 'Angel',
       knowledge: essayKnowledge,
     };
     const userMsg = `Please give WAEC-style feedback on my essay draft for this question: "${activePrompt}". Use a clear rubric: (1) Content/relevance, (2) Organisation, (3) Expression/grammar, (4) Mechanical accuracy. Point out 2 strengths, 2 specific improvements, and suggest one revised paragraph or opening. Do not rewrite the whole essay.`;
     try {
-      if (!online || (!state.settings.ai.apiKey.trim() && !state.settings.ai.proxyUrl.trim())) {
+      if (!online) {
         throw new Error('OFFLINE');
       }
       const reply = await askTutor({
@@ -134,10 +139,10 @@ export default function EssayCoachPage() {
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <button type="button" onClick={() => void getFeedback()} disabled={busy} className="btn btn-primary">
               <Icon name={busy ? 'refresh' : 'spark'} size={16} />
-              {busy ? 'Getting feedback…' : (online && (state.settings.ai.apiKey || state.settings.ai.proxyUrl) ? 'Get AI feedback' : 'Get rubric feedback')}
+              {busy ? 'Getting feedback…' : (aiReady ? 'Get AI feedback' : 'Get rubric feedback')}
             </button>
             <span className="text-[0.72rem] text-muted">
-              {online && (state.settings.ai.apiKey || state.settings.ai.proxyUrl) ? 'Online: Jacob can give targeted feedback.' : 'Offline/no key: rubric checklist mode.'}
+              {aiReady ? 'Online: Jacob can give targeted feedback.' : 'Offline: rubric checklist mode.'}
             </span>
           </div>
         </section>

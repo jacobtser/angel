@@ -35,7 +35,7 @@ const TutorContextStore = createContext<TutorValue | null>(null);
 function welcomeMessage(name: string): ChatMessage {
   return {
     role: 'assistant',
-    content: `Good to see you, ${name}. I’m **Jacob**, your study companion.\n\nTell me what you are working on, or open a lesson and ask me about the part that feels slippery. I will not hand you an answer to copy — I will help you find the next step yourself.\n\nWhen you are online and a tutor key is set, I can give fuller guidance. When you are offline, I use the guide saved on this device.`,
+    content: `Good to see you, ${name}. I’m **Jacob**, your study companion.\n\nTell me what you are working on, or open a lesson and ask me about the part that feels slippery. I will not hand you an answer to copy — I will help you find the next step yourself.\n\nWhen you are online, I can give fuller guidance. When you are offline, I use the guide saved on this device.`,
   };
 }
 
@@ -111,9 +111,8 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
       const learnerName = state.profile.name || 'Angel';
       const fullContext = { ...contextRef.current, learnerName };
       try {
-        // Use live AI when connected and configured; rely on the offline guide otherwise.
+        // Use live AI when online; rely on the offline guide otherwise.
         if (typeof navigator !== 'undefined' && !navigator.onLine) throw new Error('OFFLINE');
-        if (!ai.apiKey.trim() && !ai.proxyUrl.trim()) throw new Error('NO_KEY');
 
         const reply = await askTutor({
           settings: ai,

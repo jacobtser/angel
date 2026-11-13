@@ -57,6 +57,11 @@ export function defaultAiSettings(): AiSettings {
   return { provider: 'openai', apiKey: '', model: PROVIDER_DEFAULT_MODELS.openai, proxyUrl: '' };
 }
 
+/** True when this build ships with an owner-supplied key, so Jacob can go online with no setup. */
+export function hasIncludedAi(): boolean {
+  return Object.values(envProviderKeys()).some((key) => Boolean(key));
+}
+
 export function contextLabel(context: TutorContext): string | null {
   if (context.label) return context.label;
   if (context.topicTitle) return context.topicTitle;
@@ -119,7 +124,7 @@ ${contextLines.length ? contextLines.join('\n') : 'No specific topic is open; th
 Respond to the learner’s message using this context naturally (do not dump the context back).`;
 }
 
-const OFFLINE_END = '\n\n_This reply came from the offline guide stored on your device. Add an AI key in Settings for a deeper back-and-forth._';
+const OFFLINE_END = '\n\n_This reply came from the offline guide stored on your device. Go online for a deeper back-and-forth._';
 
 export function localTutorReply(text: string, context: TutorContext): string {
   const faq = matchFaq(text);
@@ -352,7 +357,7 @@ async function friendlyError(res: Response): Promise<string> {
     /* ignore */
   }
   if (res.status === 401 || res.status === 403) {
-    return `The API key was rejected (${res.status}). Check the key and model in Settings. ${detail}`.trim();
+    return `The AI connection was rejected (${res.status}). If you added your own key, check it in Settings. ${detail}`.trim();
   }
   if (res.status === 429) {
     return 'The AI service is rate-limiting requests. Wait a moment, or keep using the offline guide.';

@@ -54,7 +54,7 @@ export const tutorFaqs: TutorFaq[] = [
     keywords: ['mil', 'management', 'family', 'food', 'nutrition', 'budget', 'consumer', 'clothing'],
     question: 'How do I get better at Management in Living?',
     answer:
-      'MIL rewards **application**, not definition dumps. For any topic, practise this chain:\n\n- Name the concept.\n- Explain the need it meets.\n- Give a specific Ghanaian example.\n- State one strength and one limitation.\n- Suggest a practical action.\n\nFor a budget question, show income, expenditure and balance. For a nutrition question, link nutrient â†’ function â†’ local source â†’ deficiency. For a family question, name the family type, then discuss roles and resources.\n\nGive me a scenario and I will help you build the chain.',
+      'MIL rewards **application**, not definition dumps. For any topic, practise this chain:\n\n- Name the concept.\n- Explain the need it meets.\n- Give a specific Ghanaian example.\n- State one strength and one limitation.\n- Suggest a practical action.\n\nFor a budget question, show income, expenditure and balance. For a nutrition question, link nutrient → function → local source → deficiency. For a family question, name the family type, then discuss roles and resources.\n\nGive me a scenario and I will help you build the chain.',
   },
   {
     id: 'anxiety',
@@ -82,7 +82,7 @@ export const tutorFaqs: TutorFaq[] = [
     keywords: ['literature', 'novel', 'poem', 'poetry', 'drama', 'character', 'theme', 'quote', 'treasure island', 'kaya', 'umbele'],
     question: 'How do I write a literature answer?',
     answer:
-      'Use the **point â†’ evidence â†’ effect** shape.\n\n- **Point:** answer the question in one sentence.\n- **Evidence:** a short quotation or a precise moment from the text.\n- **Effect:** what that evidence shows about character, theme or technique.\n\nFor extract questions, first say who is speaking, to whom, and what is happening. Then analyse. Do not retell the whole plot.\n\nWhich text and question are you working on? I will help you build one paragraph, not hand you a finished essay.',
+      'Use the **point → evidence → effect** shape.\n\n- **Point:** answer the question in one sentence.\n- **Evidence:** a short quotation or a precise moment from the text.\n- **Effect:** what that evidence shows about character, theme or technique.\n\nFor extract questions, first say who is speaking, to whom, and what is happening. Then analyse. Do not retell the whole plot.\n\nWhich text and question are you working on? I will help you build one paragraph, not hand you a finished essay.',
   },
   {
     id: 'time',
@@ -96,7 +96,7 @@ export const tutorFaqs: TutorFaq[] = [
     keywords: ['who are you', 'your name', 'Jacob', 'are you real'],
     question: 'Who are you?',
     answer:
-      'I’m Jacob — your study companion inside Auntie Angel. I am not a teacher who will make you feel small, and I am not here to hand you answers to copy.\n\nMy job is to ask the next useful question, explain a step you missed, and help you build enough evidence that you trust yourself on exam day.\n\nYou can also use me offline: I have a small bank of study guidance stored on this device. When you are online and add an AI key in Settings, I can go deeper.\n\nWhat are we working on today?',
+      'I’m Jacob — your study companion inside Auntie Angel. I am not a teacher who will make you feel small, and I am not here to hand you answers to copy.\n\nMy job is to ask the next useful question, explain a step you missed, and help you build enough evidence that you trust yourself on exam day.\n\nYou can also use me offline: I have a small bank of study guidance stored on this device. When you are online, I can go deeper.\n\nWhat are we working on today?',
   },
 ];
 
