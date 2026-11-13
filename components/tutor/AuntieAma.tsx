@@ -11,7 +11,7 @@ import { listen, recognitionSupported } from '@/lib/speech';
 import { useTutor } from '@/components/providers/TutorProvider';
 import { RichText } from './RichText';
 
-function AmaAvatar({ size = 36 }: { size?: number }) {
+function JacobAvatar({ size = 36 }: { size?: number }) {
   return (
     <span
       className="relative inline-block shrink-0"
@@ -100,7 +100,7 @@ export function AuntieAma() {
             'Give me a hint, not the answer',
             'Check my first step',
           ]
-        : ['Help me plan an essay', 'I feel stuck â€” where do I start?', 'How do I revise without cramming?'];
+        : ['Help me plan an essay', 'I feel stuck — where do I start?', 'How do I revise without cramming?'];
 
   async function send(text: string) {
     const value = text.trim();
@@ -141,7 +141,7 @@ export function AuntieAma() {
             aria-label="Open Jacob, your study companion"
           >
             <span className="relative">
-              <AmaAvatar size={42} />
+              <JacobAvatar size={42} />
               <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-elev bg-leaf" />
             </span>
             <span className="text-left">
@@ -178,7 +178,7 @@ export function AuntieAma() {
             >
               <div className="ai-wash border-b border-line px-4 pb-3.5 pt-4">
                 <div className="flex items-start gap-3">
-                  <AmaAvatar size={40} />
+                  <JacobAvatar size={40} />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <h2 className="font-display text-lg font-semibold leading-none">Jacob</h2>
@@ -238,7 +238,7 @@ export function AuntieAma() {
                     )}
                   >
                     {message.role === 'assistant' ? (
-                      <AmaAvatar size={24} />
+                      <JacobAvatar size={24} />
                     ) : (
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--bg-sunk)] text-muted">
                         <Icon name="user" size={13} />
@@ -263,7 +263,7 @@ export function AuntieAma() {
 
                 {busy && (
                   <div className="flex items-end gap-2">
-                    <AmaAvatar size={24} />
+                    <JacobAvatar size={24} />
                     <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-line bg-[var(--bg-elev)] px-4 py-3">
                       {[0, 1, 2].map((dot) => (
                         <span

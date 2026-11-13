@@ -18,6 +18,12 @@ const nextConfig = {
       process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY || process.env.DEEPSEEK_API_KEY || '',
     NEXT_PUBLIC_OPENROUTER_API_KEY:
       process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY || '',
+    NEXT_PUBLIC_OPENAI_API_KEY:
+      process.env.NEXT_PUBLIC_OPENAI_API_KEY || process.env.OPENAI_API_KEY || '',
+    NEXT_PUBLIC_ANTHROPIC_API_KEY:
+      process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY || '',
+    NEXT_PUBLIC_GEMINI_API_KEY:
+      process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || '',
   },
 };
 

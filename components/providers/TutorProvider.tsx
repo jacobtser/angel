@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 import { askTutor, localTutorReply, type ChatMessage, type TutorContext } from '@/lib/tutor';
-import { speak, stopSpeaking } from '@/lib/speech';
+import { speakSmart, stopSpeaking, availableTtsKeys } from '@/lib/speech';
 import { useAppStore } from '@/lib/store';
 
 interface TutorValue {
@@ -57,6 +57,17 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
   settingsRef.current = state.settings.ai;
   const voiceRef = useRef(state.settings.voiceReplies);
   voiceRef.current = state.settings.voiceReplies;
+  const voiceStyleRef = useRef(state.settings.voiceStyle);
+  voiceStyleRef.current = state.settings.voiceStyle;
+
+  const speakReply = useCallback((text: string) => {
+    if (!voiceRef.current) return;
+    const ai = settingsRef.current;
+    speakSmart(text, {
+      style: voiceStyleRef.current,
+      keys: availableTtsKeys({ provider: ai.provider, apiKey: ai.apiKey }),
+    });
+  }, []);
 
   const setContext = useCallback((next: TutorContext) => {
     setContextState(next);
@@ -111,7 +122,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
         });
         const message: ChatMessage = { role: 'assistant', content: reply };
         setMessages((current) => [...current, message]);
-        if (voiceRef.current) speak(reply);
+        speakReply(reply);
       } catch (caught) {
         const reason = caught instanceof Error ? caught.message : '';
         const fallback = localTutorReply(text, fullContext);
@@ -119,7 +130,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
           ...current,
           { role: 'assistant', content: fallback, offline: true },
         ]);
-        if (voiceRef.current) speak(fallback);
+        speakReply(fallback);
         if (reason !== 'NO_KEY' && reason !== 'OFFLINE') {
           setError('The online tutor could not be reached right now, so I used the guide saved on this device.');
         }

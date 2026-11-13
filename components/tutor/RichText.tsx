@@ -21,8 +21,8 @@ function inline(text: string, keyPrefix: string) {
 /**
  * A deliberately small Markdown renderer for tutor replies.
  *
- * It supports the handful of things Jacob actually uses â€” paragraphs,
- * bold, inline code, bullets, numbered steps and quotes â€” without shipping a
+ * It supports the handful of things Jacob actually uses — paragraphs,
+ * bold, inline code, bullets, numbered steps and quotes — without shipping a
  * parser or letting raw HTML through.
  */
 export function RichText({ text, className }: { text: string; className?: string }) {

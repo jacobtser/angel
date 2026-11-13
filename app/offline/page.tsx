@@ -101,7 +101,7 @@ export default function OfflinePage() {
           <h2 className="mt-1 font-display text-lg font-semibold">Make the app findable</h2>
           <p className="mt-1.5 text-[0.8rem] leading-relaxed text-muted">
             {installed
-              ? 'Auntie Angel is installed. Look for her on your home screen or in your app list.'
+              ? 'Auntie Angel is installed. Look for it on your home screen or in your app list.'
               : isIos
                 ? 'On iPhone or iPad, open the Share menu and choose “Add to Home Screen”.'
                 : isSafari
@@ -118,10 +118,10 @@ export default function OfflinePage() {
 
         <section className="surface p-5">
           <p className="eyebrow">When the signal is gone</p>
-          <h2 className="mt-1 font-display text-lg font-semibold">Ama still helps</h2>
+          <h2 className="mt-1 font-display text-lg font-semibold">Jacob still helps</h2>
           <p className="mt-1.5 text-[0.8rem] leading-relaxed text-muted">
-            With no connection, the tutor uses the offline guide saved in the app. She may not know every
-            detail, and she will say so. Use the lesson explanations, flashcards and past papers you saved —
+            With no connection, the tutor uses the offline guide saved in the app. He may not know every
+            detail, and he will say so. Use the lesson explanations, flashcards and past papers you saved —
             those do not need a network.
           </p>
           <Link

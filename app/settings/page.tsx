@@ -10,6 +10,7 @@ import { subjects } from '@/content/subjects';
 import { isoDay, prettyDate } from '@/lib/date';
 import { useAppStore } from '@/lib/store';
 import { askTutor, PROVIDER_DEFAULT_MODELS } from '@/lib/tutor';
+import { availableTtsKeys, speakSmart, VOICE_STYLES } from '@/lib/speech';
 import type { AiSettings } from '@/lib/types';
 import { cn } from '@/lib/cn';
 
@@ -148,7 +149,7 @@ export default function SettingsPage() {
 
   function saveProfile() {
     updateProfile({
-      name: name.trim() || 'Jacob',
+      name: name.trim() || 'Angel',
       examDate,
       examDateIsProvisional: provisional,
       confidence,
@@ -175,7 +176,7 @@ export default function SettingsPage() {
       setTest({ status: 'error', message: 'Add an API key or a proxy URL first.' });
       return;
     }
-    setTest({ status: 'working', message: 'Sending one small test messageâ€¦' });
+    setTest({ status: 'working', message: 'Sending one small test message…' });
     try {
       const reply = await askTutor({
         settings: {
@@ -229,7 +230,7 @@ export default function SettingsPage() {
       <section className="hero-wash relative overflow-hidden rounded-[2rem] border border-line p-5 sm:p-9">
         <div className="aurora" aria-hidden="true" />
         <div className="relative max-w-3xl">
-          <p className="eyebrow">Make her fit you</p>
+          <p className="eyebrow">Make it fit you</p>
           <h1 className="display-lg mt-2">Settings</h1>
           <p className="prose-angel mt-3">
             Your name, your date, your device. Auntie Angel has no account and no server holding your study
@@ -259,12 +260,12 @@ export default function SettingsPage() {
             id="profile-heading"
             icon={<Icon name="user" size={19} />}
             title="Your profile"
-            description="The name Ama uses, and the date the countdown is built on. You can change either at any time."
+            description="The name Jacob uses, and the date the countdown is built on. You can change either at any time."
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="settings-name" className="label">
-                  What should she call you?
+                  What should Jacob call you?
                 </label>
                 <input
                   id="settings-name"
@@ -391,9 +392,54 @@ export default function SettingsPage() {
               <Toggle
                 checked={state.settings.voiceReplies}
                 onChange={(value) => updateSettings({ voiceReplies: value })}
-                label="Read Amaâ€™s replies aloud"
-                hint="Uses your deviceâ€™s speech voice. Nothing is sent anywhere. You can also press the speaker in the tutor."
+                label="Read Jacob’s replies aloud"
+                hint="Jacob can speak with a sweet female voice. Online, the AI providers are tried first; offline, your device voice is used."
               />
+              <div className="rounded-xl border border-line bg-elev p-3">
+                <p className="text-[0.8rem] font-semibold text-ink">Speaking voice</p>
+                <p className="mt-0.5 text-[0.68rem] leading-relaxed text-muted">
+                  Pick how Jacob sounds. Provider voices need a connection and a working key; the device voice
+                  is the automatic fallback.
+                </p>
+                <div className="mt-2 grid gap-1.5 sm:grid-cols-2">
+                  {VOICE_STYLES.map((style) => {
+                    const selected = state.settings.voiceStyle === style.id;
+                    return (
+                      <button
+                        key={style.id}
+                        type="button"
+                        onClick={() => updateSettings({ voiceStyle: style.id })}
+                        aria-pressed={selected}
+                        className={cn(
+                          'rounded-lg border px-2.5 py-2 text-left transition-colors',
+                          selected
+                            ? 'border-leaf bg-[var(--leaf-soft)] text-leaf'
+                            : 'border-line bg-[var(--bg-elev)] text-soft hover:border-leaf',
+                        )}
+                      >
+                        <span className="block text-[0.76rem] font-semibold">{style.label}</span>
+                        <span className="mt-0.5 block text-[0.64rem] leading-snug opacity-80">{style.hint}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    speakSmart(
+                      'Hello Angel. I am Jacob, your study companion. You do not have to feel ready to begin — one small step is enough for today.',
+                      {
+                        style: state.settings.voiceStyle,
+                        keys: availableTtsKeys({ provider: ai.provider, apiKey: ai.apiKey }),
+                      },
+                    )
+                  }
+                  className="btn btn-ghost btn-sm mt-2"
+                >
+                  <Icon name="volume" size={15} />
+                  Hear a sample
+                </button>
+              </div>
               <Toggle
                 checked={state.settings.reminders}
                 onChange={(value) => updateSettings({ reminders: value })}
@@ -406,7 +452,7 @@ export default function SettingsPage() {
           <Panel
             id="ai-heading"
             icon={<Icon name="spark" size={19} />}
-            title="Jacobâ€™s AI"
+            title="Jacob’s AI"
             description="The tutor works offline with a saved guide. Add a provider key for a deeper back-and-forth. Keys are stored in this browser only."
           >
             <div className="rounded-xl border border-[var(--gold)]/30 bg-[var(--gold-soft)]/60 p-3 text-[0.78rem] leading-relaxed text-soft">
@@ -480,7 +526,7 @@ export default function SettingsPage() {
                     setAi((current) => ({ ...current, apiKey: event.target.value }));
                     setAiSaved(false);
                   }}
-                  placeholder="sk-â€¦"
+                  placeholder="sk-…"
                   autoComplete="off"
                   spellCheck={false}
                 />
@@ -531,7 +577,7 @@ export default function SettingsPage() {
                 className="btn btn-secondary btn-sm"
               >
                 <Icon name="zap" size={15} />
-                {test.status === 'working' ? 'Testingâ€¦' : 'Test connection'}
+                {test.status === 'working' ? 'Testing…' : 'Test connection'}
               </button>
               {ai.apiKey && (
                 <button
@@ -579,8 +625,8 @@ export default function SettingsPage() {
 
             <p className="mt-3 text-[0.7rem] leading-relaxed text-muted">
               <strong className="text-ink">Online when connected, offline when needed:</strong> if you are
-              online and a key (or proxy) is set, Ama uses the live AI. If you are offline or the service
-              cannot be reached, she falls back to the guide saved on this device. Without a key, the offline
+              online and a key (or proxy) is set, Jacob uses the live AI. If you are offline or the service
+              cannot be reached, he falls back to the guide saved on this device. Without a key, the offline
               guide still works.
             </p>
           </Panel>
@@ -589,7 +635,7 @@ export default function SettingsPage() {
             id="offline-heading"
             icon={<Icon name="download" size={19} />}
             title="Offline & installation"
-            description="Save a subject for the days when data runs out. Saved files live in this browserâ€™s cache; you can remove them at any time."
+            description="Save a subject for the days when data runs out. Saved files live in this browser’s cache; you can remove them at any time."
           >
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[var(--bg-sunk)] p-3">
               <div>
@@ -603,7 +649,7 @@ export default function SettingsPage() {
                         ? 'On iPhone or iPad: Share â†’ Add to Home Screen.'
                         : isSafari
                           ? 'In Safari: File â†’ Add to Dock, or Share â†’ Add to Home Screen.'
-                          : 'Look for â€œInstall appâ€ in your browser menu. Installation is optional.'}
+                          : 'Look for “Install app” in your browser menu. Installation is optional.'}
                 </p>
               </div>
               {!installed && canInstall && (
@@ -631,8 +677,8 @@ export default function SettingsPage() {
                         </p>
                         <p className="mt-0.5 text-[0.7rem] text-muted">
                           {subject.paperUrl
-                            ? `${subject.paperLabel ?? 'Paper'} Â· lessons, practice and library pages`
-                            : 'Lessons and practice only â€” no past paper in this folder'}
+                            ? `${subject.paperLabel ?? 'Paper'} · lessons, practice and library pages`
+                            : 'Lessons and practice only — no past paper in this folder'}
                         </p>
                         {saved && (
                           <p className="mt-1 flex items-center gap-1 text-[0.68rem] font-semibold text-leaf">
@@ -734,7 +780,7 @@ export default function SettingsPage() {
                 <span className="tick mt-0.5">
                   <Icon name="check" size={11} />
                 </span>
-                Literature notes cover the Ghana 2022â€“2026 core English cycle. Confirm the current list with
+                Literature notes cover the Ghana 2022–2026 core English cycle. Confirm the current list with
                 your school or ghanawaec.org before relying on it.
               </li>
               <li className="flex gap-2">
@@ -748,11 +794,11 @@ export default function SettingsPage() {
               <Link href="/papers/" className="text-[0.74rem] font-semibold text-leaf hover:underline">
                 Past papers
               </Link>
-              <span className="text-muted">Â·</span>
+              <span className="text-muted">·</span>
               <Link href="/literature/" className="text-[0.74rem] font-semibold text-leaf hover:underline">
                 Literature library
               </Link>
-              <span className="text-muted">Â·</span>
+              <span className="text-muted">·</span>
               <a
                 href="https://ghanawaec.org/"
                 target="_blank"

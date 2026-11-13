@@ -88,7 +88,7 @@ export default function DashboardPage() {
               <p className="eyebrow">A word for your journey</p>
               <h2 className="mt-1 font-display text-xl font-semibold text-ink sm:text-2xl">Study with hope, purpose, and possibility</h2>
               <p className="mt-2 text-[0.9rem] leading-relaxed text-soft">
-                Your effort matters, Angel. Every page you read, every question you attempt, and every small step you take is building your future. Keep going with faith and steady work — progress is possible.
+                Your effort matters, {state.profile.name}. Every page you read, every question you attempt, and every small step you take is building your future. Keep going with faith and steady work — progress is possible.
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <blockquote className="rounded-xl bg-[var(--leaf-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink">

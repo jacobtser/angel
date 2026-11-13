@@ -47,6 +47,7 @@ export function createDefaultState(): AppState {
     settings: {
       theme: 'system',
       voiceReplies: false,
+      voiceStyle: 'sweet',
       reducedMotion: false,
       reminders: true,
       ai: defaultAiSettings(),

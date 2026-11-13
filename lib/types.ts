@@ -222,6 +222,9 @@ export interface MockResult {
 
 export type AiProvider = 'openai' | 'anthropic' | 'gemini' | 'groq' | 'deepseek' | 'openrouter';
 
+/** Preferred speaking voice. `device` uses the browser's built-in voice. */
+export type VoiceStyle = 'sweet' | 'warm' | 'bright' | 'device';
+
 export interface AiSettings {
   provider: AiProvider;
   apiKey: string;
@@ -232,6 +235,7 @@ export interface AiSettings {
 export interface Settings {
   theme: 'light' | 'dark' | 'system';
   voiceReplies: boolean;
+  voiceStyle: VoiceStyle;
   reducedMotion: boolean;
   reminders: boolean;
   ai: AiSettings;

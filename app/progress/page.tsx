@@ -16,9 +16,9 @@ import { cn } from '@/lib/cn';
 
 const moodFace: Record<Mood, string> = {
   hopeful: 'â—¡',
-  steady: 'â€¢',
+  steady: '•',
   tender: 'â—ž',
-  tired: 'â€“',
+  tired: '–',
   anxious: 'â—Ÿ',
 };
 
@@ -105,7 +105,7 @@ export default function ProgressPage() {
             <h1 className="display-lg mt-2">Your progress, in plain sight</h1>
             <p className="prose-angel mt-3 max-w-2xl">
               These numbers come only from work you have done on this device. A quiet week is not a failed
-              week. The point of looking is to choose the next small move â€” not to grade yourself twice.
+              week. The point of looking is to choose the next small move — not to grade yourself twice.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <Link href="/practice/diagnostic/" className="btn btn-primary btn-sm">
@@ -121,7 +121,7 @@ export default function ProgressPage() {
                 Print report
               </button>
             </div>
-            <p className="mt-2 text-[0.72rem] text-muted print:hidden">Overall: <strong className="text-ink">{overallStatus}</strong> Â· {daysLeft} day{daysLeft === 1 ? '' : 's'} to exam.</p>
+            <p className="mt-2 text-[0.72rem] text-muted print:hidden">Overall: <strong className="text-ink">{overallStatus}</strong> · {daysLeft} day{daysLeft === 1 ? '' : 's'} to exam.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
@@ -152,7 +152,7 @@ export default function ProgressPage() {
             <div className="glass rounded-2xl p-3.5">
               <p className="eyebrow !text-[0.55rem]">Accuracy</p>
               <p className="tabular mt-1 font-display text-2xl font-semibold leading-none">
-                {accuracy === null ? 'â€”' : `${accuracy}%`}
+                {accuracy === null ? '—' : `${accuracy}%`}
               </p>
               <p className="mt-1 text-[0.66rem] text-muted">
                 {answered ? `${answered} questions answered` : 'No questions yet'}
@@ -212,7 +212,7 @@ export default function ProgressPage() {
                           <span className="font-semibold text-soft">{part.label}</span>
                           <span className="tabular text-muted">
                             {part.value === null ? 'No evidence' : `${part.value}%`}
-                            <span className="ml-1 opacity-70">Â· {Math.round(part.weight * 100)}%</span>
+                            <span className="ml-1 opacity-70">· {Math.round(part.weight * 100)}%</span>
                           </span>
                         </div>
                         <ProgressBar
@@ -340,7 +340,7 @@ export default function ProgressPage() {
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="text-[0.74rem] font-semibold text-muted">Accuracy this week</span>
                   <span className="tabular font-display text-lg font-semibold">
-                    {accuracyThis === null ? 'â€”' : `${accuracyThis}%`}
+                    {accuracyThis === null ? '—' : `${accuracyThis}%`}
                   </span>
                 </div>
                 <Delta
@@ -518,7 +518,7 @@ export default function ProgressPage() {
                           {subjectById[mock.subject].shortName}
                         </span>
                         <span className="tabular text-[0.74rem] font-semibold">
-                          {mock.correct}/{mock.total} Â· {percent}%
+                          {mock.correct}/{mock.total} · {percent}%
                         </span>
                       </div>
                       <ProgressBar
@@ -529,7 +529,7 @@ export default function ProgressPage() {
                         height={4}
                       />
                       <p className="mt-1 text-[0.64rem] text-muted">
-                        {prettyDate(mock.date)} Â· {formatMinutes(Math.round(mock.seconds / 60))}
+                        {prettyDate(mock.date)} · {formatMinutes(Math.round(mock.seconds / 60))}
                       </p>
                     </li>
                   );
@@ -537,7 +537,7 @@ export default function ProgressPage() {
               </ul>
             ) : (
               <p className="mt-4 rounded-xl bg-[var(--bg-sunk)] p-4 text-[0.8rem] leading-relaxed text-muted">
-                No timed mock yet. A mock is not a test of your worth â€” it is the only way to practise
+                No timed mock yet. A mock is not a test of your worth — it is the only way to practise
                 choosing what to leave when the clock is real.
               </p>
             )}
@@ -574,7 +574,7 @@ export default function ProgressPage() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[0.8rem] font-semibold">{topic?.title ?? 'Mixed practice'}</p>
                         <p className="text-[0.64rem] text-muted">
-                          {subjectById[quiz.subject].shortName} Â· {quiz.mode} Â· {prettyDate(quiz.date)}
+                          {subjectById[quiz.subject].shortName} · {quiz.mode} · {prettyDate(quiz.date)}
                         </p>
                       </div>
                       <span className="tabular text-[0.7rem] text-muted">
@@ -589,7 +589,7 @@ export default function ProgressPage() {
                 Nothing here yet. Answer ten quiet questions and this list will start to fill.
               </p>
             )}
-            {!hydrated && <p className="mt-3 text-[0.7rem] text-muted">Loading your saved recordâ€¦</p>}
+            {!hydrated && <p className="mt-3 text-[0.7rem] text-muted">Loading your saved record…</p>}
           </section>
         </Reveal>
       </div>
