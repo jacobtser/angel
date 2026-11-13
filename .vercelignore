@@ -1,0 +1,35 @@
+# Dependencies and build output (Vercel rebuilds these)
+node_modules
+.next
+out
+.vercel
+.verify
+.git
+
+# Secrets (never upload)
+.env
+.env.local
+.env*.local
+
+# Legacy static-site sources (the Next app uses app/ and public/)
+English Language
+Core Mathematics
+Management in Living
+js
+css
+*.html
+
+# Personal documents and local reference media
+Results.txt
+2025 Results.pdf
+2026 Results.pdf
+Angel's WACCE INVOICE.pdf
+Auntie Angel UEW Forms.pdf
+COLLECTION_SUMMARY.txt
+DOWNLOAD_SUMMARY.txt
+*.vtt
+umbele_act*.txt
+
+# Local caches
+*.tsbuildinfo
+next-env.d.ts
