@@ -44,7 +44,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [context, setContextState] = useState<TutorContext>({});
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
-    welcomeMessage(state.profile.name || 'Jacob'),
+    welcomeMessage(state.profile.name || 'Angel'),
   ]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +82,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
   const reset = useCallback(() => {
     stopSpeaking();
     setError(null);
-    setMessages([welcomeMessage(state.profile.name || 'Jacob')]);
+    setMessages([welcomeMessage(state.profile.name || 'Angel')]);
   }, [state.profile.name]);
 
   const ask = useCallback(
@@ -97,7 +97,7 @@ export function TutorProvider({ children }: { children: React.ReactNode }) {
       setError(null);
 
       const ai = settingsRef.current;
-      const learnerName = state.profile.name || 'Jacob';
+      const learnerName = state.profile.name || 'Angel';
       const fullContext = { ...contextRef.current, learnerName };
       try {
         // Use live AI when connected and configured; rely on the offline guide otherwise.

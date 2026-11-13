@@ -12,7 +12,7 @@ import { useAppStore } from '@/lib/store';
 export function Onboarding() {
   const { state, hydrated, updateProfile } = useAppStore();
   const [dismissed, setDismissed] = useState(false);
-  const [name, setName] = useState(state.profile.name || 'Jacob');
+  const [name, setName] = useState(state.profile.name || 'Angel');
   const [examDate, setExamDate] = useState(state.profile.examDate);
   const [provisional, setProvisional] = useState(state.profile.examDateIsProvisional);
   const [confidence, setConfidence] = useState(state.profile.confidence);
@@ -27,7 +27,7 @@ export function Onboarding() {
 
   function save() {
     updateProfile({
-      name: name.trim() || 'Jacob',
+      name: name.trim() || 'Angel',
       examDate,
       examDateIsProvisional: provisional,
       confidence,

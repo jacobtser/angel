@@ -352,7 +352,7 @@ export function AuntieAma() {
                   </button>
                 </div>
                 <p className="mt-1.5 px-1 text-[0.64rem] text-muted">
-                  Jacob guides with questions. Verify facts against your paper or syllabus.
+                  Jacob guides with questions (and can speak replies when voice is on). Use the mic to talk. Verify facts against your paper or syllabus.
                 </p>
               </form>
             </motion.section>

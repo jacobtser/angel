@@ -185,72 +185,38 @@ async function askOpenAICompatible(
   return text.trim();
 }
 
-/**
- * Calls the chosen provider directly from the browser when online and configured.
- * For a personal, single-learner offline app this can be acceptable, but a public
- * deployment should use the proxy option so keys never ship to the client.
- * When offline or unavailable, callers fall back to the local on-device guide.
- */
-export async function askTutor({ settings, messages, context }: AskInput): Promise<string> {
-  const system = buildSystemPrompt(context);
-  const history = messages
-    .filter((m) => m.content.trim())
-    .slice(-8)
-    .map((m) => ({ role: m.role, content: m.content }));
-  const model = settings.model || PROVIDER_DEFAULT_MODELS[settings.provider];
-
-  if (settings.proxyUrl.trim()) {
-    const res = await fetch(settings.proxyUrl.trim(), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(settings.apiKey ? { Authorization: `Bearer ${settings.apiKey}` } : {}),
-      },
-      body: JSON.stringify({
-        provider: settings.provider,
-        model,
-        system,
-        messages: history,
-      }),
-    });
-    if (!res.ok) throw new Error(await friendlyError(res));
-    const data = await res.json();
-    const text = data.text ?? data.content ?? data.message ?? data?.choices?.[0]?.message?.content;
-    if (typeof text !== 'string' || !text.trim()) throw new Error('The proxy returned an empty reply.');
-    return text.trim();
+async function callProviderDirect(
+  provider: AiProvider,
+  apiKey: string,
+  model: string,
+  system: string,
+  history: { role: 'user' | 'assistant'; content: string }[],
+): Promise<string> {
+  if (provider === 'openai') {
+    return askOpenAICompatible('https://api.openai.com/v1/chat/completions', apiKey, model, system, history);
   }
-
-  if (!settings.apiKey.trim()) throw new Error('NO_KEY');
-
-  if (settings.provider === 'openai') {
-    return askOpenAICompatible('https://api.openai.com/v1/chat/completions', settings.apiKey, model, system, history);
+  if (provider === 'groq') {
+    return askOpenAICompatible('https://api.groq.com/openai/v1/chat/completions', apiKey, model, system, history);
   }
-
-  if (settings.provider === 'groq') {
-    return askOpenAICompatible('https://api.groq.com/openai/v1/chat/completions', settings.apiKey, model, system, history);
+  if (provider === 'deepseek') {
+    return askOpenAICompatible('https://api.deepseek.com/chat/completions', apiKey, model, system, history);
   }
-
-  if (settings.provider === 'deepseek') {
-    return askOpenAICompatible('https://api.deepseek.com/chat/completions', settings.apiKey, model, system, history);
-  }
-
-  if (settings.provider === 'openrouter') {
+  if (provider === 'openrouter') {
     return askOpenAICompatible(
       'https://openrouter.ai/api/v1/chat/completions',
-      settings.apiKey,
+      apiKey,
       model,
       system,
       history,
       { 'HTTP-Referer': typeof window !== 'undefined' ? window.location.origin : '', 'X-Title': 'Auntie Angel' },
     );
   }
-
-  if (settings.provider === 'anthropic') {
+  if (provider === 'anthropic') {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': settings.apiKey,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true',
       },
@@ -268,9 +234,8 @@ export async function askTutor({ settings, messages, context }: AskInput): Promi
     if (typeof text !== 'string') throw new Error('Claude returned an unexpected response.');
     return text.trim();
   }
-
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(settings.apiKey)}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -289,6 +254,87 @@ export async function askTutor({ settings, messages, context }: AskInput): Promi
   const text = data?.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text).join('');
   if (typeof text !== 'string' || !text.trim()) throw new Error('Gemini returned an empty reply.');
   return text.trim();
+}
+
+function envProviderKeys(): Partial<Record<AiProvider, string>> {
+  return {
+    groq: process.env.NEXT_PUBLIC_GROQ_API_KEY?.trim() || '',
+    deepseek: process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY?.trim() || '',
+    openrouter: process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.trim() || '',
+    openai: process.env.NEXT_PUBLIC_OPENAI_API_KEY?.trim() || '',
+    anthropic: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY?.trim() || '',
+    gemini: process.env.NEXT_PUBLIC_GEMINI_API_KEY?.trim() || '',
+  };
+}
+
+/**
+ * Calls the chosen provider directly from the browser when online and configured.
+ * For a personal, single-learner offline app this can be acceptable, but a public
+ * deployment should use the proxy option so keys never ship to the client.
+ * If a direct provider call fails, other configured provider keys (from settings/env)
+ * are tried as fallbacks before returning an error (caller may then use offline guide).
+ */
+export async function askTutor({ settings, messages, context }: AskInput): Promise<string> {
+  const system = buildSystemPrompt(context);
+  const history = messages
+    .filter((m) => m.content.trim())
+    .slice(-8)
+    .map((m) => ({ role: m.role, content: m.content }));
+  const requestedModel = settings.model || PROVIDER_DEFAULT_MODELS[settings.provider];
+
+  if (settings.proxyUrl.trim()) {
+    const res = await fetch(settings.proxyUrl.trim(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(settings.apiKey ? { Authorization: `Bearer ${settings.apiKey}` } : {}),
+      },
+      body: JSON.stringify({
+        provider: settings.provider,
+        model: requestedModel,
+        system,
+        messages: history,
+      }),
+    });
+    if (!res.ok) throw new Error(await friendlyError(res));
+    const data = await res.json();
+    const text = data.text ?? data.content ?? data.message ?? data?.choices?.[0]?.message?.content;
+    if (typeof text !== 'string' || !text.trim()) throw new Error('The proxy returned an empty reply.');
+    return text.trim();
+  }
+
+  const envKeys = envProviderKeys();
+  const candidates: Array<{ provider: AiProvider; apiKey: string; model: string }> = [];
+  const seen = new Set<string>();
+
+  const add = (provider: AiProvider, apiKey?: string, model?: string) => {
+    const key = (apiKey || '').trim();
+    if (!key) return;
+    const id = `${provider}:${key}`;
+    if (seen.has(id)) return;
+    seen.add(id);
+    candidates.push({ provider, apiKey: key, model: model || PROVIDER_DEFAULT_MODELS[provider] });
+  };
+
+  // Primary: user-selected provider/settings
+  add(settings.provider, settings.apiKey, requestedModel);
+  // Fallbacks: any other providers with keys available (env-configured for this build)
+  (['groq', 'openrouter', 'deepseek', 'openai', 'anthropic', 'gemini'] as AiProvider[]).forEach((p) => {
+    if (p === settings.provider && settings.apiKey.trim()) return;
+    add(p, envKeys[p], PROVIDER_DEFAULT_MODELS[p]);
+  });
+
+  if (!candidates.length) throw new Error('NO_KEY');
+
+  let lastError: unknown = null;
+  for (const c of candidates) {
+    try {
+      return await callProviderDirect(c.provider, c.apiKey, c.model, system, history);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error('The AI service could not be reached.');
 }
 
 async function friendlyError(res: Response): Promise<string> {

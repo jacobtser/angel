@@ -39,33 +39,74 @@ function cleanForSpeech(text: string): string {
  * Read a reply aloud. Long replies are split at sentence boundaries because
  * some Android voices stop abruptly after a few hundred characters.
  */
+function pickPreferredVoice(): SpeechSynthesisVoice | null {
+  if (!speechSupported()) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  const score = (v: SpeechSynthesisVoice) => {
+    const name = `${v.name} ${v.voiceURI}`.toLowerCase();
+    const lang = (v.lang || '').toLowerCase();
+    let s = 0;
+    if (/en-gh|en_ng|en-gb|en-us|en-za|en-au|en/.test(lang)) s += 2;
+    if (/female|woman|girl|zira|susan|samantha|victoria|karen|serena|libby|sonia|aria|jenny|michelle|hazel|google uk english female/.test(name)) s += 5;
+    if (/natural|neural|premium|enhanced/.test(name)) s += 2;
+    if (/male|david|mark|george|james|daniel/.test(name)) s -= 4;
+    return s;
+  };
+  return [...voices].sort((a, b) => score(b) - score(a))[0] || null;
+}
+
 export function speak(text: string, options: { rate?: number; onEnd?: () => void } = {}): void {
   if (!speechSupported()) return;
   const clean = cleanForSpeech(text);
   if (!clean) return;
 
-  window.speechSynthesis.cancel();
-  const sentences = clean.split(/(?<=[.!?])\s+/);
-  const chunks: string[] = [];
-  let current = '';
-  for (const sentence of sentences) {
-    if ((current + ' ' + sentence).trim().length > 220 && current) {
-      chunks.push(current.trim());
-      current = sentence;
-    } else {
-      current = `${current} ${sentence}`;
+  const doSpeak = () => {
+    window.speechSynthesis.cancel();
+    const voice = pickPreferredVoice();
+    const sentences = clean.split(/(?<=[.!?])\s+/);
+    const chunks: string[] = [];
+    let current = '';
+    for (const sentence of sentences) {
+      if ((current + ' ' + sentence).trim().length > 220 && current) {
+        chunks.push(current.trim());
+        current = sentence;
+      } else {
+        current = `${current} ${sentence}`;
+      }
     }
-  }
-  if (current.trim()) chunks.push(current.trim());
+    if (current.trim()) chunks.push(current.trim());
 
-  chunks.forEach((chunk, index) => {
-    const utterance = new SpeechSynthesisUtterance(chunk);
-    utterance.lang = 'en-GB';
-    utterance.rate = options.rate ?? 0.96;
-    utterance.pitch = 1;
-    if (index === chunks.length - 1) utterance.onend = () => options.onEnd?.();
-    window.speechSynthesis.speak(utterance);
-  });
+    chunks.forEach((chunk, index) => {
+      const utterance = new SpeechSynthesisUtterance(chunk);
+      if (voice) {
+        utterance.voice = voice;
+        utterance.lang = voice.lang || 'en-GB';
+      } else {
+        utterance.lang = 'en-GB';
+      }
+      utterance.rate = options.rate ?? 0.95;
+      utterance.pitch = 1.05;
+      if (index === chunks.length - 1) utterance.onend = () => options.onEnd?.();
+      window.speechSynthesis.speak(utterance);
+    });
+  };
+
+  // Voices may load asynchronously on some browsers/devices.
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) {
+    doSpeak();
+  } else {
+    let done = false;
+    const handler = () => {
+      if (done) return;
+      done = true;
+      window.speechSynthesis.removeEventListener?.('voiceschanged', handler as any);
+      doSpeak();
+    };
+    window.speechSynthesis.addEventListener?.('voiceschanged', handler as any);
+    window.setTimeout(() => { if (!done) { done = true; doSpeak(); } }, 400);
+  }
 }
 
 export function stopSpeaking(): void {

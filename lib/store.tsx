@@ -26,7 +26,7 @@ export function createDefaultState(): AppState {
   return {
     version: 1,
     profile: {
-      name: 'Jacob',
+      name: 'Angel',
       examDate: '2027-05-03',
       examDateIsProvisional: true,
       onboarded: false,

@@ -81,8 +81,26 @@ export default function DashboardPage() {
               className="mt-3 max-w-xl font-display text-[1.12rem] italic leading-relaxed text-soft sm:text-[1.3rem]"
               suppressHydrationWarning
             >
-              â€œ{affirmationFor(isoDay())}â€
+              “{affirmationFor(isoDay())}”
             </p>
+
+            <div className="mt-5 max-w-2xl rounded-2xl border border-line bg-[var(--bg-elev)]/80 p-4 sm:p-5">
+              <p className="eyebrow">A word for your journey</p>
+              <h2 className="mt-1 font-display text-xl font-semibold text-ink sm:text-2xl">Study with hope, purpose, and possibility</h2>
+              <p className="mt-2 text-[0.9rem] leading-relaxed text-soft">
+                Your effort matters, Angel. Every page you read, every question you attempt, and every small step you take is building your future. Keep going with faith and steady work — progress is possible.
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <blockquote className="rounded-xl bg-[var(--leaf-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink">
+                  <p className="font-semibold">Jeremiah 29:11–13 (KJV)</p>
+                  <p className="mt-1.5">“For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end. Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you. And ye shall seek me, and find me, when ye shall search for me with all your heart.”</p>
+                </blockquote>
+                <blockquote className="rounded-xl bg-[var(--gold-soft)] p-3.5 text-[0.86rem] leading-relaxed text-ink">
+                  <p className="font-semibold">Yeremia 29:11–13 (Dangme)</p>
+                  <p className="mt-1.5">“[11] Yi mi nɛ i to ngɛ nyɛ he ɔ, imi nɔ kake too pɛ lɛ i le; i to nɛ ma ha nɛ nyɛ he mi nɛ jɔ nyɛ, se pi kaa ma hao nyɛ. Ní kpakpahi nɛ nyɛ ngɛ blɔ hyɛe ɔ, i to nɛ ma ha nyɛ. [12] Jamɛ a be ɔ, ke nyɛ tsɛ mi nɛ nyɛ fa kue ha mi ɔ, ma bu nyɛ tue. [13] Nyɛ ma hla ye se blɔ, nɛ nyɛ maa na mi. Ke nyɛ ngɔ nyɛ tsui tsuo kɛ hla ye se blɔ ɔ,”</p>
+                </blockquote>
+              </div>
+            </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-2.5">
               <Link href={focusPath} className="btn btn-primary btn-lg">
@@ -122,7 +140,7 @@ export default function DashboardPage() {
             <div className="glass rounded-2xl p-4">
               <p className="eyebrow !text-[0.58rem]">Exam countdown</p>
               <p className="tabular mt-1 font-display text-4xl font-semibold leading-none text-ink">
-                {mounted ? daysLeft : 'â€”'}
+                {mounted ? daysLeft : '—'}
               </p>
               <p className="mt-1 text-[0.7rem] font-semibold text-muted">days to your paper</p>
               <p className="mt-2 truncate text-[0.68rem] text-muted">{prettyDate(state.profile.examDate)}</p>
@@ -208,7 +226,7 @@ export default function DashboardPage() {
               <div className="ai-wash border-b border-line px-5 py-4">
                 <p className="eyebrow">A sensible next step</p>
                 <h2 id="focus-heading" className="mt-1 font-display text-xl font-semibold">
-                  Todayâ€™s focus
+                  Today’s focus
                 </h2>
               </div>
               <div className="p-5">
@@ -324,7 +342,7 @@ export default function DashboardPage() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <h2 id="offline-heading" className="font-display text-lg font-semibold leading-tight">
-                    {installed ? 'Installed â€” ready for offline study' : 'Take her with you on your phone'}
+                    {installed ? 'Installed — ready for offline study' : 'Take her with you on your phone'}
                   </h2>
                   <p className="mt-1 text-[0.78rem] leading-relaxed text-muted">
                     {installed
@@ -373,7 +391,7 @@ export default function DashboardPage() {
       </div>
 
       <p className="mt-8 text-center text-[0.7rem] text-muted">
-        {hydrated ? 'Your progress is stored on this device.' : 'Loading your saved progressâ€¦'} Â·{' '}
+        {hydrated ? 'Your progress is stored on this device.' : 'Loading your saved progress…'} ·{' '}
         <Link href="/settings/" className="font-semibold text-leaf hover:underline">
           Settings
         </Link>

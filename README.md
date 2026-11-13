@@ -8,7 +8,7 @@ It is designed for a private candidate resitting:
 - **Management in Living** (priority 2)
 - **Core Mathematics** (priority 3)
 
-The app keeps progress on the learnerâ€™s device, works after installation/offline save where supported, and includes lessons, practice, past-paper viewing, literature/orals support, games, wellbeing/journal tools, and a Socratic tutor (â€œJacobâ€).
+The app keeps progress on the learner’s device, works after installation/offline save where supported, and includes lessons, practice, past-paper viewing, literature/orals support, games, wellbeing/journal tools, and a Socratic tutor (“Jacob”).
 
 > **Not an official WAEC product.** Use it as a study companion alongside your school, syllabus, and official WAEC information.
 
@@ -21,7 +21,7 @@ The app keeps progress on the learnerâ€™s device, works after installation/
 - **Games:** Word Match, Comprehension Dash, Number Quest, Budget Balance, Flashcard Duel.
 - **Progress & wellbeing:** readiness/analytics, mood trail, weekly journal with local insight generation, breathing reset, burnout/long-study reminders (in-app, configurable).
 - **Jacob tutor:** floating chat on pages, Socratic-first prompting, context-aware help, optional voice input/output (Web Speech API, feature-detected), offline fallback replies, configurable OpenAI/Anthropic/Gemini provider or proxy.
-- **PWA/offline:** install prompt support (`beforeinstallprompt` where available), manifest/icons, service-worker app-shell precache (production build), per-subject â€œSave offlineâ€ download flow, offline page/fallback behavior.
+- **PWA/offline:** install prompt support (`beforeinstallprompt` where available), manifest/icons, service-worker app-shell precache (production build), per-subject “Save offline” download flow, offline page/fallback behavior.
 - **Accessibility & UX:** mobile-first layout, dark/light/system theme, reduced-motion support, WCAG-conscious contrast and focus styles, warm empathetic tone.
 
 ## Tech stack
@@ -111,7 +111,7 @@ py -3 -m http.server 8765 --directory out
   - Uses network-first for navigations with cache/offline fallback
   - Uses cache-first for static assets
   - PDFs/downloads can be served from cache when saved; otherwise unavailable offline
-- **Per-subject â€œSave offlineâ€:** stores subject routes/pages and available paper assets in a named Cache Storage bucket (see `lib/offline.ts`, cache name `auntie-angel-downloads-v1`)
+- **Per-subject “Save offline”:** stores subject routes/pages and available paper assets in a named Cache Storage bucket (see `lib/offline.ts`, cache name `auntie-angel-downloads-v1`)
 - **Important:** static export means no server runtime. Installability/offline support depends on HTTPS (or localhost) and browser support.
 
 ## Jacob (AI tutor) configuration
@@ -122,7 +122,7 @@ Jacob is **Socratic-first**: it asks/hints/scaffolds before giving full answers.
 
 - **Online when connected (if configured):** when the device is online and a provider key/proxy is set, Jacob uses the live AI for fuller, context-aware help.
 - **Offline fallback (always available):** when offline, or if the live service cannot be reached, Jacob uses the on-device guide so study can continue.
-- **Direct provider call (optional):** learner can add/select a provider and key in **Settings â†’ Jacobâ€™s AI**. Supported providers include Groq, OpenRouter, DeepSeek, OpenAI, Anthropic, and Google Gemini. Keys/settings are stored in that browserâ€™s local storage.
+- **Direct provider call (optional):** learner can add/select a provider and key in **Settings â†’ Jacob’s AI**. Supported providers include Groq, OpenRouter, DeepSeek, OpenAI, Anthropic, and Google Gemini. Keys/settings are stored in that browser’s local storage.
 - **Proxy mode (recommended for shared/public use):** set a proxy URL in Settings; if provided, the app sends requests to the proxy instead of calling providers directly.
 - **Personal build convenience:** for this local/personal app, keys present in `.env`/`.env.local` (e.g. `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `DEEPSEEK_API_KEY` or `NEXT_PUBLIC_*` equivalents) can be embedded at build time via `next.config.mjs` to preconfigure the tutor. Do not use embedded keys in a public/shared deployment.
 
@@ -156,7 +156,7 @@ The proxy should return:
 - Past-paper/practice content in this project is derived from WAEC materials and examiner-report sources present in this repository, or clearly presented as original practice where applicable.
 - Explanations are paraphrased/simplified for learning; **do not treat the app as an answer key authority**. When a source scan is unclear/damaged, uncertain items should be flagged for checking rather than stated as certain.
 - **Management in Living:** this repo currently contains a timetable in `Management in Living/WASSCE/`, not a WASSCE past question paper. MIL practice in the app is presented accordingly (original/practice content), not as a past paper.
-- **Literature cycle caveat:** literature notes are aligned to the **Ghana core English 2022â€“2026** set-text cycle as represented in project content. **Private candidates and anyone sitting in a later/new exam year must confirm the current/active WAEC set-text list for their paper with their school or [ghanawaec.org](https://ghanawaec.org/)** before relying on it for exam preparation. Use the in-app filters to focus on the texts confirmed for your exam.
+- **Literature cycle caveat:** literature notes are aligned to the **Ghana core English 2022–2026** set-text cycle as represented in project content. **Private candidates and anyone sitting in a later/new exam year must confirm the current/active WAEC set-text list for their paper with their school or [ghanawaec.org](https://ghanawaec.org/)** before relying on it for exam preparation. Use the in-app filters to focus on the texts confirmed for your exam.
 
 ## Deployment
 
