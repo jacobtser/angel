@@ -139,7 +139,7 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
                   height={5}
                 />
                 <p className="mt-1 text-[0.68rem] text-muted">
-                  Saving {download.done} of {download.total} filesâ€¦
+                  Saving {download.done} of {download.total} files…
                 </p>
               </div>
             )}
@@ -269,7 +269,7 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
                 <span className="min-w-0 flex-1">
                   <span className="block font-display text-lg font-semibold">Oral English</span>
                   <span className="mt-0.5 block text-[0.76rem] leading-relaxed text-muted">
-                    Vowels, consonants, stress and intonation â€” read aloud, then answer.
+                    Vowels, consonants, stress and intonation — read aloud, then answer.
                   </span>
                 </span>
                 <Icon name="arrow-right" size={16} className="shrink-0 text-muted group-hover:text-leaf" />
@@ -310,7 +310,7 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
                   <div className="flex items-center justify-between text-[0.78rem]">
                     <span className="font-semibold text-ink">{part.label}</span>
                     <span className="tabular font-semibold text-muted">
-                      {part.value === null ? 'â€”' : `${part.value}%`}
+                      {part.value === null ? '—' : `${part.value}%`}
                     </span>
                   </div>
                   <ProgressBar
@@ -357,7 +357,7 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
                 {subjectId === 'management' && (
                   <p className="mt-3 rounded-xl bg-[var(--gold-soft)] p-3 text-[0.72rem] leading-relaxed text-[var(--gold-ink)]">
                     This vault contains the WAEC timetable, not a Management in Living question paper.
-                    The MIL practice here is original and clearly labelled â€” it is not presented as a past
+                    The MIL practice here is original and clearly labelled — it is not presented as a past
                     paper.
                   </p>
                 )}

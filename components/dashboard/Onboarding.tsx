@@ -45,7 +45,7 @@ export function Onboarding() {
       footer={
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
           <button type="button" className="btn btn-ghost" onClick={() => setDismissed(true)}>
-            Iâ€™ll do this later
+            I’ll do this later
           </button>
           <button type="button" className="btn btn-primary" onClick={save}>
             Begin
@@ -87,7 +87,7 @@ export function Onboarding() {
               onChange={(event) => setProvisional(event.target.checked)}
               className="mt-0.5 h-4 w-4 accent-[var(--leaf)]"
             />
-            This date is provisional â€” Iâ€™ll confirm it when WAEC publishes the timetable.
+            This date is provisional — I’ll confirm it when WAEC publishes the timetable.
           </label>
         </div>
 
@@ -122,7 +122,7 @@ export function Onboarding() {
             Private by design
           </p>
           <p className="mt-1">
-            Progress is stored in this browser. If you clear site data, it is gone â€” export a backup from
+            Progress is stored in this browser. If you clear site data, it is gone — export a backup from
             Settings if this device is shared.
           </p>
         </div>
