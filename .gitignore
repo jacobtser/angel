@@ -1,0 +1,38 @@
+﻿# Dependencies & build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment / secrets
+.env
+.env.local
+.env*.local
+
+# OS/editor
+.DS_Store
+Thumbs.db
+
+# Personal/sensitive documents (do not publish)
+2025 Results.pdf
+2026 Results.pdf
+Results.txt
+Angel's WACCE INVOICE.pdf
+Auntie Angel UEW Forms.pdf
+COLLECTION_SUMMARY.txt
+DOWNLOAD_SUMMARY.txt
+
+# Large local source/reference media (not needed for app deploy)
+*.en.vtt
+*.en-orig.vtt
+umbele_act*.txt
+
+# Dev artifacts / legacy
+.verify/
+_fix_names.py
+_gen_logo.py
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/

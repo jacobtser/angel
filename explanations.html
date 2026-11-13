@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Detailed Explanations — Kabete YC Smart Exam Hub</title>
+<meta name="description" content="Step-by-step AI-driven explanations for Kabete YC past examination questions." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+      </span>
+      <span class="brand-text">Kabete&nbsp;YC <strong>Smart Exam Hub</strong></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#subjects">Subjects</a>
+      <a href="guides.html?subject=mathematics">Study guide</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a class="btn btn-primary btn-sm" href="index.html#subjects">Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<main class="explain-page">
+  <div class="container">
+
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> <span>/</span> <a href="index.html#subjects">Subjects</a> <span>/</span> <span id="crumb-subject">Explanations</span>
+    </nav>
+
+    <header class="explain-head">
+      <p class="eyebrow">AI-powered breakdown</p>
+      <h1 id="paper-title">Detailed Explanations</h1>
+      <p class="lede" id="paper-sub">Question-by-question walkthroughs for the selected subject.</p>
+      <div class="explain-actions">
+        <a class="btn btn-outline" id="download-link" href="#">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+          Download Original PDF Paper
+        </a>
+        <a class="btn btn-ghost" href="index.html#subjects">&larr; All subjects</a>
+      </div>
+    </header>
+
+    <div id="question-list" class="question-list" aria-live="polite"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p><strong>Kabete YC Smart Exam Hub</strong> — past papers &amp; AI-powered explanations.</p>
+    <p class="muted">&copy; <span id="year"></span> Kabete Youth Centre.</p>
+  </div>
+</footer>
+
+<script src="js/explanations.js"></script>
+</body>
+</html>

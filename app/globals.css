@@ -1,0 +1,610 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Auntie Angel — design tokens
+   A warm, editorial palette: sunlit paper, deep forest ink, and a
+   single marigold accent. Dark mode is a quiet night studio, not a
+   neon dashboard.
+------------------------------------------------------------------- */
+
+:root {
+  --bg: #fbf7f0;
+  --bg-elev: #fffdf9;
+  --bg-sunk: #f3ecdf;
+  --bg-deep: #18241f;
+  --ink: #18241f;
+  --ink-soft: #3d4f46;
+  --muted: #5d6d64;
+  --line: rgba(24, 36, 31, 0.12);
+  --line-strong: rgba(24, 36, 31, 0.22);
+  --leaf: #1f6b56;
+  --leaf-strong: #164d3e;
+  --leaf-soft: #e2f0e9;
+  --gold: #b97a24;
+  --gold-ink: #7c4d0c;
+  --gold-soft: #f8ecd5;
+  --rose: #a84a45;
+  --rose-soft: #f7e4e1;
+  --plum: #6a4b7c;
+  --plum-soft: #efe6f4;
+  --sky: #2f6f8f;
+  --sky-soft: #e2eef3;
+  --danger: #9e3630;
+  --success: #1f6b56;
+  --ring: rgba(31, 107, 86, 0.28);
+  --shadow-color: 24 36 31;
+
+  --radius-card: 1.5rem;
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.dark {
+  --bg: #0f1714;
+  --bg-elev: #16201c;
+  --bg-sunk: #0b1210;
+  --bg-deep: #070d0b;
+  --ink: #f7f1e6;
+  --ink-soft: #d5ded7;
+  --muted: #a3b0a8;
+  --line: rgba(247, 241, 230, 0.13);
+  --line-strong: rgba(247, 241, 230, 0.24);
+  --leaf: #7ccdaf;
+  --leaf-strong: #a3e2ca;
+  --leaf-soft: rgba(124, 205, 175, 0.13);
+  --gold: #e6b15e;
+  --gold-ink: #f0c987;
+  --gold-soft: rgba(230, 177, 94, 0.13);
+  --rose: #e6a29b;
+  --rose-soft: rgba(230, 162, 155, 0.13);
+  --plum: #c8abd8;
+  --plum-soft: rgba(200, 171, 216, 0.13);
+  --sky: #93c8de;
+  --sky-soft: rgba(147, 200, 222, 0.13);
+  --danger: #f0a29b;
+  --success: #7ccdaf;
+  --ring: rgba(124, 205, 175, 0.3);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+/* A barely-there paper grain. It keeps large cream areas from feeling flat. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+}
+
+.dark body::before {
+  opacity: 0.32;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--leaf);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------------------
+   Typography
+------------------------------------------------------------------- */
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.025em;
+}
+
+.display-xl {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+}
+
+.display-lg {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.display-md {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prose-angel {
+  font-size: 1.0125rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.prose-angel strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.prose-angel a {
+  color: var(--leaf);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------
+   Surfaces
+------------------------------------------------------------------- */
+
+.surface {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1px 2px rgb(var(--shadow-color) / 0.04),
+    0 18px 40px -30px rgb(var(--shadow-color) / 0.35);
+}
+
+.surface-sunk {
+  background: var(--bg-sunk);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--bg-elev) 78%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--line);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 20, 0.72);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(247, 241, 230, 0.14);
+}
+
+.hairline {
+  border-top: 1px solid var(--line);
+}
+
+.hero-wash {
+  background:
+    radial-gradient(1100px 480px at 12% -10%, rgba(238, 193, 120, 0.34), transparent 62%),
+    radial-gradient(900px 420px at 92% 0%, rgba(31, 107, 86, 0.16), transparent 58%),
+    linear-gradient(180deg, var(--bg-sunk), var(--bg) 78%);
+}
+
+.dark .hero-wash {
+  background:
+    radial-gradient(1100px 480px at 12% -10%, rgba(185, 122, 36, 0.16), transparent 62%),
+    radial-gradient(900px 420px at 92% 0%, rgba(124, 205, 175, 0.12), transparent 58%),
+    linear-gradient(180deg, #0c1411, var(--bg) 78%);
+}
+
+.ai-wash {
+  background:
+    radial-gradient(600px 260px at 16% 0%, rgba(106, 75, 124, 0.14), transparent 70%),
+    radial-gradient(500px 240px at 90% 100%, rgba(47, 111, 143, 0.12), transparent 70%),
+    var(--bg-elev);
+}
+
+.aurora {
+  position: absolute;
+  inset: -30% -10% auto;
+  height: 520px;
+  pointer-events: none;
+  filter: blur(60px);
+  opacity: 0.55;
+  background:
+    radial-gradient(closest-side, rgba(232, 178, 94, 0.5), transparent),
+    radial-gradient(closest-side, rgba(124, 205, 175, 0.4), transparent);
+  background-position: 20% 30%, 78% 20%;
+  background-size: 46% 70%, 38% 60%;
+  background-repeat: no-repeat;
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+/* ------------------------------------------------------------------
+   Buttons, chips, inputs
+------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 0.925rem;
+  line-height: 1;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-primary {
+  background: var(--leaf);
+  color: #fffdf9;
+  box-shadow: 0 10px 24px -14px rgba(31, 107, 86, 0.9);
+}
+
+.btn-primary:hover {
+  background: var(--leaf-strong);
+}
+
+.dark .btn-primary {
+  background: #2e8b72;
+  color: #08110d;
+}
+
+.dark .btn-primary:hover {
+  background: #3ba585;
+}
+
+.btn-secondary {
+  background: var(--bg-elev);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.btn-secondary:hover {
+  border-color: var(--leaf);
+  color: var(--leaf);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-sunk);
+  color: var(--ink);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #21160a;
+}
+
+.btn-gold:hover {
+  filter: brightness(1.06);
+}
+
+.btn-ai {
+  background: linear-gradient(120deg, #5b3f6e, #2f6f8f);
+  color: #fffdf9;
+  box-shadow: 0 12px 30px -18px rgba(106, 75, 124, 0.9);
+}
+
+.btn-ai:hover {
+  filter: brightness(1.08);
+}
+
+.btn-sm {
+  min-height: 2.25rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.825rem;
+}
+
+.btn-lg {
+  min-height: 3.25rem;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 0.28rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  background: var(--bg-elev);
+}
+
+.chip-leaf {
+  background: var(--leaf-soft);
+  border-color: transparent;
+  color: var(--leaf);
+}
+
+.dark .chip-leaf {
+  color: var(--leaf);
+}
+
+.chip-gold {
+  background: var(--gold-soft);
+  border-color: transparent;
+  color: var(--gold-ink);
+}
+
+.chip-rose {
+  background: var(--rose-soft);
+  border-color: transparent;
+  color: var(--rose);
+}
+
+.chip-plum {
+  background: var(--plum-soft);
+  border-color: transparent;
+  color: var(--plum);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--ink);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.925rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+}
+
+/* ------------------------------------------------------------------
+   Small illustrative details
+------------------------------------------------------------------- */
+
+.rule-hand {
+  height: 7px;
+  width: 72px;
+  border-radius: 999px;
+  background: var(--gold);
+  opacity: 0.85;
+  transform: rotate(-1.2deg);
+}
+
+.tick {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: var(--leaf-soft);
+  color: var(--leaf);
+  flex: none;
+}
+
+.dot-grid {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.subject-english {
+  --subject: var(--rose);
+  --subject-soft: var(--rose-soft);
+}
+.subject-mathematics {
+  --subject: var(--sky);
+  --subject-soft: var(--sky-soft);
+}
+.subject-management {
+  --subject: var(--gold-ink);
+  --subject-soft: var(--gold-soft);
+}
+.dark .subject-management {
+  --subject: var(--gold);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Motion — every animation is muted for reduced-motion users
+------------------------------------------------------------------- */
+
+@keyframes drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(3%, 2%, 0) scale(1.08);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 var(--ring);
+  }
+  70% {
+    box-shadow: 0 0 0 12px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(85vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-sunk) 25%,
+    var(--bg-elev) 50%,
+    var(--bg-sunk) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora {
+    animation: none;
+  }
+}
+
+/* The same agreement, but chosen inside the app rather than in the OS. */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduce-motion .aurora {
+  animation: none;
+}
+
+/* Print-friendly lesson pages (she may want a paper copy). */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+  .surface {
+    box-shadow: none;
+    border-color: #ccc;
+    break-inside: avoid;
+  }
+}

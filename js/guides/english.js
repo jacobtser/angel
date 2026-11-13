@@ -1,0 +1,873 @@
+/* English Language (WASSCE)
+   Sources:
+   - Exam structure: ENGLISH-LANGUAGE.pdf (WAEC syllabus, in this folder)
+   - Questions & options: waec-2012-english.pdf (Paper 1 objective, 100 items)
+   Answers are worked out from the paper itself; no answer key exists in the PDF.
+   Items marked flag:true are ones where the scanned text layer is damaged. */
+
+window.GUIDES = window.GUIDES || {};
+window.GUIDES.english = {
+  label: 'English Language',
+  summary: 'Every question in every English paper in this folder — 425 answered items across four years, plus the essay plans, comprehension and summary models.',
+  pdf: 'English%20Language/WASSCE/waec-2012-english.pdf',
+  format: [
+    { label: 'Paper 1', detail: '80 objective questions · 1 hour · 40 marks' },
+    { label: 'Paper 2', detail: '1 essay from 5 + comprehension + summary · 2 hours · 100 marks' },
+    { label: 'Paper 3', detail: '60 oral/listening items · 45 minutes · 30 marks' },
+    { label: 'Paper 1 split', detail: '40 lexis + 40 structure (Ghana: 30 lexis, 20 structure, 30 literature)' }
+  ],
+  paperNote: 'WASSCE May/June 2012, Paper 1 (Objective). All 100 items are answered below. Some options are damaged in the scan — those items are marked "check".',
+  topics: [
+    {
+      name: 'Lexis — Synonyms and Antonyms',
+      concept: 'Choosing the word closest in meaning, or most nearly opposite, to a target word in context.',
+      points: [
+        'Read the whole sentence first — context fixes the meaning of the word.',
+        'Test each option by substituting it back into the sentence.',
+        'For antonyms, the blank sentence often signals contrast: "while", "but", "unlike", "than".',
+        'Watch near-misses: "incredible" (unbelievable) vs "incredulous" (disbelieving).'
+      ]
+    },
+    {
+      name: 'Idioms and Figurative Language',
+      concept: 'Expressions whose meaning cannot be built from the individual words.',
+      points: [
+        'at loggerheads = in disagreement',
+        'beat about the bush = avoid the point',
+        'a snake in the grass = a deceitful person',
+        'yellow journalism = sensational, unscrupulous reporting',
+        'give an inch and take a mile = exploit any concession',
+        'second to none = the best',
+        'Never translate an idiom literally — that is exactly what distractor options do.'
+      ]
+    },
+    {
+      name: 'Structure — Verbs and Tense',
+      concept: 'Concord, tense sequence, conditionals, and verb patterns after certain words.',
+      points: [
+        'Subject–verb agreement: "the number of …" takes a singular verb.',
+        'After "dare not", "had better", "would rather" use the bare infinitive.',
+        'Third conditional: "If he had won …, he would have become …".',
+        'After prepositions and "refuse", "agree", "strive" use the to-infinitive where required.',
+        '"did not" is always followed by the base form: "did not witness".'
+      ]
+    },
+    {
+      name: 'Structure — Connectors and Prepositions',
+      concept: 'Choosing the linker or preposition that matches the logical relationship.',
+      points: [
+        'Contrast: although, even though, in spite of ( + noun/-ing), however.',
+        'Result: consequently, therefore, so … that.',
+        'Recover FROM an illness; accused OF stealing; interested IN; quick TO understand.',
+        'Question tags mirror the auxiliary and flip the polarity: "You are …, aren\'t you?".'
+      ]
+    },
+    {
+      name: 'Structure — Pronouns, Determiners, Comparatives',
+      concept: 'Reflexive pronouns, quantifiers, and correct comparison forms.',
+      points: [
+        'Reflexive: myself, yourself, himself, themselves (never "theirselves").',
+        '"whichever" for a free choice among things; "whoever" for people.',
+        'Comparing two things: comparative ("more beautiful"), not superlative.',
+        '"such a fast typist that …" / "so … that …".'
+      ]
+    },
+    {
+      name: 'Cloze / Gap Fill',
+      concept: 'Choosing the word that fits both the meaning and the grammar of a travel narrative.',
+      points: [
+        'Read the whole passage once before filling any gap.',
+        'Use the surrounding grammar to narrow options (a/an, prepositions, verb form).',
+        'Travel vocabulary: passport, visa, embassy, travel agency, boarding pass, departure desk, stop-over.',
+        'Check the sentence reads naturally after substitution.'
+      ]
+    },
+    {
+      name: 'Essay Writing (Paper 2)',
+      concept: 'One essay from a choice: letter, article, description, or narrative.',
+      points: [
+        'Formal letter: two addresses, date, salutation, body paragraphs, "Yours faithfully".',
+        'Article: title, byline, introduction, developed paragraphs, conclusion.',
+        'Description: sensory detail and ordered movement through the scene.',
+        'Narrative: clear plot, consistent tense, and a closing line that ties to the title.',
+        'Plan for 2–3 minutes; examiners reward organised paragraphing.'
+      ]
+    },
+    {
+      name: 'Comprehension and Summary (Paper 2)',
+      concept: 'Extracting stated and implied meaning, and condensing a passage.',
+      points: [
+        'Answer in your own words unless asked to quote.',
+        'Match the number of points to the marks available.',
+        'For "give the meaning as used", paraphrase — do not define out of context.',
+        'Summary: use only the relevant sentences, join in continuous prose, and stay within the word limit.'
+      ]
+    },
+    {
+      name: 'Prose — Set Texts',
+      concept: 'Answering extract-based questions on the prescribed novels and short stories.',
+      points: [
+        'Identify the speaker, the addressee and the situation before anything else — most extract questions turn on these.',
+        'Match the quotation to the moment in the plot; a line that could come from two places is usually testing exactly that.',
+        'Know the difference between what a character says and what the author implies.',
+        'For "the figure of speech", name the device first, then explain the effect in the context of the extract.',
+        'Learn each major character\'s defining trait plus one quotation that proves it.'
+      ]
+    },
+    {
+      name: 'Drama — Set Texts',
+      concept: 'Reading a play as action and conflict, not as a novel.',
+      points: [
+        'Track who is on stage in each scene — extract questions often ask "one other character present".',
+        'Protagonist and antagonist: know who wants what, and who blocks it.',
+        'Dramatic irony depends on what the audience knows and the character does not.',
+        'Stage directions and props carry meaning; note them when quoting.',
+        'For a play, the speaker\'s tone matters as much as the words — sarcasm and mockery are common answers.'
+      ]
+    },
+    {
+      name: 'Poetry and Literary Devices',
+      concept: 'Recognising form, device and theme quickly under exam pressure.',
+      points: [
+        'Alliteration: repeated initial consonant sounds — "stuttering rifles\' rapid rattle".',
+        'Personification: human action given to a thing — "the surf roared".',
+        'Metaphor: direct comparison without like/as — "sleepy scarecrow".',
+        'Simile: comparison using like or as — "like the wind".',
+        'Paradox: apparent contradiction holding a truth — "except you enthrall me, never shall be free".',
+        'Antithesis: opposing ideas placed together — "magnanimous despair".',
+        'Symbolism: a concrete thing standing for an idea — the weaver bird for colonialism.',
+        'Theme questions: answer with a full statement ("time triumphs over all things"), not a single word.'
+      ]
+    }
+  ],
+  papers: [
+    {
+      name: 'WASSCE May/June 2012 — Paper 1 (Objective)',
+      note: 'All 100 objective items, answered. Items where the scan is damaged are marked "check".',
+      questions: [
+    // ---------- SECTION A: synonyms ----------
+    { n: '1', q: 'Marlu did atone for the loss of his brother\'s trousers by giving him a new watch.', a: 'B — make amends', why: '"Atone" means to make up for a wrong. The gift of a new watch is the compensation.' },
+    { n: '2', q: 'As he listened to my story his face remained inscrutable.', a: 'C — impossible to understand', why: 'Inscrutable describes a face that gives nothing away.' },
+    { n: '3', q: 'The director gave a very emotional speech at the graduation.', a: 'A — passionate', why: 'An emotional speech is charged with feeling; "passionate" is the closest synonym.' },
+    { n: '4', q: 'My father lives a humdrum life in the village.', a: 'C — monotonous', why: 'Humdrum means dull and repetitive.' },
+    { n: '5', q: 'There has always been considerable rift between the two parties.', a: 'A — discord', why: 'A rift is a serious disagreement.' },
+    { n: '6', q: 'Farnatta believed that the murder of her brother was premeditated.', a: 'B — planned', why: '"Premeditated" means thought out in advance.' },
+    { n: '7', q: 'The little rabbit in the grass looks timid.', a: 'A — shy', why: 'Timid means easily frightened; "shy" is the nearest option.' },
+    { n: '8', q: 'Karma\'s father jailed him for larceny.', a: 'D — stealing small items', why: 'Larceny is theft of personal property — not armed robbery.' },
+    { n: '9', q: 'There were several allegations made in the report against your client.', a: 'A — assertions', why: 'An allegation is a claim or assertion, usually unproven.' },
+    { n: '10', q: 'When the criminal case came up, the police were filled with apprehension.', a: 'B — fear', why: 'Apprehension here means anxious fear, not "arrest".', flag: true },
+    { n: '11', q: 'The food at Martha\'s restaurant is very palatable.', a: 'B — tasty', why: 'Palatable means pleasant to taste.' },
+    { n: '12', q: 'The report on the accident was said to be subjective.', a: 'D — full of the writer\'s personal feelings', why: 'Subjective = based on personal opinion rather than fact.' },
+
+    // ---------- SECTION B: antonyms ----------
+    { n: '13', q: 'The businessman says that most of his customers are creditworthy, but few are ____.', a: 'C — insolvent', why: 'Creditworthy (able to pay) contrasts with insolvent (unable to pay debts).' },
+    { n: '14', q: 'Her song was much more melancholy in tone while Miatta\'s was ____.', a: 'D — happier', why: 'The "while" signals contrast; melancholy means sad.' },
+    { n: '15', q: 'There are more peaceful people in our club than ____ ones.', a: 'C — dubious', why: 'The scanned word is damaged; "dubious" is the only option that can carry a negative contrast.', flag: true },
+    { n: '16', q: 'Four of the member countries accepted the report while one ____ it.', a: 'A — rejected', why: 'The opposite of accepted is rejected.' },
+    { n: '17', q: 'He does not know the difference between compliments and ____.', a: 'D — insults', why: 'A compliment praises; an insult wounds — direct opposites.' },
+    { n: '18', q: 'Private issues should not be discussed in the ____.', a: 'B — public', why: 'Private contrasts with public.' },
+    { n: '19', q: 'Bertha is indifferent about her school work but Korto is ____.', a: 'D — concerned', why: 'Indifferent (uninterested) contrasts with concerned.' },
+    { n: '20', q: 'The crowd assembled for the meeting but the police ____ them.', a: 'B — dispersed', why: 'Assembled (gathered) is reversed by dispersed (scattered).' },
+    { n: '21', q: 'Our discussion yesterday was much more inspiring unlike the past ones which were ____.', a: 'A — bland', why: 'Inspiring contrasts with bland (dull, unstimulating).' },
+    { n: '22', q: 'We inhale oxygen and ____ carbon dioxide.', a: 'B — exhale', why: 'Inhale breathes in; exhale breathes out.' },
+    { n: '23', q: 'English Language is compulsory but Literature is ____.', a: 'D — optional', why: 'Compulsory contrasts with optional.' },
+    { n: '24', q: 'In the absence of orderliness there is ____.', a: 'D — confusion', why: 'Orderliness contrasts with confusion/disorder.' },
+
+    // ---------- SECTION C: interpretation ----------
+    { n: '25', q: 'Kortuma and his family are always at loggerheads.', a: 'B — have disagreements', why: 'At loggerheads = in persistent conflict.' },
+    { n: '26', q: 'The judge admonished the witness not to beat about the bush.', a: 'D — to go straight to the point', why: 'Beating about the bush means avoiding the main issue.' },
+    { n: '27', q: 'The boy walked at a snail\'s pace.', a: 'A — slowly', why: 'A snail moves very slowly; the image transfers to the walking.' },
+    { n: '28', q: 'Academically, our science class is second to none in the community.', a: 'C — is the best', why: 'Second to none = nothing ranks above it.' },
+    { n: '29', q: 'The coordinator needs to throw more light on his recent statement.', a: 'B — explain his statement better', why: 'Shedding light on something means clarifying it.' },
+    { n: '30', q: 'My friend Amelia is a snake in the grass.', a: 'C — is deceitful', why: 'A hidden snake strikes unexpectedly — an image of concealed treachery.' },
+    { n: '31', q: 'Our union should not encourage yellow journalism.', a: 'D — sensational news', why: 'Yellow journalism = reporting that exaggerates for sensation.' },
+    { n: '32', q: 'If you give Alfred an inch he takes a mile.', a: 'D — takes advantage of situations', why: 'The idiom describes exploiting a small concession.' },
+    { n: '33', q: 'We had doubts about Etta\'s leadership but she rose up to the occasion.', a: 'A — proved her ability', why: 'Rising to the occasion means meeting a challenge successfully.' },
+    { n: '34', q: 'My grandmother\'s house ____ so we have to stay at a hotel until the painting is completed.', a: 'A — is being painted', why: 'Present continuous passive: the house is receiving the action now.' },
+    { n: '35', q: '"I hope that you ____ all that I have told you," the old man told the boy.', a: 'B — will remember', why: 'The hope concerns a future state, so the future tense is required.' },
+
+    // ---------- SECTION D: structure ----------
+    { n: '36', q: 'Students with good behaviour usually ____ well in their lessons.', a: 'D — do', why: 'The plural subject "students" takes the base form "do".' },
+    { n: '37', q: 'Of all the languages in the world, English is ____.', a: 'A — the most popular', why: 'Comparing more than two things requires the superlative.' },
+    { n: '38', q: 'After all the criticisms Henry dare not ____ any more mistakes.', a: 'C — make', why: '"Dare not" is followed by the bare infinitive.' },
+    { n: '39', q: 'You are going with your friend to the party, ____?', a: 'B — aren\'t you?', why: 'The tag mirrors "are" and reverses polarity.' },
+    { n: '40', q: 'I ____ my parents last Sunday but I went out of town.', a: 'C — should have visited', why: 'Expresses an unfulfilled obligation in the past.' },
+    { n: '41', q: 'Amelia left the party early, so she ____ the fight.', a: 'D — did not witness', why: '"Did not" takes the base form, not the past tense.' },
+    { n: '42', q: 'The striking workers refused ____ work today.', a: 'C — to begin', why: '"Refuse" is followed by the to-infinitive.' },
+    { n: '43', q: 'The culprits ____ to jail after the trial.', a: 'B — were sent', why: 'Plural subject + past passive: "were sent".' },
+    { n: '44', q: 'Most of the spectators ____ see the game.', a: 'C — could hardly', why: '"Hardly" is already negative; adding "not" creates a double negative.' },
+    { n: '45', q: 'Albertha was ____ that she was soon promoted.', a: 'D — such a fast typist', why: '"Such a + adjective + noun + that" is the correct pattern.' },
+    { n: '46', q: 'When we entered the hall, the concert ____.', a: 'D — had begun', why: 'Past perfect marks an action completed before another past action.' },
+    { n: '47', q: 'Having ____ a deal with the construction company, the manager was pleased.', a: 'C — struck', why: 'Perfect participle needs the past participle "struck".' },
+    { n: '48', q: 'Mr. Massaquoi\'s car did not start; ____ he was late for work today.', a: 'C — consequently', why: 'The second clause is a result of the first.' },
+    { n: '49', q: 'He accused the janitor ____ his book.', a: 'A — of stealing', why: 'The fixed pattern is "accuse somebody of (doing) something".' },
+    { n: '50', q: 'The number of malaria cases in the county ____ increasing.', a: 'B — has been', why: '"The number of" is singular, so it takes "has".' },
+    { n: '51', q: 'Uncle Samakai will go for a short training course before ____ his new job.', a: 'B — taking up', why: '"Take up a job" = begin it; the preposition "before" takes the -ing form.' },
+    { n: '52', q: 'Solomon completed the exercise, ____ he was sick.', a: 'A — even though', why: 'The clauses contrast, so a concessive connector is needed.' },
+    { n: '53', q: 'We worked hard during our final year, ____?', a: 'D — didn\'t we?', why: 'The statement is affirmative past, so the tag is negative past.' },
+    { n: '54', q: 'The patient is gradually recovering ____ his illness.', a: 'C — from', why: 'The fixed collocation is "recover from an illness".' },
+    { n: '55', q: 'If he ____ the election, he would have become a member of the legislature.', a: 'A — had won', why: 'Third conditional: "if + had + past participle … would have + past participle".' },
+    { n: '56', q: '"I ____ be able to go to the concert," she said uncertainly.', a: 'D — might', why: '"Uncertainly" points to possibility, not obligation or certainty.' },
+    { n: '57', q: '____ the long distance I ran, I never got tired.', a: 'D — In spite of', why: '"In spite of" takes a noun phrase ("the long distance"), matching the structure.' },
+    { n: '58', q: 'Which of the two cars is the ____?', a: 'B — more beautiful', why: 'Only two cars are compared, so the comparative is required.' },
+    { n: '59', q: 'I am not ____ in learning Chinese.', a: 'A — interested', why: '"Interested in" describes the person; "interesting" describes the thing.' },
+    { n: '60', q: 'Did anyone ____ to the principal about our project?', a: 'C — speak', why: 'After "did", the base form is used.' },
+    { n: '61', q: 'Many children in Liberia take care of ____.', a: 'D — themselves', why: '"Theirselves" is not a word; the correct reflexive is "themselves".' },
+    { n: '62', q: 'The audience described the president\'s message as ____.', a: 'C — very interesting', why: 'The message causes interest, so the -ing adjective is correct.' },
+    { n: '63', q: 'There are several courses offered and you may select ____ course you desire.', a: 'B — whichever', why: 'A free choice among things takes "whichever".' },
+    { n: '64', q: 'The hotel at the stadium is about ____.', a: 'D — three stories high', why: 'The standard measure phrase is "three stories high".' },
+    { n: '65', q: 'Because of some misunderstanding, the workers ____ strike action.', a: 'B — resorted to', why: 'The scan reads "resulted to", but the idiomatic verb is "resort to". Choose the past-tense "to"-form.', flag: true },
+    { n: '66', q: 'Miatta spends most of her time reading, writing letters and ____ to her friends on the phone.', a: 'D — talking', why: 'All items in the list must share the same -ing form.' },
+    { n: '67', q: 'All of my friends love to eat, dance and ____ funny jokes.', a: 'B — tell', why: 'The list follows "love to", so each verb is a bare infinitive.' },
+    { n: '68', q: 'The game was ____ enjoyable that they did not want to leave.', a: 'C — so', why: '"So + adjective + that" expresses result.' },
+    { n: '69', q: 'If she had not been smart, the thief ____ away with her money.', a: 'D — would have gotten', why: 'Third conditional result clause: "would have + past participle".' },
+    { n: '70', q: 'We saw the young man suddenly ____ from the truck.', a: 'B — fall', why: 'Verbs of perception ("saw") take the bare infinitive.' },
+    { n: '71', q: 'We need to write a letter and ____ the manager for his contribution.', a: 'A — thank', why: '"Need to write … and thank" keeps the bare infinitive after "to".' },
+    { n: '72', q: 'Liberian children should strive ____ their parents.', a: 'D — to emulate', why: '"Strive to + verb" is the correct pattern.' },
+    { n: '73', q: 'Mr. Jalebah led a ____ delegation to the Council meeting.', a: 'C — three-man', why: 'A compound adjective before a noun is singular: "a three-man delegation". The option duplicates "a"; the word itself is right.', flag: true },
+    { n: '74', q: 'Musa is intelligent; he is quick ____.', a: 'D — to understand', why: 'The adjective "quick" takes the to-infinitive.' },
+    { n: '75', q: 'Your suit is ____ mine.', a: 'D — more expensive than', why: 'Comparison between two items uses "more … than".' },
+    { n: '76', q: 'We should learn ____ kindly to one another.', a: 'B — to speak', why: '"Learn to + verb" is the required pattern.' },
+    { n: '77', q: 'Unauthorized persons ____ the gate during working hours.', a: 'C — dare not enter', why: '"Dare not" takes the bare infinitive and needs no auxiliary.' },
+    { n: '78', q: 'The supervisor of schools ____ our school before.', a: 'C — has never visited', why: '"Before" with "has" forms the present perfect, which fits the completed auxiliary in the stem.' },
+    { n: '79', q: 'I ____ in the track team next week.', a: 'A — will be running', why: 'Future continuous describes an activity in progress at a future time.' },
+    { n: '80', q: 'He had fever so he ____ in bed all day yesterday.', a: 'C — lay', why: 'The past tense of "lie" (to recline) is "lay".' },
+    { n: '81', q: 'The two parties in the dispute agreed ____.', a: 'D — to compromise', why: '"Agree to + verb" for accepting a proposal.' },
+    { n: '82', q: 'We have not seen the box ____.', a: 'C — in which we kept the golden key', why: 'The relative clause needs a preposition + which, and the golden key is what was kept.' },
+    { n: '83', q: 'Which of the following sentences is grammatically correct?', a: 'Options are illegible in the scan — check against your printed paper.', why: 'All four options are corrupted in the text layer.', flag: true },
+
+    // ---------- SECTION E: cloze ----------
+    { n: '84', q: '… obtained a ____ from the ____ office to enable him travel …', a: 'D — passport', why: 'A passport is the travel document that enables international travel.' },
+    { n: '85', q: '… from the ____ office …', a: 'A — Foreign Affairs', why: 'Among the options, a passport is issued through the Foreign Affairs/immigration office.' },
+    { n: '86', q: '… working at the American ____ helped him …', a: 'C — Embassy', why: 'The American Embassy is the natural institution.' },
+    { n: '87', q: '… to obtain a ____ for his trip.', a: 'D — visa', why: 'A visa is the entry permit attached to a passport.' },
+    { n: '88', q: 'He later ____ his ticket from a ____ …', a: 'C — purchased', why: 'Tickets are purchased; the past tense fits the narrative.' },
+    { n: '89', q: '… his ticket from a ____ …', a: 'C — travel agency', why: 'Travel agencies sell tickets.' },
+    { n: '90', q: '… and ____ his ____ for July 2011.', a: 'B — confirmed', why: 'One confirms a booking, not insures or assigns it.' },
+    { n: '91', q: '… and confirmed his ____ for July 2011.', a: 'C — flight', why: 'A flight is confirmed for a date.' },
+    { n: '92', q: 'I accompanied him to the airport and reported at the ____ …', a: 'C — departure desk', why: 'Passengers check in at the departure desk.' },
+    { n: '93', q: '… for the ____ formalities.', a: 'B — departure', why: 'Departure formalities precede boarding.' },
+    { n: '94', q: 'I watched the planes ____ and ____.', a: 'D — take off', why: 'Planes take off and land.' },
+    { n: '95', q: '… and ____.', a: 'B — land', why: 'The paired action to "take off" is "land".' },
+    { n: '96', q: 'After inspection of his passport and luggage he was issued a ____.', a: 'A — boarding pass', why: 'A boarding pass is issued after check-in.' },
+    { n: '97', q: 'I saw the plane ____ into space.', a: 'D — zooming', why: 'Zooming conveys rapid upward movement.' },
+    { n: '98', q: 'He had a smooth ____ to the USA.', a: 'B — flight', why: 'A journey by air is a flight.' },
+    { n: '99', q: 'His ____ took him to Accra …', a: 'C — route', why: 'A route is the path a journey follows.' },
+    { n: '100', q: '… where he ____ for three hours.', a: 'C — stop-over', why: 'A stop-over is a brief break in a longer journey.' }
+      ]
+    },
+    {
+      name: 'WASSCE May/June 2012 — Paper 2 (Essay, Comprehension, Summary)',
+      note: 'Essay questions have no single right answer, so these are model plans and full model answers for the comprehension and summary.',
+      questions: [
+        {
+          n: '6(1)',
+          q: 'According to the passage, what difference in reading speed does the author show between poor readers and highly educated readers?',
+          a: 'Highly educated adults vary their speed according to the material and their purpose in reading, whereas poor readers keep the same speed whatever they read.',
+          steps: [
+            'The passage opens by saying adults, even highly educated ones, "vary greatly in the speed and efficiency of their reading".',
+            'It then says some read slowly and others rush and must go back.',
+            'The key contrast is with "poor readers", who "may lack the ability to vary their manner of reading according to the type of reading matter".',
+            'So the difference is flexibility of speed, not simply fast versus slow.'
+          ],
+          tip: 'Answer the exact question asked. Saying "educated readers are faster" is wrong — the passage says they vary.'
+        },
+        {
+          n: '6(2)',
+          q: 'Why does the author think that proof-reading is very difficult for most people?',
+          a: 'Because people are accustomed to overlooking the exact shape and order of letters and words, which is precisely what proof-reading requires them to notice.',
+          steps: [
+            'Locate the sentence about proof-reading.',
+            'It says the reader must notice "not so much the meaning ... as the exact shape and order of letters and words".',
+            'It then gives the reason: "since they are accustomed to overlooking such details".',
+            'Join the two: the habit of reading for meaning makes close attention to form difficult.'
+          ],
+          tip: 'The answer is a cause, so begin with "Because …" and quote the causal clause.'
+        },
+        {
+          n: '6(3)',
+          q: 'What does the phrase "take in the whole of it" mean in the passage?',
+          a: 'To understand and absorb the entire content of the material.',
+          why: 'It is used of reading "more difficult material, with the intention of taking in the whole of it" — that is, grasping all of it, not skimming.'
+        },
+        {
+          n: '6(4a)',
+          q: 'Give the meaning of "regress" as used in the passage.',
+          a: 'Go back over what has already been read.',
+          why: 'Context: readers who "dash along too quickly and then have to regress" — they must return to an earlier point.'
+        },
+        {
+          n: '6(4b)',
+          q: 'Give the meaning of "skim" as used in the passage.',
+          a: 'Read very quickly to get only the general idea.',
+          why: 'Context: "He may be able to skim a page, pick up a word or two here and there, and gain a general idea".'
+        },
+        {
+          n: '6(4c)',
+          q: 'Give the meaning of "proof-reading" as used in the passage.',
+          a: 'Reading a text very slowly and carefully in order to detect misprints.',
+          why: 'The passage defines it as reading that "necessitates careful attention to detail" in order "to detect misprints in a sample print".'
+        },
+        {
+          n: '6(4d)',
+          q: 'Give the meaning of "misprint" as used in the passage.',
+          a: 'A printing error — a word or letter printed wrongly.',
+          why: 'Proof-reading exists to detect misprints, so the word names the error itself.'
+        },
+        {
+          n: '7(1)',
+          q: 'According to the passage, what is the purpose of advertising?',
+          a: 'To persuade people to buy the products that advertisers have for sale.',
+          why: 'The passage opens: "Advertisers have something to sell and they use a number of ways to persuade us to buy their products."'
+        },
+        {
+          n: '7(2)',
+          q: 'What aspect of human nature do advertisers use to persuade people to buy products?',
+          a: 'The feelings and fears common to nearly everyone — the need for security, popularity, health, success and attractiveness.',
+          why: 'The second paragraph lists exactly these: security, popularity, health, success and attractiveness.'
+        },
+        {
+          n: '7(3)',
+          q: 'Give an appropriate title for the passage.',
+          a: 'The Art of Advertising (accept: Advertising and Human Behaviour; How Advertisers Persuade Us).',
+          steps: [
+            'A title must cover the whole passage, not one paragraph.',
+            'The passage is about advertisers exploiting common emotions.',
+            'Keep it short — a phrase, not a sentence.',
+            'Do not simply copy the first line.'
+          ],
+          tip: 'Titles are usually noun phrases with no full stop.'
+        },
+        {
+          n: 'A1',
+          q: 'Letter: your pen pal abroad asks about recreation facilities in your country. Describe one facility that would interest him.',
+          a: 'Model plan for an informal letter of about 150 words.',
+          steps: [
+            'Address and date at the top right; salutation "Dear Kofi,".',
+            'Paragraph 1: acknowledge his letter and state why you are writing.',
+            'Paragraph 2: name the facility and say where it is (for example the national sports stadium).',
+            'Paragraph 3: describe what it offers — swimming pool, tennis courts, football pitch, gymnasium, restaurant.',
+            'Paragraph 4: explain why it would interest him — major matches, coaching sessions, chances to meet people.',
+            'Paragraph 5: practical details — opening hours, entry fee, how to get there.',
+            'Close with "Yours sincerely," and your first name.'
+          ],
+          tip: 'An informal letter still needs paragraphs. One solid paragraph per idea scores better than one block of text.'
+        },
+        {
+          n: 'A2',
+          q: 'Letter: as youth leader of your district, write to the district representative about major development needs and how he/she could assist.',
+          a: 'Model plan for a formal letter of about 150 words.',
+          steps: [
+            'Your address and date; the representative\'s official address below it.',
+            'Salutation "Dear Sir/Madam,"; a clear subject line.',
+            'Opening: state who you are and the body you represent.',
+            'Body: three numbered needs — for example feeder roads, a health centre, and a skills-training centre for the youth.',
+            'For each need, say briefly what it costs the community and what specific help you want.',
+            'Close by inviting a meeting; sign "Yours faithfully," with your full name.'
+          ],
+          tip: 'Formal letters use "Yours faithfully" with "Dear Sir/Madam". "Yours sincerely" belongs with a named recipient.'
+        },
+        {
+          n: 'B3',
+          q: 'Article for the school magazine: "The Importance of Good Appearance".',
+          a: 'Model plan for an essay of about 250 words.',
+          steps: [
+            'Title centred, then a byline (your name).',
+            'Introduction: define appearance as dress, grooming and bearing — not beauty.',
+            'Point 1: first impressions are formed in seconds and are hard to reverse.',
+            'Point 2: good appearance builds self-confidence and affects how you perform.',
+            'Point 3: it signals respect for others and for the occasion.',
+            'Point 4: it opens doors in interviews and public life.',
+            'Counterpoint: appearance is not character — warn against judging people by dress alone.',
+            'Conclusion: neatness is within everyone\'s reach, regardless of income.'
+          ],
+          tip: 'An article needs a title and byline. Marks are usually set aside for them.'
+        },
+        {
+          n: 'B4',
+          q: 'You witnessed a street demonstration in which people were injured and property damaged. Give a vivid description of the scene.',
+          a: 'Model plan for a descriptive essay of about 250 words.',
+          steps: [
+            'Open in the middle of the action, not with background — a description, not a story.',
+            'Use the senses: chanting and whistles (sound), tear gas (smell and sight), dust and heat (feel).',
+            'Move in a clear order — from the front of the crowd outward, or from beginning to aftermath.',
+            'Choose three or four sharp details rather than listing everything: a fallen banner, a shattered windscreen, a bleeding trader.',
+            'Use strong verbs and similes, but do not overdo the adjectives.',
+            'Close on a single striking image that fixes the mood.'
+          ],
+          tip: 'A description is judged on sensory detail and organisation, not on plot. Do not turn it into a story with a hero.'
+        },
+        {
+          n: 'B5',
+          q: 'Write an imaginary story which justifies the saying, "Hope is the last thing we lose."',
+          a: 'Model plan for a narrative essay of about 250 words.',
+          steps: [
+            'Establish a character with a clear goal and a mounting obstacle.',
+            'Let the situation worsen in two or three stages so the loss feels real.',
+            'Show the moment of near-despair — this is where "hope is the last thing" must be earned.',
+            'Introduce one small, believable opportunity rather than a miraculous rescue.',
+            'Show the character acting on it, and let the outcome follow logically.',
+            'Return explicitly to the saying in the final line, but do not preach.',
+            'Keep one tense throughout — past tense is safest.'
+          ],
+          tip: 'The examiner marks whether the story actually illustrates the saying. A story that only mentions it at the end without demonstrating it loses the content marks.'
+        }
+      ]
+    },
+    {
+      name: 'WASSCE May/June 2016 — Paper 2 (Comprehension & Summary)',
+      note: 'Model answers worked from the passage printed in the paper. The PDF contains no marking scheme.',
+      questions: [
+        {
+          n: '6(a)',
+          q: 'Why did the writer\'s father warn the boys against going out at night?',
+          a: 'Because recent happenings had shown that it was unsafe to go out at night.',
+          why: 'The passage states the reason directly: "since recent happenings had shown that it was unsafe".'
+        },
+        {
+          n: '6(b)',
+          q: 'Quote a phrase in the second paragraph which shows that the teacher\'s house was not far from the writer\'s own.',
+          a: '"a stone\'s throw from ours"',
+          steps: [
+            'Scan paragraph 2 only — the question restricts you to it.',
+            'Look for a comparison of distance.',
+            '"A stone\'s throw" is an idiom for a very short distance.',
+            'Quote it exactly, in quotation marks.'
+          ],
+          tip: 'When a question says "quote", copy the words verbatim. Paraphrasing scores zero even if the meaning is right.'
+        },
+        {
+          n: '6(c)',
+          q: 'What enabled the teacher to discover the boys?',
+          a: 'The powerful headlights of his approaching car lit up the scene, and he spotted them.',
+          why: 'The passage says "the powerful headlights of an approaching car warned us" and "he had already spotted us".'
+        },
+        {
+          n: '6(d)',
+          q: 'Describe what led to the writer\'s injury.',
+          a: 'In his haste to get down from the mango tree after being spotted, he lost his balance and fell heavily, injuring his arm.',
+          steps: [
+            'Sequence the cause: being spotted → panic → hurried descent.',
+            'State the loss of balance.',
+            'State the fall and the specific injury (his arm).',
+            'Keep it to the causal chain the question asks for.'
+          ]
+        },
+        {
+          n: '6(e)',
+          q: 'Why did the writer\'s father refuse to open the door?',
+          a: 'He believed his son was sleeping peacefully in his room, so he thought the teacher was mistaken.',
+          why: 'His reply is "My son is sleeping peacefully in his room" — he was unaware of the boy\'s absence.'
+        },
+        {
+          n: '6(f)',
+          q: '"…an instant alarm…" (i) What is the grammatical name given to this expression? (ii) What is its function?',
+          a: '(i) Noun phrase. (ii) Object of the verb "raised".',
+          steps: [
+            'The head word is "alarm" — a noun, so the whole expression is a noun phrase.',
+            '"Instant" is a modifier, not the head.',
+            'Ask what the phrase does in "The teacher raised an instant alarm": it receives the action of "raised".',
+            'Therefore it functions as the object of the verb.'
+          ],
+          tip: 'Name the phrase by its head word, then state its function by its job in the sentence — two separate marks.'
+        },
+        {
+          n: '6(g)',
+          q: '"…like the wind…" (i) What figure of speech is contained in this expression? (ii) What does it mean?',
+          a: '(i) Simile. (ii) It means very fast / at great speed.',
+          why: 'The comparison uses "like", which is the marker of a simile.'
+        },
+        {
+          n: '6(h)',
+          q: 'Give another word or phrase that can replace each of: recent, delicious, stealthily, approaching, spotted, verify.',
+          a: 'recent → latest/current; delicious → tasty/mouth-watering; stealthily → secretly/quietly; approaching → coming/nearing; spotted → saw/noticed; verify → confirm/check.',
+          steps: [
+            'Replace each word in its original sentence and check the meaning still fits.',
+            'Keep the same part of speech: "spotted" is a verb here, so the replacement must be a verb.',
+            'Do not simply repeat the word with a suffix.',
+            'One word or short phrase per item.'
+          ],
+          tip: '"As used in the passage" means context decides. A dictionary synonym that breaks the sentence earns nothing.'
+        },
+        {
+          n: '7(a)',
+          q: 'In four sentences, one for each, summarize the factors that have prompted the rapid increase in world population.',
+          a: 'Improved medical care and available drugs have cut death rates and raised life expectancy. The spread of education has created awareness of health and welfare and dispelled harmful myths. Better farming practices and tools have increased the food supply and reduced hunger. Relative security and the absence of major wars have reduced war-related deaths.',
+          steps: [
+            'Identify the four factor paragraphs: health, education, nutrition, security.',
+            'One sentence per factor — do not merge two factors into a sentence.',
+            'Use your own words; lift only technical terms.',
+            'Keep each sentence short and complete.'
+          ],
+          tip: 'The instruction "one for each" is a hard constraint. Five sentences where four are required can lose marks even if the content is right.'
+        },
+        {
+          n: '7(b)',
+          q: 'In two sentences, one for each, summarize what is likely to follow the continuing rapid population growth.',
+          a: 'Gross over-population may leave too little arable land to produce enough food. Rapid growth may also cause environmental degradation through the waste that homes and industries generate.',
+          steps: [
+            'The final paragraph names two dangers.',
+            'First danger: insufficient arable land for food production.',
+            'Second danger: pollution and environmental degradation from waste.',
+            'Write each as one sentence, in your own words.'
+          ],
+          tip: 'Summary answers must be continuous prose — bullet points and lifted sentences are penalised.'
+        }
+      ]
+    },
+    {
+      name: 'WASSCE May/June 2016 — Paper 1 (Objective)',
+      note: 'All 80 objective items across Sections 1–6 (antonyms, sentence completion, interpretation, synonyms, structure, cloze).',
+      questions: [
+        { n: '1', q: 'That road which used to be wide now appears ____ because of the new drainage.', a: 'C — narrow', why: 'Wide is opposed by narrow; the drainage has taken part of the road\'s width.' },
+        { n: '2', q: 'In the past, any person who angered the gods was made to ____ them.', a: 'A — appease', why: 'To anger is to provoke; to appease is to pacify — the required opposite.' },
+        { n: '3', q: 'Rather than being sensitive to the plight of the workers, the manager remained ____.', a: 'D — indifferent', why: '"Rather than" marks contrast with sensitive; indifferent means showing no concern.' },
+        { n: '4', q: 'A keen student makes progress but the ____ one hardly does well.', a: 'A — inactive', why: 'Keen means eager and actively interested; the contrast is with inactive. "Reluctant" describes unwillingness rather than lack of activity, and the sentence is about effort producing progress.', flag: true },
+        { n: '5', q: 'Unlike you, I thought the message was quite ____, not ambiguous.', a: 'B — clear', why: 'Ambiguous (having more than one meaning) is opposed by clear.' },
+        { n: '6', q: 'Good policies alleviate poverty whereas bad ones ____.', a: 'C — aggravate', why: '"Whereas" marks contrast; alleviate (ease) is opposed by aggravate (make worse).' },
+        { n: '7', q: 'One expects books in a library to be well ____, not jumbled.', a: 'C — arranged', why: 'Jumbled (mixed up) is opposed by arranged (put in order).' },
+        { n: '8', q: 'Despite everything, I chose to keep rather than ____ the secret.', a: 'C — reveal', why: 'The direct opposite of keep a secret is reveal it.' },
+        { n: '9', q: 'Though the teachers ____ the idea, the principal was averse to it.', a: 'A — welcomed', why: 'Averse (opposed) is contrasted by "though", so the teachers must have favoured it — welcomed.' },
+        { n: '10', q: 'It is only natural to feel nervous when you first take the stage but you soon become ____.', a: 'D — composed', why: 'Nervous is opposed by composed (calm and self-controlled).' },
+
+        { n: '11', q: 'Don\'t tell me you\'re ____ enough to believe his lies.', a: 'D — naive', why: 'Naive means easily deceived through lack of experience — exactly the sense needed.' },
+        { n: '12', q: 'The members of parliament tabled an ____ to the constitution.', a: 'B — amendment', why: 'An amendment is a formal change to a document; "adjustment" is too informal for a constitution.' },
+        { n: '13', q: 'His ____ to violent video games is something to worry about.', a: 'D — addiction', why: 'Addiction implies a harmful dependency; dedication and attachment are neutral or positive.' },
+        { n: '14', q: 'Most people think that ____ punishment should be abolished, even in murder cases.', a: 'B — capital', why: 'Capital punishment is the death penalty — the only kind abolished even for murder.' },
+        { n: '15', q: 'The President made a ____ appeal for calm in the face of the crisis.', a: 'A — passionate', why: 'A passionate appeal is an earnest, strongly felt one — the natural collocation.' },
+        { n: '16', q: 'What I gave you was supposed to ____ your monthly earnings.', a: 'D — augment', why: 'To augment is to add to or increase — the precise register here.' },
+        { n: '17', q: 'The boy\'s parents ____ a sigh of relief when he was found.', a: 'D — heaved', why: 'The fixed collocation is "heave a sigh of relief".' },
+        { n: '18', q: 'We ____ the meeting indefinitely because we could not form a quorum.', a: 'C — adjourned', why: 'To adjourn is to suspend a meeting without fixing the next date — matching "indefinitely".' },
+        { n: '19', q: 'The policeman tried to ____ money from the motorist.', a: 'B — extort', why: 'To extort is to obtain money by threat or force. "Extract" suggests removal, not coercion.' },
+        { n: '20', q: 'They were given an ____: either pay the rent or vacate the premises.', a: 'A — ultimatum', why: 'An ultimatum is a final demand with a stated consequence — exactly the two-part structure here.' },
+
+        { n: '21', q: 'My school carried the day in the debate.', a: 'B — won the debate', why: 'To carry the day is to be victorious.' },
+        { n: '22', q: 'We covered much ground at the conference yesterday.', a: 'B — treated many issues', why: 'Covering ground means dealing with a range of topics, not physical space.' },
+        { n: '23', q: 'We saw Ada, of all people, dancing.', a: 'D — we were surprised to see Ada dancing', why: '"Of all people" signals surprise that this particular person did it.' },
+        { n: '24', q: 'There are clear indications that Buba backed the wrong horse.', a: 'A — supported the wrong person', why: 'Backing the wrong horse means supporting a cause or person that loses.' },
+        { n: '25', q: 'I knew that they were being economical with the truth.', a: 'C — knew more than they were prepared to say', why: 'Being economical with the truth is withholding part of it, not being ignorant of it.' },
+        { n: '26', q: 'My mother wanted to know what was eating him.', a: 'C — why he was upset', why: '"What is eating someone" is what is troubling or worrying them.' },
+        { n: '27', q: 'People who tell lies make me seethe.', a: 'B — angry', why: 'To seethe is to be boiling with anger.' },
+        { n: '28', q: 'After several attempts to claim the child, he threw in the towel.', a: 'B — accepted defeat', why: 'Throwing in the towel is conceding defeat, from boxing.' },
+        { n: '29', q: 'This is their third defeat in a row.', a: 'D — suffered three consecutive defeats', why: '"In a row" means consecutively, and "their defeat" means they lost rather than won.' },
+        { n: '30', q: 'The company has been under siege from the public.', a: 'C — criticized', why: 'Under siege here means subjected to sustained public attack, not physically picketed.' },
+
+        { n: '31', q: 'Most people abhor nagging.', a: 'B — despise', why: 'To abhor is to hate intensely; despise is the closest in strength and register.' },
+        { n: '32', q: 'I really hope Beatrice would be kind enough to let us stay the night.', a: 'C — gracious', why: 'Gracious means showing courtesy and generosity — a better fit for hospitality than merely polite.' },
+        { n: '33', q: 'I personally think that the costume is rather outlandish.', a: 'B — strange', why: 'Outlandish means conspicuously unusual or strange.' },
+        { n: '34', q: 'He did all he could to fortify the building against attack.', a: 'B — secure', why: 'To fortify is to strengthen against attack, that is, to secure it.' },
+        { n: '35', q: 'This is one decision you cannot defend.', a: 'A — justify', why: 'To defend a decision is to justify it.' },
+        { n: '36', q: 'He simply disliked his wife\'s inordinate demands for money.', a: 'B — excessive', why: 'Inordinate means beyond reasonable limits.' },
+        { n: '37', q: 'Bravery is Victor\'s most dominant trait.', a: 'B — outstanding', why: 'Dominant here means most prominent or outstanding.' },
+        { n: '38', q: 'It\'s always better to buy durable products.', a: 'D — lasting', why: 'Durable means able to withstand wear — long-lasting. "Permanent" is too absolute.' },
+        { n: '39', q: 'Where did this document emanate from?', a: 'A — originate', why: 'To emanate is to come or originate from a source.' },
+        { n: '40', q: 'The management applauded the staff for their hard work.', a: 'B — commended', why: 'To applaud figuratively is to praise formally — commended.' },
+
+        { n: '41', q: 'You like ice cream, ____?', a: 'D — don\'t you', why: 'Affirmative present "like" takes the negative tag "don\'t you".' },
+        { n: '42', q: 'I didn\'t tell my parents about the trip because they would be ____ themselves with worry.', a: 'D — beside', why: 'The idiom is "beside oneself with worry", meaning overwhelmed.' },
+        { n: '43', q: 'We arrived just ____ time for the formal opening.', a: 'A — in', why: 'The idiom is "in time", meaning early enough.' },
+        { n: '44', q: 'She claims ____ someone jump over the fence.', a: 'B — to have seen', why: '"Claim" takes the to-infinitive, and the event is prior, so the perfect infinitive is required.' },
+        { n: '45', q: 'Kofi says he is better at Physics ____.', a: 'B — than I am', why: 'Comparison needs "than", and the verb must be included to complete the clause correctly.' },
+        { n: '46', q: 'Her shoes are made ____ genuine leather.', a: 'B — of', why: 'When the material is unchanged in the finished product, the preposition is "of".' },
+        { n: '47', q: 'Even after his explanation, I was none the ____.', a: 'A — wiser', why: 'The idiom "none the wiser" means still not understanding.' },
+        { n: '48', q: 'I spoke to Mary and Peter on the issue but ____ of them took my advice.', a: 'B — neither', why: 'Two people, both failing to act — neither. "Either" would be affirmative.' },
+        { n: '49', q: 'We need to ____ for lost time.', a: 'C — make up', why: 'The idiom is "make up for lost time".' },
+        { n: '50', q: 'Everyone wants to be the ____ favourite.', a: 'C — school principal\'s', why: 'The favourite belongs to the principal, so the possessive falls on principal, and "school" modifies it attributively.' },
+        { n: '51', q: 'That haircut makes him ____ in the crowd.', a: 'A — stand out', why: 'To stand out is to be conspicuously noticeable.' },
+        { n: '52', q: 'The deal ____ because we could not get enough money to finance it.', a: 'D — fell through', why: 'A deal that falls through fails to be completed.' },
+        { n: '53', q: '____ in this town for many years, I can tell you a lot about its people.', a: 'C — Having lived', why: 'The perfect participle shows the living happened before the present ability to speak.' },
+        { n: '54', q: 'I don\'t believe that any ____ person would do such a thing.', a: 'B — mature', why: 'The adjective "mature" modifies "person"; "matured" is a past participle and "matures" a verb.' },
+        { n: '55', q: 'The coach, as well as the players, ____ given fantastic gifts last month.', a: 'A — was', why: 'With "as well as", the verb agrees with the first subject — "the coach", which is singular.' },
+        { n: '56', q: 'If he ____ here, he would do it for free.', a: 'B — were', why: 'The unreal present conditional uses "were" for all persons.' },
+        { n: '57', q: 'Had she told me, I ____ you.', a: 'B — would have stopped', why: 'Inverted third conditional: "Had + past participle … would have + past participle".' },
+        { n: '58', q: 'Since his transfer to Banjul, my brother ____ our hometown.', a: 'C — has not visited', why: '"Since" with a present result requires the present perfect.' },
+        { n: '59', q: 'The Minister ____ Agriculture visited our school today.', a: 'C — of', why: 'The portfolio is expressed as "Minister of Agriculture".' },
+        { n: '60', q: 'I was barely halfway home when darkness ____.', a: 'B — set in', why: 'Darkness "sets in" — begins and settles. "Set off" means depart.' },
+        { n: '61', q: 'You must obtain a degree ____ medicine to be a doctor.', a: 'D — in', why: 'A degree in a subject takes "in".' },
+        { n: '62', q: 'We\'ll buy more but for now, let\'s just ____ with what we have.', a: 'B — make do', why: '"Make do with" means manage with what is available.' },
+        { n: '63', q: 'They told her that we would solve the problem ____.', a: 'D — ourselves', why: 'The subject of the clause is "we", so the reflexive must be "ourselves".' },
+        { n: '64', q: 'The sport I like ____ is swimming.', a: 'C — most', why: 'The superlative adverb is needed for liking something above all others.' },
+        { n: '65', q: 'If you insist that you are not a tailor, ____ are you?', a: 'D — who', why: 'The question asks about identity, which requires "who".' },
+        { n: '66', q: 'If your grades don\'t improve, I shall have no option ____ to move you to another school.', a: 'D — but', why: 'The idiom is "have no option but to do something".' },
+        { n: '67', q: '____ rather he did not stay.', a: 'D — would', why: 'The construction is "would rather" + past subjunctive: "I would rather he did not stay".', flag: true },
+        { n: '68', q: 'Your submission is ____.', a: 'A — neither here nor there', why: 'The idiom means irrelevant or beside the point.' },
+        { n: '69', q: 'Every one of the boys ____ excited about the picnic.', a: 'D — seems', why: '"Every one" is singular, so the verb takes -s.' },
+        { n: '70', q: 'You ____ be ashamed of yourself for saying such a thing before the principal.', a: 'B — should', why: '"Should" expresses moral obligation.' },
+
+        { n: '71', q: 'Displaying his ____ very conspicuously on his neck …', a: 'C — stethoscope', why: 'A doctor wears a stethoscope around the neck.' },
+        { n: '72', q: '… he walked through the ____ …', a: 'D — ward', why: 'A hospital ward is where patients are treated and examined.' },
+        { n: '73', q: '… greeting each of the ____ who greeted him in return.', a: 'A — patients', why: 'The people in a ward being greeted by a doctor are patients.' },
+        { n: '74', q: 'His eyes caught a woman on a nearby ____.', a: 'B — bed', why: 'She is lying down and is later wheeled away, so she is on a bed.' },
+        { n: '75', q: 'He went closer, held her hand, feeling for her ____.', a: 'B — pulse', why: 'Feeling the wrist for a pulse is a standard clinical check.' },
+        { n: '76', q: '… and then carried out some other minor ____.', a: 'D — checks', why: 'Minor examinations are checks; probes and drills are instruments or procedures, not "minor" actions done by hand.' },
+        { n: '77', q: '"Stretcher, stretcher, quickly; take her to the ____!"', a: 'A — theatre', why: 'The operating theatre is where surgery is performed, and the next line mentions the operating room.' },
+        { n: '78', q: 'Even the ____ who had been supervising her treatment were amazed.', a: 'C — midwives', why: 'An ectopic pregnancy is a maternity case, so the staff supervising her treatment are midwives.' },
+        { n: '79', q: '"This is an ectopic pregnancy … The ____ must be taken out promptly."', a: 'D — foetus', why: 'In an ectopic pregnancy the foetus develops outside the womb and must be removed.' },
+        { n: '80', q: 'Before long, the surgery was completed, ____.', a: 'D — transfusion', why: 'Surgery of this kind is followed by a blood transfusion; "transfusion" is the only medical noun among the options.' }
+      ]
+    },
+    {
+      name: 'WASSCE 2023 — English Language 1 (Objective), Part A',
+      note: 'Questions 1–50: Lexis and Structure (Sections I–V). The Literature section for this paper is in the next two blocks, both alternatives included.',
+      questions: [
+        { n: '1', q: 'The diverse groups became ____ in a common course.', a: 'D — united', why: 'The underlined word is "diverse" (different); the gap needs its opposite, and "united" is the only option that also fits "in a common course".' },
+        { n: '2', q: 'Aku\'s mood changed from the dismal to the ____.', a: 'B — ecstatic', why: 'Dismal means gloomy; the opposite is ecstatic (joyful).' },
+        { n: '3', q: 'The invigorating drinks served at the party made us forget how ____ the trip had been.', a: 'C — enervating', why: 'Invigorating gives energy; enervating drains it.' },
+        { n: '4', q: 'Whereas tourism is thriving, other local businesses are ____.', a: 'A — declining', why: '"Whereas" marks the contrast; thriving (growing) opposes declining.' },
+        { n: '5', q: 'Although now a renowned doctor, Johnny rose from ____ beginnings.', a: 'A — humble', why: 'A renowned present contrasts with humble origins — the classic "humble beginnings" collocation.' },
+        { n: '6', q: 'The efforts to defuse the tension, rather ____ it.', a: 'A — aggravated', why: '"Rather" signals the opposite of the intended effect; to defuse is to calm, so the gap needs aggravated (made worse).' },
+        { n: '7', q: 'Her condition may worsen rather than ____ if she continues to brood over the incident.', a: 'B — improve', why: '"Rather than" contrasts with worsen, so the gap needs a word meaning get better.' },
+        { n: '8', q: 'Charitable actions can influence ____ people to change.', a: 'D — selfish', why: 'Charitable (giving to others) is opposed by selfish.' },
+        { n: '9', q: 'No one knows the origin of this group, but we are sure of its ____.', a: 'A — demise', why: 'Origin (beginning) is opposed by demise (end). "Extinction" applies to species, not a group\'s beginning.' },
+        { n: '10', q: 'It is interesting that minute creatures survive alongside ____ ones in the same habitat.', a: 'B — large', why: 'Minute means tiny; the contrast is with large.' },
+
+        { n: '11', q: 'The students tried every means to secure permission, ____?', a: 'B — didn\'t they', why: 'The statement is affirmative past ("tried"), so the tag is negative past.' },
+        { n: '12', q: 'At the last P.T.A. meeting, tempers ____ between the parents and the teachers.', a: 'D — rose', why: '"Tempers rose" — rise is intransitive and its past tense is rose. "Arose" means came into being, which does not fit tempers.' },
+        { n: '13', q: 'Every human being has a right ____ education.', a: 'D — to', why: 'The fixed collocation is "a right to education".' },
+        { n: '14', q: 'The article ____ the attention of scholars everywhere.', a: 'B — attracted', why: '"Attract attention" is the correct collocation.' },
+        { n: '15', q: 'The building remains an ____ testimony to the ingenuity of ancient architecture.', a: 'A — eloquent', why: 'An eloquent testimony is a vivid, convincing piece of evidence — a standard collocation.' },
+        { n: '16', q: 'The manager said ____ criticisms would work for the good of the company.', a: 'C — constructive', why: 'Constructive criticism is the kind intended to improve, which matches "for the good of the company".' },
+        { n: '17', q: 'The pastor\'s honesty is ____ question.', a: 'D — without', why: '"Without question" means beyond doubt — the only option that forms a correct idiom here.' },
+        { n: '18', q: 'But for the timely intervention of the police, the thief ____ lynched.', a: 'B — would have been', why: '"But for" introduces an unreal past condition, so the result clause takes would have + past participle.' },
+        { n: '19', q: 'People ____ the world over are benefitting from technology.', a: 'B — around', why: '"People around the world" is the standard phrase; "the world over" is a separate idiom that cannot be doubled.' },
+        { n: '20', q: 'In a civilized society, one has the chance to express ____ opinion.', a: 'B — one\'s', why: 'The subject "one" must be matched by the possessive "one\'s".' },
+
+        { n: '21', q: 'The school was not surprised that Ama felt dejected at seeing her results.', a: 'A — disappointed', why: 'Dejected means low in spirits because of a setback; disappointed is the closest.' },
+        { n: '22', q: 'Serwaa wonders why Koomson has suddenly become conceited after his promotion.', a: 'B — haughty', why: 'Conceited means having an inflated opinion of oneself; haughty is the nearest option.' },
+        { n: '23', q: 'The government should arrest quack doctors in the country.', a: 'A — fraudulent', why: 'A quack practises without proper qualification and is therefore fraudulent, not merely uneducated.' },
+        { n: '24', q: 'Many people deserted the area because of armed robbers.', a: 'A — abandoned', why: 'To desert a place is to abandon it.' },
+        { n: '25', q: 'Issah has shown much dedication to our cause.', a: 'A — commitment', why: 'Dedication and commitment are near synonyms.' },
+        { n: '26', q: 'The Minister gets angry when you express your candid opinion.', a: 'B — honest', why: 'Candid means frank and honest. "Open" is tempting but "candid opinion" pairs with honest.' },
+        { n: '27', q: 'Stephen\'s performance in the game was sterling.', a: 'B — remarkable', why: 'Sterling means excellent or outstanding.' },
+        { n: '28', q: 'In 1940, Cape Coast Castle was so fortified that no enemy could attack it.', a: 'D — reinforced', why: 'To fortify is to strengthen against attack; reinforced is the exact match.' },
+        { n: '29', q: 'In some secondary schools, new students are harassed by their prefects.', a: 'D — troubled', why: 'Harass means to subject repeatedly to unwanted pressure — troubled is the closest neutral option.' },
+        { n: '30', q: 'The chief has gained notoriety for his corrupt activities.', a: 'C — infamy', why: 'Notoriety is fame for a bad reason; infamy carries exactly that sense.' },
+
+        { n: '31', q: 'Joan made heavy weather of her new position in the office.', a: 'B — experienced difficulty', why: 'To make heavy weather of something is to struggle with it unnecessarily.' },
+        { n: '32', q: 'Ama told her sister not to be afraid for she has her back always.', a: 'B — will defend her sister', why: 'To have someone\'s back is to support and protect them.' },
+        { n: '33', q: 'I have half a mind to apply for this post.', a: 'A — am not sure if I should apply', why: '"Half a mind" expresses hesitation, not refusal.' },
+        { n: '34', q: 'Afi cannot make head or tail of what you are saying.', a: 'D — understand you', why: 'Being unable to make head or tail of something is being unable to understand it.' },
+        { n: '35', q: 'No matter what difficulty you are facing now, there\'s always a silver lining at the end.', a: 'B — a happy ending', why: 'A silver lining is the hopeful aspect of a bad situation.' },
+        { n: '36', q: 'In the last year in office, the director became a lame duck.', a: 'D — was weak', why: 'A lame duck is an office holder whose power has run out. Among these options "was weak" is the closest.', flag: true },
+        { n: '37', q: 'After he lost his election, Thomas withdrew to the village to lick his wounds.', a: 'B — recover from his defeat', why: 'Licking one\'s wounds is recovering after a loss.' },
+        { n: '38', q: 'In less than three months, the new MD has managed to bring the rebellious union members into line.', a: 'B — making the union members conform to his dictates', why: '"Into line" means into obedience or conformity.' },
+        { n: '39', q: 'Despite his low wages, Mawuli was able to make ends meet.', a: 'B — managed his income', why: 'To make ends meet is to live within one\'s means.' },
+        { n: '40', q: 'The building project failed because the company cut corners.', a: 'C — spent less resources on the project', why: 'Cutting corners means doing something cheaply or carelessly to save money or effort.' },
+
+        { n: '41', q: 'Football is a game which pits one ____ against the other.', a: 'D — team', why: 'Football is played between two teams.' },
+        { n: '42', q: 'At ____, each is made up of eleven ____.', a: 'B — kick off', why: '"Kick off" is the fixed football term for the start of a match.' },
+        { n: '43', q: 'At kick off, each is made up of eleven ____.', a: 'D — players', why: 'A team consists of players.' },
+        { n: '44', q: '… whose aim is to win the game by ensuring that they score more ____.', a: 'D — goals', why: 'Football is scored in goals, not baskets, points or runs.' },
+        { n: '45', q: 'In order to ensure fairness, there is the ____ whose duty is to insist that …', a: 'A — referee', why: 'The referee officiates a football match (an umpire officiates hockey, cricket or tennis).' },
+        { n: '46', q: '… that the ____ of the game are obeyed.', a: 'B — rules', why: '"Rules of the game" is the standard collocation.' },
+        { n: '47', q: 'On each side of the ____, there is a goal post …', a: 'C — pitch', why: 'Football is played on a pitch.' },
+        { n: '48', q: 'If any other person touches the ball with the hand, that will be a ____.', a: 'A — foul', why: 'Handling the ball is a foul. It becomes a penalty only inside the goal area, as the next sentence says.' },
+        { n: '49', q: 'There is always a reserve ____ which coaches rely on for substitutions.', a: 'B — bench', why: 'Substitutes sit on the bench.' },
+        { n: '50', q: 'No football match worth its salt is complete without ____.', a: 'B — spectators', why: 'Spectators watch a match; supporters are a subset of them, and "without spectators" is the general statement.' }
+      ]
+    },
+    {
+      name: 'WASSCE 2020 — English Language 1 (Objective), Part A',
+      note: 'Questions 1–50: Lexis and Structure (Sections I–V). The Literature section for this paper is in the next two blocks, both alternatives included.',
+      questions: [
+        { n: '1', q: 'Geraldine is very courteous but her brother, Gerald, is unbelievably ____.', a: 'B — impolite', why: 'Courteous (polite) is opposed by impolite. Arrogant and snobbish are not direct opposites of courteous.' },
+        { n: '2', q: 'Whilst Lydia became ____ in the course of the contest, Lena was confident.', a: 'D — jittery', why: '"Whilst" marks contrast with confident; jittery means nervous.' },
+        { n: '3', q: 'We thought Jane was the instigator of the take-over; it turned out that she was rather the ____.', a: 'B — troubleshooter', why: 'An instigator starts trouble; a troubleshooter resolves it. The other options are not opposites.', flag: true },
+        { n: '4', q: 'When they appeared before the disciplinary committee, Rex was unrepentant but Ray was ____.', a: 'C — remorseful', why: 'Unrepentant (showing no regret) is opposed by remorseful (full of regret).' },
+        { n: '5', q: 'Mama thought what I had done was smart but Dad said it was ____.', a: 'A — dumb', why: 'Smart (clever) is opposed by dumb (stupid).' },
+        { n: '6', q: 'Question 6 — the sentence did not survive OCR in this scan.', a: 'Cannot be determined from this copy — check your printed paper.', why: 'Only the tail of the sentence and the four options were recovered.', flag: true },
+        { n: '7', q: 'Instead of being gentle with the frightened child, Tom was rather ____.', a: 'D — harsh', why: '"Instead of" signals contrast with gentle; harsh is the direct opposite.' },
+        { n: '8', q: 'I felt very agitated yet I maintained a ____ demeanour.', a: 'B — calm', why: '"Yet" marks contrast with agitated; calm is the opposite.' },
+        { n: '9', q: 'Adding much salt to food at table is ____ to the heart, not beneficial.', a: 'C — injurious', why: 'The "not beneficial" clause confirms a negative word; "injurious to" is the correct collocation.' },
+        { n: '10', q: 'The sound from Larry\'s recorder was ____ rather than audible.', a: 'A — muffled', why: '"Rather than audible" needs a word meaning hard to hear; muffled fits.' },
+
+        { n: '11', q: 'We shall overcome ____ how difficult it is.', a: 'A — no matter', why: '"No matter how" is the correct concessive pattern.' },
+        { n: '12', q: 'Jemima will be here ____ a minute.', a: 'C — in', why: 'Future time is expressed with "in a minute".' },
+        { n: '13', q: 'The ambulance sped ____ the hill.', a: 'B — down', why: 'To speed down a hill is the natural collocation; "downwards" would need "the hill" handled differently.' },
+        { n: '14', q: 'You ____ a scratch on your neck the last time we met.', a: 'C — had', why: '"The last time we met" fixes a past point, so the simple past is required.' },
+        { n: '15', q: 'He ____ they should be punished immediately.', a: 'D — thinks', why: 'Third-person singular subject takes "thinks"; the present tense suits the general statement.' },
+        { n: '16', q: '____ midnight, Tom fell asleep.', a: 'A — By', why: '"By midnight" means no later than midnight, which fits falling asleep.' },
+        { n: '17', q: 'Elorm and Jacob were then ____ war with each other.', a: 'C — at', why: 'The fixed phrase is "at war with".' },
+        { n: '18', q: 'Though Tay had heard their cries for help, he ____ them.', a: 'D — ignored', why: 'The past perfect "had heard" requires a simple past in the main clause.' },
+        { n: '19', q: 'Ali and Maria are good friends; they seldom ____.', a: 'C — argue', why: '"Seldom" is a present-tense frequency adverb, so the base form is used with a plural subject.' },
+        { n: '20', q: 'Kennedy and Portia ____ live in Accra.', a: 'A — used to', why: '"Used to + verb" expresses a past state that no longer holds.' },
+
+        { n: '21', q: 'Mother\'s message was motivational; it gingered the children to work hard.', a: 'C — inspirational', why: 'Something that gingers people into action inspires them.' },
+        { n: '22', q: 'I have a hunch that the programme will not go well.', a: 'B — suspicion', why: 'A hunch is a feeling or suspicion not yet proven.' },
+        { n: '23', q: 'Desmond admonished his people not to go to war.', a: 'D — warned', why: 'In this context admonish means to warn earnestly; "reproved" would imply past fault.' },
+        { n: '24', q: 'Parliamentary proceedings have been adjourned until January.', a: 'C — suspended', why: 'To adjourn is to suspend or postpone.' },
+        { n: '25', q: 'What the professor said was alien to all his students.', a: 'C — unfamiliar', why: 'Alien means strange or unfamiliar.' },
+        { n: '26', q: 'The unwholesome practice is anathema to decent people.', a: 'B — a curse', why: 'Anathema is something intensely detested; "a curse" is the closest option.' },
+        { n: '27', q: 'When Joanita was declared winner, pandemonium broke out.', a: 'B — chaos', why: 'Pandemonium is wild disorder.' },
+        { n: '28', q: 'The subject of sanitation was accentuated at the meeting because of its importance.', a: 'A — emphasized', why: 'To accentuate is to give emphasis to.' },
+        { n: '29', q: 'When the wild dog attacked the puppies, Cecil throttled it.', a: 'C — strangled', why: 'To throttle is to seize by the throat.' },
+        { n: '30', q: 'Little Simon was given a drug to suppress his hyperactivity.', a: 'D — control', why: 'To suppress here means to bring under control, not to crush or conquer.' },
+
+        { n: '31', q: 'Ever since Uche disgraced my niece in public, she has kept him at arm\'s length.', a: 'A — doesn\'t want to get close to Uche', why: 'Keeping someone at arm\'s length is maintaining distance from them.' },
+        { n: '32', q: 'If Seth really wants to be helped, he has to put his cards on the table.', a: 'B — has to be truthful, honest and frank', why: 'Putting one\'s cards on the table is disclosing everything openly.' },
+        { n: '33', q: 'We consider the day our daughter first went to school as a red-letter day.', a: 'A — of importance and therefore should be celebrated', why: 'A red-letter day is a memorable, important day.' },
+        { n: '34', q: 'When the officer challenged the order, the commander hit the ceiling.', a: 'C — very angry', why: 'To hit the ceiling is to explode with anger.' },
+        { n: '35', q: 'News of the chief\'s death spread like wildfire.', a: 'C — reached many people within a short time', why: 'Wildfire spreads uncontrollably fast — the point is speed and reach, not confusion.' },
+        { n: '36', q: 'It looks like Selina got out of bed on the wrong side.', a: 'D — was in a very bad mood', why: 'The idiom describes a bad temper from the start of the day.' },
+        { n: '37', q: 'James developed cold feet when he met the Manager to discuss his transfer.', a: 'B — had second thoughts about what he wanted to do', why: 'Cold feet means a loss of nerve — he hesitated rather than decided to change his mind.' },
+        { n: '38', q: 'The priest\'s death was a bolt from the blue.', a: 'A — died suddenly and unexpectedly', why: 'A bolt from the blue is a complete surprise; the idiom says nothing about how he died.' },
+        { n: '39', q: 'Anne is two-faced in her interactions with her friends.', a: 'C — hypocritical', why: 'Two-faced means presenting different faces to different people.' },
+        { n: '40', q: 'When Joe got there, he decided to strike while the iron was hot.', a: 'D — took advantage of the situation', why: 'The idiom means acting promptly while the opportunity lasts.' },
+
+        { n: '41', q: 'Two months after moving into our new house, we hadn\'t noticed any ____ on the building …', a: 'D — defects', why: 'Defects are faults in the structure; damages is not used in this count sense.' },
+        { n: '42', q: '… till one Sunday morning when water started ____ from a corner of the shower …', a: 'D — dripping', why: 'The later sentence says water was "dropping heavily", and a small start is a drip.' },
+        { n: '43', q: '… in our ____ bedroom.', a: 'C — master', why: 'The main bedroom of a house is the master bedroom.' },
+        { n: '44', q: 'We assumed it was a simple ____ and therefore asked my nephew … to fix it.', a: 'B — leakage', why: 'A leakage is the escape of water; that is the fault being fixed.' },
+        { n: '45', q: 'He did, but the ____ lasted for that day only.', a: 'A — repair', why: 'The repair is what he carried out and what failed the next day.' },
+        { n: '46', q: 'Frantically, I called the ____ who promptly came to our rescue.', a: 'C — plumber', why: 'A plumber is the tradesman for water pipes and leaks.' },
+        { n: '47', q: 'A thorough check revealed that two roofing ____ had been blown away …', a: 'B — sheets', why: 'Roofing sheets are the panels that wind can lift; rafters and beams are the frame.' },
+        { n: '48', q: '… causing water to collect on the ____.', a: 'A — ceiling', why: 'Water from a damaged roof collects on the ceiling before it drips into the room.' },
+        { n: '49', q: 'The water therefore had to ____ through.', a: 'C — seeped', why: 'Seep means to pass slowly through a porous material.' },
+        { n: '50', q: 'We therefore had to re-roof that ____ of the house.', a: 'A — side', why: 'A house is re-roofed on a side; "phase" and "line" do not describe a part of a building.' }
+      ]
+    },
+    {
+      name: 'WASSCE 2020 — Part B (Literature)',
+      note: 'Questions 51–80: Prose (Great Expectations / No Sweetness Here), Drama (Merchant of Venice / Ananse in the Land of Idiots), Poetry (non-African and African). Items marked "check" depend on the page of your edition.',
+      questions: [
+        { n: '51', q: 'Prose, Great Expectations: "My father, Pip, he were given to drink…" Who spoke these words?', a: 'A — Joe', why: 'Joe Gargery speaks this way throughout — the ungrammatical, affectionate voice is his signature.' },
+        { n: '52', q: 'Prose, Great Expectations: What was being discussed?', a: 'C — Going to school', why: 'Joe is recounting his own upbringing in the context of Pip being sent to school.' },
+        { n: '53', q: 'Prose, Great Expectations: "…he hammered away at my mother" is an example of', a: 'C — metaphor', why: 'Hammering is applied to beating a person, transferring the action of a hammer without using "like" or "as".' },
+        { n: '54', q: 'Prose, Great Expectations: What does the extract say about the persona? He was', a: 'D — violent and a drunkard', why: 'The extract says he was "given to drink" and that when drunk he beat the mother.' },
+        { n: '55', q: 'Prose, Great Expectations: Biddy was', a: 'C — Pip\'s girlfriend', why: 'Among these options this is the only one that fits Biddy\'s role in the novel; strictly she is Pip\'s childhood companion who later marries Joe.', flag: true },
+        { n: '56', q: 'Prose, Great Expectations: The speaker was about to travel to', a: 'B — London', why: 'Pip is leaving for London to be educated as a gentleman.' },
+        { n: '57', q: 'Prose, Great Expectations: Two other characters present were', a: 'D — Joe and Biddy', why: 'This is the leave-taking at the forge, where Joe and Biddy see him off.' },
+        { n: '58', q: 'Prose, Great Expectations: The speaker was thinking about the', a: 'B — bright prospects at his new destination', why: 'He says morning "brightened" his "general prospect of life" — his thoughts are on what awaits him.' },
+        { n: '59', q: 'Prose, Great Expectations: The speaker was', a: 'B — Pip', why: 'The narrative is Pip\'s first-person retrospective.' },
+        { n: '60', q: 'Prose, Great Expectations: What is the meaning of "six days intervened between me and the day of departure"?', a: 'B — I have six more days to go', why: '"Intervened between me and" means standing between him and the event — six days still remain.' },
+
+        { n: '51', q: 'Prose, No Sweetness Here: Setu abhors the big men because they', a: 'A — sleep around with underage girls', why: 'Setu\'s complaint is precisely that girls who have "seen their blood not many moons gone" sleep with men old enough to be their fathers.' },
+        { n: '52', q: 'Prose, No Sweetness Here: Setu and Zirigu are', a: 'C — husband and wife', why: 'Their exchange is the familiar argument of a married couple in the story.' },
+        { n: '53', q: 'Prose, No Sweetness Here: "big men" as used in the extract symbolizes', a: 'D — affluence and corruption', why: 'The men are "big" because of money, and the passage ties that money to sexual exploitation.' },
+        { n: '54', q: 'Prose, No Sweetness Here: "Maybe it is better that all mothers are not like you…" — the speaker is', a: 'D — Zirigu', why: 'Zirigu is the character arguing with the mother-figure in this exchange.', flag: true },
+        { n: '55', q: 'Prose, No Sweetness Here: The figure of speech in "the land would be flowing with the blood of all the big men" is', a: 'C — metaphor', why: 'Blood is described as flowing like a river over the land — a comparison made without "like" or "as".' },
+        { n: '56', q: 'Prose, No Sweetness Here: What had occasioned this speech?', a: 'B — Immorality of the big men', why: 'The whole exchange is provoked by the conduct of wealthy men towards young girls.' },
+        { n: '57', q: 'Prose, No Sweetness Here: The mother referred to in the extract is', a: 'C — Maami Ama', why: 'Maami Ama is the mother figure in the collection who confronts this behaviour.' },
+        { n: '58', q: 'Prose, No Sweetness Here: "Please little sister, I am not trying to interfere in your private life…" — little sister refers to', a: 'A — Mercy', why: 'The exchange belongs to "Two Sisters", in which Mercy is the younger sister being advised.', flag: true },
+        { n: '59', q: 'Prose, No Sweetness Here: The speaker of that extract is', a: 'B — Connie', why: 'Connie is the elder sister who counsels Mercy in "Two Sisters".', flag: true },
+        { n: '60', q: 'Prose, No Sweetness Here: "That man" in the extract is', a: 'B — Mensah Arthur', why: 'He is the already-attached man at the centre of the sisters\' disagreement.', flag: true },
+
+        { n: '61', q: 'Drama, Merchant of Venice: "Mislike me not for my complexion…" — the speaker is', a: 'C — Morocco', why: 'The Prince of Morocco opens his suit to Portia with exactly these lines.' },
+        { n: '62', q: 'Drama, Merchant of Venice: "The shadowed livery of the burnished sun" suggests the speaker', a: 'A — is at the mercy of the sun', why: 'He calls his dark skin the "livery" (uniform) the sun has imposed on him — the sun has marked him.', flag: true },
+        { n: '63', q: 'Drama, Merchant of Venice: The addressee is', a: 'D — Portia', why: 'Morocco is addressing the heiress he has come to woo.' },
+        { n: '64', q: 'Drama, Merchant of Venice: Which character was present at the scene?', a: 'B — Nerissa', why: 'Nerissa attends Portia throughout the casket scenes.' },
+        { n: '65', q: 'Drama, Merchant of Venice: One of the themes of the play is', a: 'A — justice and mercy', why: 'The trial of Antonio turns entirely on the opposition between strict justice and mercy.' },
+        { n: '66', q: 'Drama, Merchant of Venice: "In Belmont is a lady richly left…" — these words were spoken', a: 'D — in a street in Venice', why: 'Bassanio speaks them to Antonio in Venice, describing Portia who lives in Belmont.' },
+        { n: '67', q: 'Drama, Merchant of Venice: To whom were these words spoken?', a: 'B — Antonio', why: 'Bassanio is explaining to Antonio why he needs money to travel to Belmont.' },
+        { n: '68', q: 'Drama, Merchant of Venice: What is the meaning of "In Belmont is a lady richly left"?', a: 'A — A lady with substantial fortune lives in Belmont', why: '"Richly left" means left wealthy — that is, she has inherited a large fortune.' },
+        { n: '69', q: 'Drama, Merchant of Venice: The speaker intended to ____ the lady in question.', a: 'B — marry (the option is missing in the scan)', why: 'Bassanio\'s purpose is to woo and marry Portia; the OCR lost this option entirely.', flag: true },
+        { n: '70', q: 'Drama, Merchant of Venice: The lady in question is', a: 'B — Portia', why: 'Portia is the rich heiress of Belmont.' },
+
+        { n: '61', q: 'Drama, Ananse in the Land of Idiots: "How can such a sleepy scarecrow embody the watchful vigilance of an empire?" — who is referred to?', a: 'C — Akpala', why: 'Akpala is the drowsy guard being mocked in this line.' },
+        { n: '62', q: 'Drama, Ananse in the Land of Idiots: The figure of speech in "sleepy scarecrow" is', a: 'A — metaphor', why: 'A man is called a scarecrow directly, with no "like" or "as".' },
+        { n: '63', q: 'Drama, Ananse in the Land of Idiots: The speaker is', a: 'B — Mbasila', why: 'Mbasila is the character voicing this contempt.' },
+        { n: '64', q: 'Drama, Ananse in the Land of Idiots: The speaker was being', a: 'B — sarcastic', why: 'The rhetorical question is mockery, not a genuine enquiry.' },
+        { n: '65', q: 'Drama, Ananse in the Land of Idiots: The sleepy scarecrow was supposed to be a', a: 'D — guard', why: '"Watchful vigilance" is the duty of a guard, which the man is failing to perform.' },
+        { n: '66', q: 'Drama, Ananse in the Land of Idiots: "What sort of request is that? What purpose would that serve…" — the speaker and addressee are', a: 'B — King and Akpala', why: 'The King is rejecting a request put to him by Akpala.' },
+        { n: '67', q: 'Drama, Ananse in the Land of Idiots: The request was that', a: 'B — the princess and her peers sing and dance', why: 'That is the entertainment being asked for in this scene.' },
+        { n: '68', q: 'Drama, Ananse in the Land of Idiots: One other character present at the scene is', a: 'B — Mbasila', why: 'Mbasila is on stage for this exchange.' },
+        { n: '69', q: 'Drama, Ananse in the Land of Idiots: "You are a condemned man striving to buy back your life" is', a: 'B — metaphorical', why: 'Life is treated as a commodity that can be bought back — a transfer of meaning.' },
+        { n: '70', q: 'Drama, Ananse in the Land of Idiots: Which word best describes the addressee?', a: 'A — Deceitful', why: 'The addressee is Ananse, the trickster whose defining trait is deceit.' },
+
+        { n: '71', q: 'Poetry, The Definition of Love: "Magnanimous despair" illustrates', a: 'C — antithesis', why: 'Two opposing ideas — greatness and hopelessness — are yoked together for contrast.' },
+        { n: '72', q: 'Poetry, The Definition of Love: "As lines so love oblique may well themselves in every angle greet" contrasts with the poet\'s feeling of', a: 'B — separation', why: 'The lines may meet at every angle; the lovers, by contrast, never can.' },
+        { n: '73', q: 'Poetry, Ozymandias: The theme is best expressed as', a: 'A — time triumphs over all things', why: 'The shattered statue and the empty desert show that power does not survive time.' },
+        { n: '74', q: 'Poetry, Ozymandias: The end of the poem is', a: 'C — ironic', why: 'The boast "Look on my works, ye Mighty, and despair!" is answered by bare sand.' },
+        { n: '75', q: 'Poetry, The Road Not Taken: The setting is', a: 'A — morning', why: 'The poem is set in a "yellow wood" at the start of a day\'s walking; morning is the time given in the options.' },
+        { n: '76', q: 'Poetry, The Road Not Taken: In the last stanza, the poet\'s mood is', a: 'A — solemn', why: 'He will tell the story "with a sigh", which colours the ending with reflection rather than triumph.', flag: true },
+        { n: '77', q: 'Poetry, What Tomas Said in a Pub: The poem is dominated by images associated with', a: 'B — taste', why: 'The poem is built around drinking in a pub, so the imagery is gustatory.' },
+        { n: '78', q: 'Poetry, What Tomas Said in a Pub: Part of the poem\'s message is conveyed by', a: 'A — repetition', why: 'The refrain-like repetition carries the poem\'s argument about contentment.' },
+        { n: '79', q: 'Poetry, Mirror: The speaker is', a: 'D — the mirror', why: 'The opening line "I am not cruel, only truthful" is the mirror speaking about itself.' },
+        { n: '80', q: 'Poetry, Mirror: The poem is about', a: 'A — the fear of ageing', why: 'The woman looks into the mirror and then the lake, and sees time passing her.' },
+
+        { n: '71', q: 'Poetry, Lest We Should Be The Last: The setting is', a: 'B — dusk', why: 'The poem\'s imagery of fading light places it at dusk.' },
+        { n: '72', q: 'Poetry, Lest We Should Be The Last: "We begin in hope and end in ____"', a: 'D — disappointment', why: 'The line sets hope against its collapse.' },
+        { n: '73', q: 'Poetry, Lost Friends: The lost friends in the poem are the', a: 'A — dead', why: 'The poem mourns companions who have died.' },
+        { n: '74', q: 'Poetry, Lost Friends: "Their new addiction" refers to', a: 'D — work', why: 'The survivors have turned to work as a way of coping with grief.' },
+        { n: '75', q: 'Poetry, Makola: The poem is best described as', a: 'C — descriptive', why: 'It presents the market through accumulated sensory detail rather than plot or song.' },
+        { n: '76', q: 'Poetry, Makola: "Why must it all be in his terms, at his convenience?" illustrates', a: 'B — rhetorical question', why: 'The question is asked for effect, not to obtain an answer.' },
+        { n: '77', q: 'Poetry, Silver Wedding: The theme is the reward of', a: 'C — ageing', why: 'A silver wedding marks twenty-five years, so the poem reflects on what endurance over time brings.', flag: true },
+        { n: '78', q: 'Poetry, Silver Wedding: The images associated with the celebration appeal mostly to our sense of', a: 'C — sight', why: 'The poem\'s celebration is built from visual images of the occasion.' },
+        { n: '79', q: 'Poetry, They Hunt The Night: "they sought to put us away" — "they" refers to the', a: 'A — oppressors', why: 'The poem is about a persecuted people and those who hunt them.' },
+        { n: '80', q: 'Poetry, They Hunt The Night: The poem ends on a tone of', a: 'B — defiance', why: 'The closing stance is resistance, not submission or reconciliation.' }
+      ]
+    },
+    {
+      name: 'WASSCE 2023 — Part B (Literature)',
+      note: 'Questions 51–80: Prose (Treasure Island / The Kaya Girl), Drama (An Enemy of the People / The Son of Umbele), Poetry (non-African and African). Items marked "check" depend on the page of your edition.',
+      questions: [
+        { n: '51', q: 'Prose, Treasure Island: "How that personage haunted my dreams…" — "that personage" refers to', a: 'A — the nut-brown man', why: 'The description matches the old sea-faring guest, Billy Bones, whose appearance Jim describes in just these terms.', flag: true },
+        { n: '52', q: 'Prose, Treasure Island: "…the surf roared along the cove" is an example of', a: 'D — personification', why: 'The surf is given the human or animal action of roaring.' },
+        { n: '53', q: 'Prose, Treasure Island: The general atmosphere in the extract is that of', a: 'C — fear', why: 'The dream-haunting and "diabolical expressions" create dread.' },
+        { n: '54', q: 'Prose, Treasure Island: Patrons of the Admiral Benbow sang with the man because they', a: 'D — were afraid of him', why: 'They join in out of intimidation, not enjoyment.' },
+        { n: '55', q: 'Prose, Treasure Island: "I don\'t like treasure voyages on any account…" — the speaker is', a: 'A — Captain Smollett', why: 'Smollett is the cautious captain who distrusts the whole enterprise.' },
+        { n: '56', q: 'Prose, Treasure Island: The speaker\'s mood is that of', a: 'A — anger', why: 'He is voicing sharp disapproval of the secrecy surrounding the voyage.' },
+        { n: '57', q: 'Prose, Treasure Island: The figure of speech in "the secret has been told to the parrot" is', a: 'C — symbolism', why: 'The parrot stands for how completely the secret has leaked.' },
+        { n: '58', q: 'Prose, Treasure Island: The parrot is', a: 'B — John Silver', why: 'The parrot, Captain Flint, belongs to Long John Silver — the question asks whose it is.', flag: true },
+        { n: '59', q: 'Prose, Treasure Island: The story is about buccaneers and the', a: 'D — hidden treasure', why: 'The plot turns on the location of Flint\'s buried hoard.', flag: true },
+        { n: '60', q: 'Prose, Treasure Island: The character associated with heroism is', a: 'C — Jim Hawkins', why: 'Jim is the novel\'s young hero, whose courage drives much of the action.' },
+
+        { n: '51', q: 'Prose, The Kaya Girl: "They held an award ceremony for me…" — "They" refers to', a: 'B — the district education officers', why: 'The ceremony is an official one organised by the education authority.', flag: true },
+        { n: '52', q: 'Prose, The Kaya Girl: The award ceremony was for', a: 'D — exceptional performance in BECE', why: 'The award celebrates her results in the Basic Education Certificate Examination.' },
+        { n: '53', q: 'Prose, The Kaya Girl: The speaker got for her award a', a: 'C — scholarship', why: 'The prize is support for further schooling.' },
+        { n: '54', q: 'Prose, The Kaya Girl: The listener described the speaker as', a: 'B — brilliant', why: 'The praise is for academic ability.' },
+        { n: '55', q: 'Prose, The Kaya Girl: The listener felt', a: 'A — proud', why: 'The listener\'s reaction is pride in the speaker\'s achievement.' },
+        { n: '56', q: 'Prose, The Kaya Girl: "Sorry Madam! I said with an ingratiating smile…" — the speaker is', a: 'A — Abena', why: 'Abena is the shop assistant whose voice this is.' },
+        { n: '57', q: 'Prose, The Kaya Girl: The extract shows that the speaker is', a: 'D — flattering', why: '"Ingratiating" means trying to please in order to gain favour.' },
+        { n: '58', q: 'Prose, The Kaya Girl: The customer\'s reaction was that of', a: 'A — anger', why: 'The customer "marched into the shop", and the speaker is apprehensive about a complaint.' },
+        { n: '59', q: 'Prose, The Kaya Girl: In the meanwhile, Faiza had', a: 'A — disappeared', why: 'The backward nod shows Faiza slipping away while the speaker deals with the customer.', flag: true },
+        { n: '60', q: 'Prose, The Kaya Girl: "She looked the type" — she is described as always', a: 'C — complaining', why: 'The speaker fears a complaint, which tells us the customer\'s reputation.' },
+
+        { n: '61', q: 'Drama, An Enemy of the People: "I know — but he won\'t do that, my dear Peter…" — the speaker is', a: 'B — Katherine Stockmann', why: 'Katherine addresses her brother Peter; the "my dear Peter" marks the relationship.' },
+        { n: '62', q: 'Drama, An Enemy of the People: The Badger is', a: 'B — Morten Kiil', why: 'Morten Kiil is nicknamed the Badger in the play.' },
+        { n: '63', q: 'Drama, An Enemy of the People: "that" refers to', a: 'B — changing his will', why: 'The exchange concerns Morten Kiil threatening to alter his will.' },
+        { n: '64', q: 'Drama, An Enemy of the People: Peter is the speaker\'s', a: 'C — brother', why: 'Peter Stockmann is Katherine\'s brother and the doctor\'s brother.' },
+        { n: '65', q: 'Drama, An Enemy of the People: The protagonist is', a: 'A — Dr. Thomas Stockmann', why: 'The play follows his stand over the contaminated baths.' },
+        { n: '66', q: 'Drama, An Enemy of the People: The antagonist is', a: 'D — Peter Stockmann', why: 'The Mayor opposes his brother at every turn.' },
+        { n: '67', q: 'Drama, An Enemy of the People: "Well, tell your grandfather, then…" — the speaker is', a: 'B — Morten Kiil', why: 'Kiil is the one who reveals he has bought the tannery.' },
+        { n: '68', q: 'Drama, An Enemy of the People: The addressee\'s grandfather is', a: 'B — Morten Kiil', why: 'The addressee is Petra, and Kiil is her grandfather.' },
+        { n: '69', q: 'Drama, An Enemy of the People: "not right in the upper storey" is a', a: 'A — metaphor', why: 'The mind is spoken of as an upper floor of a building.' },
+        { n: '70', q: 'Drama, An Enemy of the People: What the speaker blames the tannery for is the', a: 'D — pollution of the Municipal Baths', why: 'The tannery\'s effluent is what contaminates the baths and starts the whole conflict.' },
+
+        { n: '61', q: 'Drama, The Son of Umbele: The character who shot himself is', a: 'C — Benko', why: 'Benko takes his own life at the play\'s crisis.', flag: true },
+        { n: '62', q: 'Drama, The Son of Umbele: The character who appreciates Joshua\'s love is', a: 'B — Duella', why: 'Duella is the one who recognises and returns Joshua\'s affection.' },
+        { n: '63', q: 'Drama, The Son of Umbele: The setting is a', a: 'B — fishing village', why: 'The community lives by fishing, which is why the nets and the sea recur.' },
+        { n: '64', q: 'Drama, The Son of Umbele: "…my mother provided for me. I had everything I wanted, even my special world…" — the speaker is', a: 'C — Joshua', why: 'Joshua is the privileged son being described.', flag: true },
+        { n: '65', q: 'Drama, The Son of Umbele: The addressee is', a: 'C — Attu', why: 'Attu is the character receiving this account.', flag: true },
+        { n: '66', q: 'Drama, The Son of Umbele: The speaker comes from a ____ family.', a: 'D — rich', why: '"I had everything I wanted" is the point of the speech.' },
+        { n: '67', q: 'Drama, The Son of Umbele: "even my special world" is a', a: 'C — symbol', why: 'The "special world" stands for his protected, privileged upbringing.' },
+        { n: '68', q: 'Drama, The Son of Umbele: "For all you know, they might be lying at the bottom of the sea." — "they" refers to', a: 'C — the fishing nets', why: 'The nets are what would be lost at the bottom of the sea.' },
+        { n: '69', q: 'Drama, The Son of Umbele: "…they never learn. They will make food for the trouts…" — the speaker is', a: 'C — Benko', why: 'Benko is the voice of this bitter remark.' },
+        { n: '70', q: 'Drama, The Son of Umbele: The speaker is being', a: 'D — humorous', why: 'The image of the drowned becoming food for fish is grimly comic.' },
+
+        { n: '71', q: 'Poetry, Anthem for Doomed Youth: The poem is about', a: 'D — war', why: 'It is a protest against the slaughter of young soldiers.' },
+        { n: '72', q: 'Poetry, Anthem for Doomed Youth: "Only the stuttering rifles\' rapid rattle" illustrates', a: 'A — alliteration', why: 'The repeated r and t sounds imitate the gunfire.' },
+        { n: '73', q: 'Poetry, I Sit and Look Out: The dominant theme is', a: 'B — life\'s disappointments', why: 'The speaker catalogues the sorrows and injustices of the world.' },
+        { n: '74', q: 'Poetry, I Sit and Look Out: The speaker is', a: 'C — detached', why: 'He sits and observes without intervening — that distance is the poem\'s point.' },
+        { n: '75', q: 'Poetry, Batter my Heart: The poem is about', a: 'A — faith', why: 'It is a prayer for God to break and remake the speaker\'s devotion.' },
+        { n: '76', q: 'Poetry, Batter my Heart: "Except you enthrall me, never shall be free, Nor ever chaste, except you ravish me" illustrates', a: 'B — paradox', why: 'Captivity is said to bring freedom and violation to bring purity — apparent contradictions that hold a truth.' },
+        { n: '77', q: 'Poetry, Piano: The poem is about', a: 'A — recollecting the past', why: 'A song triggers the speaker\'s memory of his mother and childhood.' },
+        { n: '78', q: 'Poetry, Piano: The setting is', a: 'D — winter', why: 'The memory places "winter outside" and the cosy parlour within.' },
+        { n: '79', q: 'Poetry, If We Must Die: The poem is a', a: 'D — sonnet', why: 'It is a fourteen-line poem in sonnet form.' },
+        { n: '80', q: 'Poetry, If We Must Die: The poem deals with the issue of', a: 'C — oppression', why: 'It calls on the oppressed to resist with dignity rather than die passively.' },
+
+        { n: '71', q: 'Poetry, Nightfall in Soweto: The poem is about', a: 'C — the negative effects of darkness', why: 'Nightfall brings fear and violence to the township.' },
+        { n: '72', q: 'Poetry, Nightfall in Soweto: The dominant figure of speech is', a: 'A — personification', why: 'Night is given human intentions and actions throughout.' },
+        { n: '73', q: 'Poetry, The Weaver Bird: The weaver bird symbolizes', a: 'B — colonialism', why: 'The bird builds its nest in the speaker\'s tree and displaces him — the colonial intrusion.' },
+        { n: '74', q: 'Poetry, The Weaver Bird: "And laid its eggs on our only tree" suggests', a: 'C — invasion', why: 'The bird claims the one tree that belongs to the speaker.' },
+        { n: '75', q: 'Poetry, Night Rain: The poem deals with the issue of', a: 'D — poverty', why: 'The rain exposes the poet\'s poverty and the contrast with the wealthy.' },
+        { n: '76', q: 'Poetry, Night Rain: The setting is the', a: 'B — countryside', why: 'The poem\'s huts, thatch and rain place it in a rural setting.' },
+        { n: '77', q: 'Poetry, An African Thunderstorm: The poem is about the power of', a: 'A — nature', why: 'The storm overwhelms the human world it passes through.' },
+        { n: '78', q: 'Poetry, An African Thunderstorm: The atmosphere is one of', a: 'D — confusion', why: 'The storm scatters people and animals into disorder.' },
+        { n: '79', q: 'Poetry, Once Upon a Time: The poem is about the breakdown of', a: 'D — social values', why: 'It laments the loss of sincerity and warmth in social conduct.', flag: true },
+        { n: '80', q: 'Poetry, Once Upon a Time: "they used to shake hands with their hearts but that\'s gone, son" — the speaker is', a: 'C — sad', why: 'The tone is regret for what has been lost.' }
+      ]
+    }
+  ],
+  closingNote: 'Coverage: four objective papers (2012, 2016, 2020, 2023), the 2016 comprehension and summary, the 2012 comprehension and summary, and both 2020 and 2023 Literature sections — every question printed in the papers held in this folder, except the corrupt scans. Items marked "check" depend on the page of your specific edition, or on an option the OCR lost; treat those as strong suggestions, not certainties. Essay questions have model plans rather than answers, because no single answer is correct — but the plans show the structure that earns marks.'
+};
