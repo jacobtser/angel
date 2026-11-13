@@ -14,6 +14,13 @@ export function DueCards() {
   const { state, hydrated } = useAppStore();
   const [mode, setMode] = useState<'due' | 'all'>('due');
 
+  const due = useMemo(
+    () => allFlashcards.filter((card) => (state.srs[card.id]?.due ?? isoDay()) <= isoDay()),
+    [state.srs],
+  );
+
+  const cards = mode === 'due' ? due : allFlashcards;
+
   const cardKnowledge = useMemo(() => {
     const sample = cards.slice(0, 20).map((c) => `- [${c.subject}/${c.topicId}] Q: ${c.front} | A: ${c.back}${c.hint ? ` (hint: ${c.hint})` : ''}`).join('\n');
     return [
@@ -29,13 +36,6 @@ export function DueCards() {
       'Recall before rereading. The struggle to retrieve an answer is what tells your brain the information matters.',
     knowledge: cardKnowledge,
   });
-
-  const due = useMemo(
-    () => allFlashcards.filter((card) => (state.srs[card.id]?.due ?? isoDay()) <= isoDay()),
-    [state.srs],
-  );
-
-  const cards = mode === 'due' ? due : allFlashcards;
   const bySubject = (['english', 'management', 'mathematics'] as const).map((id) => ({
     id,
     due: due.filter((card) => card.subject === id).length,
