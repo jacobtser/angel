@@ -467,6 +467,25 @@ export default function SettingsPage() {
               </p>
             </div>
 
+            <div className="mt-3 rounded-xl border border-line bg-elev p-3 text-[0.76rem] leading-relaxed text-soft">
+              <p className="font-semibold text-ink">Set up on Angel’s phone (one time)</p>
+              <ol className="mt-1.5 list-decimal space-y-1 pl-4">
+                <li>
+                  Open <strong>console.groq.com</strong> and copy a Groq API key.
+                </li>
+                <li>
+                  Choose <strong>Groq</strong> below, paste the key, and press <strong>Save AI settings</strong>.
+                </li>
+                <li>
+                  Press <strong>Test connection</strong>. The key stays on this phone only.
+                </li>
+              </ol>
+              <p className="mt-1.5 text-[0.7rem] text-muted">
+                For the sweet provider voice, accept the Orpheus text-to-speech terms once in the Groq console.
+                If it has not been accepted, Jacob automatically uses the phone voice instead.
+              </p>
+            </div>
+
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div>
                 <label htmlFor="ai-provider" className="label">
