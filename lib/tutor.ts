@@ -26,7 +26,7 @@ export const PROVIDER_DEFAULT_MODELS: Record<AiProvider, string> = {
   openai: 'gpt-4o-mini',
   anthropic: 'claude-3-5-sonnet-latest',
   gemini: 'gemini-2.0-flash',
-  groq: 'llama-3.3-70b-versatile',
+  groq: 'openai/gpt-oss-120b',
   deepseek: 'deepseek-chat',
   openrouter: 'openai/gpt-4o-mini',
 };
@@ -280,7 +280,13 @@ export async function askTutor({ settings, messages, context }: AskInput): Promi
     .filter((m) => m.content.trim())
     .slice(-8)
     .map((m) => ({ role: m.role, content: m.content }));
-  const requestedModel = settings.model || PROVIDER_DEFAULT_MODELS[settings.provider];
+  const requestedModel = (() => {
+    const saved = settings.model?.trim();
+    if (!saved) return PROVIDER_DEFAULT_MODELS[settings.provider];
+    // Retire model ids from earlier builds that the provider has since removed.
+    if (settings.provider === 'groq' && saved.includes('llama-3.3-70b')) return PROVIDER_DEFAULT_MODELS.groq;
+    return saved;
+  })();
 
   if (settings.proxyUrl.trim()) {
     const res = await fetch(settings.proxyUrl.trim(), {
