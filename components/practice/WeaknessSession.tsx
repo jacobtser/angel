@@ -24,17 +24,6 @@ export function WeaknessSession({ subjectId }: { subjectId: SubjectId }) {
   const { state } = useAppStore();
   const [questions, setQuestions] = useState<QuizQuestion[] | null>(null);
 
-  useTutorContext({
-    subjectId,
-    label: `${subject.name} review & fix`,
-    topicTitle: subject.name,
-    bigIdea: 'Target the topics that need the most attention right now.',
-    knowledge: [
-      buildSubjectKnowledge(subjectId),
-      weakTopics.length ? '\nFOCUS TOPICS (needs attention now):\n' + weakTopics.map((t) => buildTopicKnowledge(t)).join('\n\n---\n') : '',
-    ].join('\n'),
-  });
-
   const weakTopics = useMemo(() => {
     return topicsForSubject(subjectId)
       .slice()
@@ -48,6 +37,17 @@ export function WeaknessSession({ subjectId }: { subjectId: SubjectId }) {
       })
       .slice(0, 4);
   }, [state.topics, subjectId]);
+
+  useTutorContext({
+    subjectId,
+    label: `${subject.name} review & fix`,
+    topicTitle: subject.name,
+    bigIdea: 'Target the topics that need the most attention right now.',
+    knowledge: [
+      buildSubjectKnowledge(subjectId),
+      weakTopics.length ? '\nFOCUS TOPICS (needs attention now):\n' + weakTopics.map((t) => buildTopicKnowledge(t)).join('\n\n---\n') : '',
+    ].join('\n'),
+  });
 
   useEffect(() => {
     const pools = weakTopics.map((t) => shuffle(t.quiz));
