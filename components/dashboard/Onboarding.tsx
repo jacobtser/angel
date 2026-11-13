@@ -71,7 +71,7 @@ export function Onboarding() {
 
         <div>
           <label htmlFor="onboarding-date" className="label">
-            When do you sit the exam?
+            When is your first paper?
           </label>
           <input
             id="onboarding-date"
@@ -87,7 +87,7 @@ export function Onboarding() {
               onChange={(event) => setProvisional(event.target.checked)}
               className="mt-0.5 h-4 w-4 accent-[var(--leaf)]"
             />
-            This date is provisional — I’ll confirm it when WAEC publishes the timetable.
+            This date is provisional — I’ll confirm the January–February window when WAEC publishes the timetable.
           </label>
         </div>
 

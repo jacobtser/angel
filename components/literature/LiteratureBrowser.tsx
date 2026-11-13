@@ -75,7 +75,7 @@ export function LiteratureBrowser() {
       </aside>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="scrollbar-none flex gap-1.5 overflow-x-auto" role="group" aria-label="Filter by genre">
+        <div className="scrollbar-none flex flex-wrap gap-1.5" role="group" aria-label="Filter by genre">
           {genres.map((item) => (
             <button
               key={item.id}
@@ -88,7 +88,7 @@ export function LiteratureBrowser() {
             </button>
           ))}
         </div>
-        <div className="scrollbar-none flex gap-1.5 overflow-x-auto" role="group" aria-label="Filter by origin">
+        <div className="scrollbar-none flex flex-wrap gap-1.5" role="group" aria-label="Filter by origin">
           {(['all', 'African', 'Non-African'] as const).map((item) => (
             <button
               key={item}

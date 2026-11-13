@@ -91,6 +91,8 @@ export default function ProgressPage() {
 
   const baseline = minutesLast > 0 || questionsLast > 0 || cardsLast > 0;
   const daysLeft = Math.max(0, daysUntil(state.profile.examDate));
+  const examWindowEnd = state.profile.examEndDate || state.profile.examDate;
+  const examWindow = `${prettyDate(state.profile.examDate, { day: 'numeric', month: 'short' })} – ${prettyDate(examWindowEnd)}`;
   const sprint = examSprintPlan(state, daysLeft, 7);
   const overallStatus =
     overall >= 70 ? 'On Track' : overall >= 50 ? 'Improving' : answered > 0 ? 'At Risk' : 'Not enough evidence';
@@ -121,7 +123,7 @@ export default function ProgressPage() {
                 Print report
               </button>
             </div>
-            <p className="mt-2 text-[0.72rem] text-muted print:hidden">Overall: <strong className="text-ink">{overallStatus}</strong> · {daysLeft} day{daysLeft === 1 ? '' : 's'} to exam.</p>
+            <p className="mt-2 text-[0.72rem] text-muted print:hidden">Overall: <strong className="text-ink">{overallStatus}</strong> · {daysLeft} day{daysLeft === 1 ? '' : 's'} to your first paper · {examWindow}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
@@ -174,9 +176,9 @@ export default function ProgressPage() {
             {subjects.map((subject) => {
               const result = readiness(state, subject.id, subject.topics);
               return (
-                <article key={subject.id} className={`subject-${subject.id} surface p-5`}>
+                <article key={subject.id} className={`subject-${subject.id} surface min-w-0 p-5`}>
                   <div className="flex items-start justify-between gap-3">
-                    <div>
+                    <div className="min-w-0">
                       <span
                         className="chip"
                         style={{ background: 'var(--subject-soft)', color: 'var(--subject)' }}
@@ -209,8 +211,8 @@ export default function ProgressPage() {
                     {result.parts.map((part) => (
                       <li key={part.id}>
                         <div className="flex items-center justify-between gap-2 text-[0.72rem]">
-                          <span className="font-semibold text-soft">{part.label}</span>
-                          <span className="tabular text-muted">
+                          <span className="min-w-0 font-semibold text-soft">{part.label}</span>
+                          <span className="shrink-0 tabular text-muted">
                             {part.value === null ? 'No evidence' : `${part.value}%`}
                             <span className="ml-1 opacity-70">· {Math.round(part.weight * 100)}%</span>
                           </span>
@@ -391,8 +393,8 @@ export default function ProgressPage() {
           </div>
           <div className="mt-4 grid gap-4 lg:grid-cols-3">
             {subjects.map((subject) => (
-              <article key={subject.id} className={`subject-${subject.id} surface p-4`}>
-                <div className="flex items-center justify-between gap-2">
+              <article key={subject.id} className={`subject-${subject.id} surface min-w-0 p-4`}>
+                <div className="flex min-w-0 items-center justify-between gap-2">
                   <h3 className="font-display text-lg font-semibold">{subject.shortName}</h3>
                   <span className="chip" style={{ background: 'var(--subject-soft)', color: 'var(--subject)' }}>
                     {subject.topics.filter((t) => state.topics[t.id]?.studied).length}/{subject.topics.length}
@@ -426,10 +428,10 @@ export default function ProgressPage() {
               <p className="eyebrow">A focused daily plan</p>
               <h2 id="sprint-heading" className="mt-1 display-md">Exam sprint plan</h2>
               <p className="mt-1 max-w-2xl text-[0.84rem] leading-relaxed text-muted">
-                A simple {sprint.length}-day plan based on your exam date and current gaps. When you are online, use live AI/tutor help as needed; when offline, use saved lessons and downloaded papers.
+                A simple {sprint.length}-day plan based on your {examWindow} exam window and current gaps. When you are online, use live AI/tutor help as needed; when offline, use saved lessons and downloaded papers.
               </p>
             </div>
-            <span className="chip">{daysLeft} days left</span>
+            <span className="chip">{daysLeft} days to first paper</span>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {sprint.map((item) => (

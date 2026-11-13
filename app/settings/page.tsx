@@ -35,7 +35,7 @@ function Panel({
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--leaf-soft)] text-leaf">
           {icon}
         </span>
-        <div>
+        <div className="min-w-0">
           <h2 id={id} className="font-display text-xl font-semibold leading-tight">
             {title}
           </h2>
@@ -114,6 +114,7 @@ export default function SettingsPage() {
 
   const [name, setName] = useState(state.profile.name);
   const [examDate, setExamDate] = useState(state.profile.examDate);
+  const [examEndDate, setExamEndDate] = useState(state.profile.examEndDate);
   const [provisional, setProvisional] = useState(state.profile.examDateIsProvisional);
   const [confidence, setConfidence] = useState(state.profile.confidence);
   const [profileSaved, setProfileSaved] = useState(false);
@@ -132,12 +133,14 @@ export default function SettingsPage() {
     if (!hydrated) return;
     setName(state.profile.name);
     setExamDate(state.profile.examDate);
+    setExamEndDate(state.profile.examEndDate);
     setProvisional(state.profile.examDateIsProvisional);
     setConfidence(state.profile.confidence);
   }, [
     hydrated,
     state.profile.name,
     state.profile.examDate,
+    state.profile.examEndDate,
     state.profile.examDateIsProvisional,
     state.profile.confidence,
   ]);
@@ -151,6 +154,7 @@ export default function SettingsPage() {
     updateProfile({
       name: name.trim() || 'Angel',
       examDate,
+      examEndDate: examEndDate || examDate,
       examDateIsProvisional: provisional,
       confidence,
       onboarded: true,
@@ -255,15 +259,15 @@ export default function SettingsPage() {
       </section>
 
       <div className="mt-6 grid gap-5 xl:grid-cols-[1.15fr_.85fr]">
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           <Panel
             id="profile-heading"
             icon={<Icon name="user" size={19} />}
             title="Your profile"
-            description="The name Jacob uses, and the date the countdown is built on. You can change either at any time."
+            description="The name Jacob uses, and the exam window the countdown is built on. You can change either at any time."
           >
             <div className="grid gap-4 sm:grid-cols-2">
-              <div>
+              <div className="sm:col-span-2">
                 <label htmlFor="settings-name" className="label">
                   What should Jacob call you?
                 </label>
@@ -280,7 +284,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <label htmlFor="settings-date" className="label">
-                  Exam date
+                  First paper
                 </label>
                 <input
                   id="settings-date"
@@ -289,6 +293,21 @@ export default function SettingsPage() {
                   value={examDate}
                   onChange={(event) => {
                     setExamDate(event.target.value);
+                    setProfileSaved(false);
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="settings-date-end" className="label">
+                  Last paper
+                </label>
+                <input
+                  id="settings-date-end"
+                  type="date"
+                  className="input"
+                  value={examEndDate}
+                  onChange={(event) => {
+                    setExamEndDate(event.target.value);
                     setProfileSaved(false);
                   }}
                 />
@@ -305,7 +324,7 @@ export default function SettingsPage() {
                 }}
                 className="mt-0.5 h-4 w-4 accent-[var(--leaf)]"
               />
-              This date is provisional. WAEC has not confirmed the 2027 timetable in this app.
+              These dates are provisional. WAEC has not confirmed the 2027 timetable in this app.
             </label>
 
             <div className="mt-4">
@@ -393,7 +412,7 @@ export default function SettingsPage() {
                 checked={state.settings.voiceReplies}
                 onChange={(value) => updateSettings({ voiceReplies: value })}
                 label="Read Jacob’s replies aloud"
-                hint="Jacob can speak with a sweet female voice. Online, the app’s AI voice is tried first; offline, your device voice is used."
+                hint="Jacob can speak with a sweet female voice. Online, the app's AI voice is tried first; offline, your device voice is used. All voices speak English only."
               />
               <div className="rounded-xl border border-line bg-elev p-3">
                 <p className="text-[0.8rem] font-semibold text-ink">Speaking voice</p>
@@ -519,7 +538,7 @@ export default function SettingsPage() {
               <div className="flex gap-2">
                 <input
                   id="ai-key"
-                  className="input"
+                  className="input min-w-0 flex-1"
                   type={showKey ? 'text' : 'password'}
                   value={ai.apiKey}
                   onChange={(event) => {
@@ -735,7 +754,7 @@ export default function SettingsPage() {
           </Panel>
         </div>
 
-        <aside className="space-y-5">
+        <aside className="min-w-0 space-y-5">
           <Panel
             id="data-heading"
             icon={<Icon name="shield" size={19} />}

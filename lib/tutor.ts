@@ -76,6 +76,7 @@ export function buildSystemPrompt(context: TutorContext): string {
     management: 'Management in Living',
   };
 
+  const EN_ONLY_NOTICE = 'Always reply in English only. Never switch to French, Dangme, Twi, or any other language, even if the learner asks in another language. Respond to the learner’s message using this context naturally (do not dump the context back).';
   const learner = context.learnerName?.trim() || 'the learner';
 
   const contextLines = [
@@ -121,7 +122,8 @@ RESPONSE LENGTH & TONE
 CONTEXT AVAILABLE
 ${contextLines.length ? contextLines.join('\n') : 'No specific topic is open; this may be a general study question.'}${knowledgeBlock}
 
-Respond to the learner’s message using this context naturally (do not dump the context back).`;
+Respond to the learner’s message using this context naturally (do not dump the context back).
+${EN_ONLY_NOTICE}`;
 }
 
 const OFFLINE_END = '\n\n_This reply came from the offline guide stored on your device. Go online for a deeper back-and-forth._';

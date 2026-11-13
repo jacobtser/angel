@@ -27,7 +27,8 @@ export function createDefaultState(): AppState {
     version: 1,
     profile: {
       name: 'Angel',
-      examDate: '2027-05-03',
+      examDate: '2027-01-04',
+      examEndDate: '2027-02-26',
       examDateIsProvisional: true,
       onboarded: false,
       confidence: 3,
@@ -60,10 +61,17 @@ function mergeWithDefaults(raw: unknown): AppState {
   const base = createDefaultState();
   if (!raw || typeof raw !== 'object') return base;
   const value = raw as Partial<AppState>;
+  const profile = { ...base.profile, ...(value.profile ?? {}) };
+  // The May 2027 placeholder predates the real January–February window.
+  // Move anyone still sitting on it onto the current provisional dates.
+  if (profile.examDate === '2027-05-03') {
+    profile.examDate = base.profile.examDate;
+    profile.examEndDate = base.profile.examEndDate;
+  }
   return {
     ...base,
     ...value,
-    profile: { ...base.profile, ...(value.profile ?? {}) },
+    profile,
     settings: {
       ...base.settings,
       ...(value.settings ?? {}),

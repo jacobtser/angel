@@ -115,7 +115,7 @@ export default function EssayCoachPage() {
       </section>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-[1.1fr_.9fr]">
-        <section className="surface p-5 sm:p-6">
+        <section className="surface min-w-0 p-5 sm:p-6">
           <label className="label" htmlFor="essay-prompt">Choose a prompt</label>
           <select id="essay-prompt" className="select" value={prompt} onChange={(e) => setPrompt(e.target.value)}>
             {prompts.map((p) => <option key={p} value={p}>{p.slice(0, 90)}{p.length > 90 ? '…' : ''}</option>)}
@@ -147,8 +147,8 @@ export default function EssayCoachPage() {
           </div>
         </section>
 
-        <section className="surface p-5 sm:p-6" aria-labelledby="feedback-heading">
-          <div className="flex items-center justify-between gap-2">
+        <section className="surface min-w-0 p-5 sm:p-6" aria-labelledby="feedback-heading">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 id="feedback-heading" className="font-display text-xl font-semibold">Feedback</h2>
             {usedOffline && <span className="chip">Offline guide</span>}
           </div>

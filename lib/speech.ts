@@ -38,6 +38,18 @@ function cleanForSpeech(text: string): string {
 }
 
 /**
+ * Guard: only read English aloud. A reply that drifts into another script
+ * (Dangme, Twi, French with marks, non-Latin script) is skipped rather than
+ * spoken with an English voice.
+ */
+function isEnglishSpeechText(text: string): boolean {
+  const chars = Array.from(text.replace(/\s/g, ''));
+  if (!chars.length) return true;
+  const nonAscii = chars.filter((ch) => /[^\x00-\x7f]/.test(ch)).length;
+  return nonAscii / chars.length < 0.15;
+}
+
+/**
  * Read a reply aloud. Long replies are split at sentence boundaries because
  * some Android voices stop abruptly after a few hundred characters.
  */
@@ -45,17 +57,27 @@ function pickPreferredVoice(): SpeechSynthesisVoice | null {
   if (!speechSupported()) return null;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return null;
+  // Only English voices are ever used. A phone configured with a French,
+  // Hausa, Twi or anything else default voice must not hijack the "English"
+  // reply, otherwise the tutor sounds like he is speaking another language.
+  const en = voices.filter((v) => /^en([-_]|$)/i.test((v.lang || '').toLowerCase()));
+  const pool = en.length ? en : voices.filter((v) => !/^xx/i.test((v.lang || '').toLowerCase()));
+  if (!pool.length) return null;
   const score = (v: SpeechSynthesisVoice) => {
     const name = `${v.name} ${v.voiceURI}`.toLowerCase();
     const lang = (v.lang || '').toLowerCase();
     let s = 0;
-    if (/en-gh|en_ng|en-gb|en-us|en-za|en-au|en/.test(lang)) s += 2;
-    if (/female|woman|girl|zira|susan|samantha|victoria|karen|serena|libby|sonia|aria|jenny|michelle|hazel|google uk english female/.test(name)) s += 5;
-    if (/natural|neural|premium|enhanced/.test(name)) s += 2;
-    if (/male|david|mark|george|james|daniel/.test(name)) s -= 4;
+    if (/en-gh|en-gb|en-uk|en-us|en-za|en-au|en-gh|en/.test(lang)) s += 2;
+    if (/female|woman|girl|zira|samantha|victoria|karen|serena|libby|sonia|aria|jenny|michelle|hazel|google uk english female|google us english female|neural2-zira|samantha neural|google uk en female|microsoft zira|google uk en female/.test(name)) s += 5;
+    if (/natural|neural|premium|enhanced|google us english female|google uk english female/.test(name)) s += 2;
+    if (/male|david|mark|george|james|daniel|andrew|bradley|brian|eric/.test(name)) s -= 4;
     return s;
   };
-  return [...voices].sort((a, b) => score(b) - score(a))[0] || null;
+  const pick = [...pool].sort((a, b) => score(b) - score(a))[0];
+  // English voices only, whatever the pool came from.
+  const voice = pick ?? pool[0];
+  if ((voice.lang || '').toLowerCase().startsWith('en')) return voice;
+  return null;
 }
 
 export function speak(text: string, options: { rate?: number; onEnd?: () => void } = {}): void {
@@ -66,6 +88,10 @@ export function speak(text: string, options: { rate?: number; onEnd?: () => void
   const doSpeak = () => {
     window.speechSynthesis.cancel();
     const voice = pickPreferredVoice();
+    if (!isEnglishSpeechText(clean)) {
+      console.warn('Skipping non-English text for speech');
+      return;
+    }
     const sentences = clean.split(/(?<=[.!?])\s+/);
     const chunks: string[] = [];
     let current = '';
@@ -87,8 +113,8 @@ export function speak(text: string, options: { rate?: number; onEnd?: () => void
       } else {
         utterance.lang = 'en-GB';
       }
-      utterance.rate = options.rate ?? 0.95;
-      utterance.pitch = 1.05;
+      utterance.rate = options.rate ?? 0.98;
+      utterance.pitch = 1.0;
       if (index === chunks.length - 1) utterance.onend = () => options.onEnd?.();
       window.speechSynthesis.speak(utterance);
     });
@@ -177,8 +203,16 @@ const GEMINI_VOICES: Record<Exclude<VoiceStyle, 'device'>, string> = {
   bright: 'Leda',
 };
 
+/* Groq's PlayAI voices are English-only and sound notably less synthetic
+ * than device voices. `Celeste-PlayAI` leads; the rest are fallbacks. */
+const GROQ_PLAYAI_VOICES: Record<Exclude<VoiceStyle, 'device'>, string> = {
+  sweet: 'Celeste-PlayAI',
+  warm: 'Cheyenne-PlayAI',
+  bright: 'Deedee-PlayAI',
+};
+
 const VOICE_DIRECTION =
-  'You are Jacob, a kind study companion for a WASSCE candidate. Speak with a sweet, warm, encouraging female voice. Be gentle, clear and unhurried, like a supportive older sister. Natural Ghanaian English pronunciation. Never sound robotic or hurried.';
+  'You are Jacob, a kind study companion for a WASSCE candidate. Speak with a sweet, warm, encouraging female voice. Be gentle, clear and unhurried, like a supportive older sister. Natural Ghanaian English pronunciation. Never sound robotic or hurried. Speak only English.';
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentUrl: string | null = null;
@@ -301,6 +335,31 @@ async function tryGroqSpeech(
   }
 }
 
+async function tryGroqPlayaiSpeech(
+  clean: string,
+  voice: Exclude<VoiceStyle, 'device'>,
+  key: string,
+  token: number,
+  onEnd?: () => void,
+): Promise<boolean> {
+  try {
+    const res = await fetchWithTimeout('https://api.groq.com/openai/v1/audio/speech', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model: 'playai-tts',
+        voice: GROQ_PLAYAI_VOICES[voice],
+        input: clean.slice(0, 4000),
+        response_format: 'wav',
+      }),
+    });
+    if (!res.ok || token !== playToken) return false;
+    return await playBlob(await res.blob(), token, onEnd);
+  } catch {
+    return false;
+  }
+}
+
 async function tryOpenAiSpeech(
   clean: string,
   voice: Exclude<VoiceStyle, 'device'>,
@@ -381,6 +440,10 @@ export function speakSmart(
 ): void {
   const clean = cleanForSpeech(text);
   if (!clean) return;
+  if (!isEnglishSpeechText(clean)) {
+    console.warn('Skipping non-English text for speech');
+    return;
+  }
 
   stopSpeaking();
   const token = playToken;
@@ -395,6 +458,8 @@ export function speakSmart(
 
   void (async () => {
     if (keys.groq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
+    if (token !== playToken) return;
+    if (keys.groq && (await tryGroqPlayaiSpeech(clean, style, keys.groq, token, options.onEnd))) return;
     if (token !== playToken) return;
     if (keys.openai && (await tryOpenAiSpeech(clean, style, keys.openai, token, options.onEnd))) return;
     if (token !== playToken) return;

@@ -61,7 +61,7 @@ export function PapersBrowser() {
       </section>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="scrollbar-none flex gap-1.5 overflow-x-auto" role="group" aria-label="Filter by subject">
+        <div className="scrollbar-none flex flex-wrap gap-1.5" role="group" aria-label="Filter by subject">
           {subjectTabs.map((tab) => (
             <button
               key={tab.id}

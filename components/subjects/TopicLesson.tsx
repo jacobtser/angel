@@ -155,7 +155,7 @@ export function TopicLesson({ topicId }: { topicId: string }) {
         )}
       </header>
 
-      <nav className="no-print mt-5 flex gap-1.5 overflow-x-auto pb-1" aria-label="Lesson sections">
+      <nav className="no-print mt-5 flex flex-wrap gap-1.5 pb-1" aria-label="Lesson sections">
         {[
           { href: '#idea', label: 'Big idea' },
           { href: '#worked', label: 'Worked examples' },

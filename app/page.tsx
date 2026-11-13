@@ -44,6 +44,8 @@ export default function DashboardPage() {
   const week = activityWindow(state, 7);
   const weekMinutes = week.reduce((sum, day) => sum + day.minutes, 0);
   const daysLeft = Math.max(0, daysUntil(state.profile.examDate));
+  const examWindowEnd = state.profile.examEndDate || state.profile.examDate;
+  const examWindow = `${prettyDate(state.profile.examDate, { day: 'numeric', month: 'short' })} – ${prettyDate(examWindowEnd)}`;
   const weekLabels = week.map((day) =>
     new Intl.DateTimeFormat('en-GB', { weekday: 'short' }).format(new Date(`${day.day}T12:00:00`)),
   );
@@ -133,7 +135,7 @@ export default function DashboardPage() {
               {state.profile.examDateIsProvisional && (
                 <span className="chip chip-gold">
                   <Icon name="info" size={13} />
-                  Exam date provisional
+                  Exam window provisional
                 </span>
               )}
             </div>
@@ -145,8 +147,8 @@ export default function DashboardPage() {
               <p className="tabular mt-1 font-display text-4xl font-semibold leading-none text-ink">
                 {mounted ? daysLeft : '—'}
               </p>
-              <p className="mt-1 text-[0.7rem] font-semibold text-muted">days to your paper</p>
-              <p className="mt-2 truncate text-[0.68rem] text-muted">{prettyDate(state.profile.examDate)}</p>
+              <p className="mt-1 text-[0.7rem] font-semibold text-muted">days to your first paper</p>
+              <p className="mt-2 text-[0.68rem] leading-snug text-muted">{examWindow}</p>
             </div>
 
             <div className="glass rounded-2xl p-4">

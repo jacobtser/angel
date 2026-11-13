@@ -243,7 +243,10 @@ export interface Settings {
 
 export interface Profile {
   name: string;
+  /** First paper — the number the countdown counts to. */
   examDate: string;
+  /** Last paper — the end of the exam window. */
+  examEndDate: string;
   examDateIsProvisional: boolean;
   onboarded: boolean;
   confidence: number;

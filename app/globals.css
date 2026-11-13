@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Phones: a responsive grid that has not declared a base column count
+     gets an implicit track sized to max-content, so a single long line can
+     push the whole page sideways. Pin those grids to one constrained
+     column; `sm:grid-cols-*` and friends still win because utilities layer
+     later. */
+  .grid:not(.grid-cols-1):not(.grid-cols-2):not(.grid-cols-3):not(.grid-cols-4):not(.grid-cols-5):not(.grid-cols-6):not(.grid-cols-7):not(.grid-cols-8):not(.grid-cols-9):not(.grid-cols-10):not(.grid-cols-11):not(.grid-cols-12) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ------------------------------------------------------------------
    Auntie Angel — design tokens
    A warm, editorial palette: sunlit paper, deep forest ink, and a
@@ -269,7 +280,13 @@ body::before {
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   cursor: pointer;
-  white-space: nowrap;
+  /* Long labels must wrap on narrow phones instead of forcing a
+     horizontal scrollbar. Buttons still stay a pill on one line when
+     the text fits. */
+  max-width: 100%;
+  text-align: center;
+  line-height: 1.2;
+  overflow-wrap: break-word;
   border: 1px solid transparent;
 }
 
@@ -400,6 +417,8 @@ body::before {
 .select,
 .textarea {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 2.75rem;
   border-radius: 0.9rem;
   border: 1px solid var(--line-strong);

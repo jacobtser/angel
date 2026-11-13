@@ -64,8 +64,8 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
         }}
       >
         <div className="dot-grid pointer-events-none absolute inset-y-0 right-0 w-1/2 opacity-40" aria-hidden="true" />
-        <div className="relative grid gap-6 lg:grid-cols-[1.5fr_auto] lg:items-center">
-          <div>
+        <div className="relative grid min-w-0 gap-6 lg:grid-cols-[1.5fr_auto] lg:items-center">
+          <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <span className="chip" style={{ background: 'var(--bg-elev)', color: 'var(--subject)' }}>
                 Priority {subject.priority}
@@ -154,7 +154,7 @@ export function SubjectHub({ subjectId }: { subjectId: SubjectId }) {
             )}
           </div>
 
-          <div className="flex items-center gap-5 lg:flex-col lg:items-end">
+          <div className="flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5 lg:flex-col lg:items-end">
             <ProgressRing value={report.score} size={132} color="var(--subject)" label={`${subject.name} readiness`}>
               <span className="text-center">
                 <span className="tabular block font-display text-3xl font-semibold leading-none">
