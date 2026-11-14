@@ -212,7 +212,7 @@ const GROQ_PLAYAI_VOICES: Record<Exclude<VoiceStyle, 'device'>, string> = {
 };
 
 const VOICE_DIRECTION =
-  'You are Jacob, a kind study companion for a WASSCE candidate. Speak with a sweet, warm, encouraging female voice. Be gentle, clear and unhurried, like a supportive older sister. Natural Ghanaian English pronunciation. Never sound robotic or hurried. Speak only English.';
+  'You are Jacob, a warm, human study companion for a WASSCE candidate. Speak naturally, with a smooth, conversational tone — like a caring older sister talking to a younger sibling over tea. Be gentle and unhurried, but lively and expressive: vary your pace and pitch as a real person does. Never sound robotic, flat, or rushed. Pronounce words clearly. Speak only English.';
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentUrl: string | null = null;
@@ -457,9 +457,9 @@ export function speakSmart(
   const keys = options.keys ?? availableTtsKeys();
 
   void (async () => {
-    if (keys.groq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
-    if (token !== playToken) return;
     if (keys.groq && (await tryGroqPlayaiSpeech(clean, style, keys.groq, token, options.onEnd))) return;
+    if (token !== playToken) return;
+    if (keys.groq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
     if (token !== playToken) return;
     if (keys.openai && (await tryOpenAiSpeech(clean, style, keys.openai, token, options.onEnd))) return;
     if (token !== playToken) return;
