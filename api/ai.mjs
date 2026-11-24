@@ -128,7 +128,8 @@ export default async function handler(req, res) {
         signal: AbortSignal.timeout(20_000),
       });
       if (!upstream.ok) {
-        console.error('[api/ai] speech upstream', upstream.status);
+        const detail = await upstream.text().catch(() => '');
+        console.error('[api/ai] speech upstream', upstream.status, model, detail.slice(0, 300));
         return fail(res, 502, 'Speech is unavailable right now.');
       }
       const audio = Buffer.from(await upstream.arrayBuffer());
