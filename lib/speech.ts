@@ -467,8 +467,7 @@ export function speakSmart(
 
   void (async () => {
     const useGroq = Boolean(keys.groq) || HOSTED_AI;
-    if (useGroq && (await tryGroqPlayaiSpeech(clean, style, keys.groq, token, options.onEnd))) return;
-    if (token !== playToken) return;
+    // Groq decommissioned `playai-tts`, so Orpheus is the Groq voice now.
     if (useGroq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
     if (token !== playToken) return;
     if (keys.openai && (await tryOpenAiSpeech(clean, style, keys.openai, token, options.onEnd))) return;
