@@ -31,35 +31,40 @@ export const PROVIDER_DEFAULT_MODELS: Record<AiProvider, string> = {
   openrouter: 'openai/gpt-4o-mini',
 };
 
+/** Server-side connection (see `api/ai.mjs`): the key never reaches the browser. */
+const HOSTED_AI_ENDPOINT = '/api/ai';
+
+export function hostedAiAvailable(): boolean {
+  return process.env.NEXT_PUBLIC_HOSTED_AI === '1';
+}
+
 export function defaultAiSettings(): AiSettings {
-  const groq = process.env.NEXT_PUBLIC_GROQ_API_KEY?.trim() || '';
-  const deepseek = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY?.trim() || '';
-  const openrouter = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.trim() || '';
-  if (groq) {
-    return { provider: 'groq', apiKey: groq, model: PROVIDER_DEFAULT_MODELS.groq, proxyUrl: '' };
-  }
-  if (openrouter) {
-    return {
-      provider: 'openrouter',
-      apiKey: openrouter,
-      model: PROVIDER_DEFAULT_MODELS.openrouter,
-      proxyUrl: '',
-    };
-  }
-  if (deepseek) {
-    return {
-      provider: 'deepseek',
-      apiKey: deepseek,
-      model: PROVIDER_DEFAULT_MODELS.deepseek,
-      proxyUrl: '',
-    };
+  if (hostedAiAvailable()) {
+    return { provider: 'groq', apiKey: '', model: PROVIDER_DEFAULT_MODELS.groq, proxyUrl: '' };
   }
   return { provider: 'openai', apiKey: '', model: PROVIDER_DEFAULT_MODELS.openai, proxyUrl: '' };
 }
 
-/** True when this build ships with an owner-supplied key, so Jacob can go online with no setup. */
+/** True when this build ships with an included connection, so Jacob can go online with no setup. */
 export function hasIncludedAi(): boolean {
-  return Object.values(envProviderKeys()).some((key) => Boolean(key));
+  return hostedAiAvailable();
+}
+
+async function askHosted(
+  model: string,
+  system: string,
+  history: { role: 'user' | 'assistant'; content: string }[],
+): Promise<string> {
+  const res = await fetch(HOSTED_AI_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ kind: 'chat', model, system, messages: history }),
+  });
+  if (!res.ok) throw new Error(await friendlyError(res));
+  const data = await res.json();
+  const text = data?.text;
+  if (typeof text !== 'string' || !text.trim()) throw new Error('The AI service returned an unexpected response.');
+  return text.trim();
 }
 
 export function contextLabel(context: TutorContext): string | null {
@@ -263,17 +268,6 @@ async function callProviderDirect(
   return text.trim();
 }
 
-function envProviderKeys(): Partial<Record<AiProvider, string>> {
-  return {
-    groq: process.env.NEXT_PUBLIC_GROQ_API_KEY?.trim() || '',
-    deepseek: process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY?.trim() || '',
-    openrouter: process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.trim() || '',
-    openai: process.env.NEXT_PUBLIC_OPENAI_API_KEY?.trim() || '',
-    anthropic: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY?.trim() || '',
-    gemini: process.env.NEXT_PUBLIC_GEMINI_API_KEY?.trim() || '',
-  };
-}
-
 /**
  * Calls the chosen provider directly from the browser when online and configured.
  * For a personal, single-learner offline app this can be acceptable, but a public
@@ -316,33 +310,25 @@ export async function askTutor({ settings, messages, context }: AskInput): Promi
     return text.trim();
   }
 
-  const envKeys = envProviderKeys();
-  const candidates: Array<{ provider: AiProvider; apiKey: string; model: string }> = [];
-  const seen = new Set<string>();
+  const candidates: Array<() => Promise<string>> = [];
 
-  const add = (provider: AiProvider, apiKey?: string, model?: string) => {
-    const key = (apiKey || '').trim();
-    if (!key) return;
-    const id = `${provider}:${key}`;
-    if (seen.has(id)) return;
-    seen.add(id);
-    candidates.push({ provider, apiKey: key, model: model || PROVIDER_DEFAULT_MODELS[provider] });
-  };
-
-  // Primary: user-selected provider/settings
-  add(settings.provider, settings.apiKey, requestedModel);
-  // Fallbacks: any other providers with keys available (env-configured for this build)
-  (['groq', 'openrouter', 'deepseek', 'openai', 'anthropic', 'gemini'] as AiProvider[]).forEach((p) => {
-    if (p === settings.provider && settings.apiKey.trim()) return;
-    add(p, envKeys[p], PROVIDER_DEFAULT_MODELS[p]);
-  });
+  // Primary: the learner's own key from Settings, called directly.
+  const ownKey = settings.apiKey.trim();
+  if (ownKey) {
+    candidates.push(() => callProviderDirect(settings.provider, ownKey, requestedModel, system, history));
+  }
+  // Fallback: the included server-side connection for this build.
+  if (hostedAiAvailable()) {
+    const hostedModel = settings.provider === 'groq' ? requestedModel : PROVIDER_DEFAULT_MODELS.groq;
+    candidates.push(() => askHosted(hostedModel, system, history));
+  }
 
   if (!candidates.length) throw new Error('NO_KEY');
 
   let lastError: unknown = null;
-  for (const c of candidates) {
+  for (const run of candidates) {
     try {
-      return await callProviderDirect(c.provider, c.apiKey, c.model, system, history);
+      return await run();
     } catch (err) {
       lastError = err;
     }

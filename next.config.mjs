@@ -7,25 +7,12 @@ const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
   images: { unoptimized: true },
-  // Personal build: the owner's keys are present at build time and are exposed
-  // to the client bundle so Jacob works out of the box for Angel with no setup.
-  // This is a deliberate trade-off for this private app: the keys are visible
-  // to anyone who inspects the deployed bundle, so only the Groq key is wired
-  // by default and the app warns users in Settings. To stop sharing the key,
-  // remove these env vars (or point the app at a server-side proxy) and rebuild.
+  // The included AI connection runs through the server function in `api/ai.mjs`,
+  // so provider keys stay on the server and never ship in the client bundle.
+  // Only a yes/no flag is exposed, telling the app the hosted connection exists.
   env: {
-    NEXT_PUBLIC_GROQ_API_KEY:
-      process.env.NEXT_PUBLIC_GROQ_API_KEY || process.env.GROQ_API_KEY || '',
-    NEXT_PUBLIC_DEEPSEEK_API_KEY:
-      process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY || process.env.DEEPSEEK_API_KEY || '',
-    NEXT_PUBLIC_OPENROUTER_API_KEY:
-      process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY || '',
-    NEXT_PUBLIC_OPENAI_API_KEY:
-      process.env.NEXT_PUBLIC_OPENAI_API_KEY || process.env.OPENAI_API_KEY || '',
-    NEXT_PUBLIC_ANTHROPIC_API_KEY:
-      process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY || '',
-    NEXT_PUBLIC_GEMINI_API_KEY:
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || '',
+    NEXT_PUBLIC_HOSTED_AI:
+      process.env.GROQ_API_KEY || process.env.NEXT_PUBLIC_GROQ_API_KEY ? '1' : '',
   },
 };
 

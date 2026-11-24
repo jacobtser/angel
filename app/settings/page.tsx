@@ -480,8 +480,8 @@ export default function SettingsPage() {
                 Live AI is connected
               </p>
               <p className="mt-1">
-                Jacob can already answer online with the key included in this app. Anyone who opens the app
-                link can use that connection, so share the link carefully. Adding your own key below is
+                Jacob can already answer online through the connection included in this app. Its key is kept
+                safely on the server and is never stored on this device. Adding your own key below is
                 optional and overrides it on this device only.
               </p>
             </div>

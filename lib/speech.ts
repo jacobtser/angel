@@ -165,17 +165,28 @@ interface TtsKeys {
   gemini: string;
 }
 
-function readEnvKeys(): TtsKeys {
-  return {
-    groq: process.env.NEXT_PUBLIC_GROQ_API_KEY?.trim() || '',
-    openai: process.env.NEXT_PUBLIC_OPENAI_API_KEY?.trim() || '',
-    gemini: process.env.NEXT_PUBLIC_GEMINI_API_KEY?.trim() || '',
-  };
+/** The included Groq voice runs through the server function (`api/ai.mjs`). */
+const HOSTED_AI = process.env.NEXT_PUBLIC_HOSTED_AI === '1';
+
+/** Speech request to Groq: direct with the learner's own key, otherwise via the server. */
+function groqSpeechRequest(body: Record<string, unknown>, key: string): Promise<Response> {
+  if (key) {
+    return fetchWithTimeout('https://api.groq.com/openai/v1/audio/speech', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify(body),
+    });
+  }
+  return fetchWithTimeout('/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ kind: 'speech', ...body }),
+  });
 }
 
-/** Merge the learner's saved provider key with build-time keys. */
+/** The learner's saved provider key (build-time keys are no longer shipped). */
 export function availableTtsKeys(primary?: { provider: string; apiKey: string }): TtsKeys {
-  const keys = readEnvKeys();
+  const keys: TtsKeys = { groq: '', openai: '', gemini: '' };
   const key = primary?.apiKey?.trim();
   if (key) {
     if (primary?.provider === 'groq' && !keys.groq) keys.groq = key;
@@ -318,16 +329,15 @@ async function tryGroqSpeech(
   onEnd?: () => void,
 ): Promise<boolean> {
   try {
-    const res = await fetchWithTimeout('https://api.groq.com/openai/v1/audio/speech', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
+    const res = await groqSpeechRequest(
+      {
         model: 'canopylabs/orpheus-v1-english',
         voice: GROQ_VOICES[voice],
         input: `[warmly] ${clean.slice(0, 4000)}`,
         response_format: 'wav',
-      }),
-    });
+      },
+      key,
+    );
     if (!res.ok || token !== playToken) return false;
     return await playBlob(await res.blob(), token, onEnd);
   } catch {
@@ -343,16 +353,15 @@ async function tryGroqPlayaiSpeech(
   onEnd?: () => void,
 ): Promise<boolean> {
   try {
-    const res = await fetchWithTimeout('https://api.groq.com/openai/v1/audio/speech', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
+    const res = await groqSpeechRequest(
+      {
         model: 'playai-tts',
         voice: GROQ_PLAYAI_VOICES[voice],
         input: clean.slice(0, 4000),
         response_format: 'wav',
-      }),
-    });
+      },
+      key,
+    );
     if (!res.ok || token !== playToken) return false;
     return await playBlob(await res.blob(), token, onEnd);
   } catch {
@@ -457,9 +466,10 @@ export function speakSmart(
   const keys = options.keys ?? availableTtsKeys();
 
   void (async () => {
-    if (keys.groq && (await tryGroqPlayaiSpeech(clean, style, keys.groq, token, options.onEnd))) return;
+    const useGroq = Boolean(keys.groq) || HOSTED_AI;
+    if (useGroq && (await tryGroqPlayaiSpeech(clean, style, keys.groq, token, options.onEnd))) return;
     if (token !== playToken) return;
-    if (keys.groq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
+    if (useGroq && (await tryGroqSpeech(clean, style, keys.groq, token, options.onEnd))) return;
     if (token !== playToken) return;
     if (keys.openai && (await tryOpenAiSpeech(clean, style, keys.openai, token, options.onEnd))) return;
     if (token !== playToken) return;
