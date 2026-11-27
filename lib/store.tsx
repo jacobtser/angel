@@ -45,6 +45,7 @@ export function createDefaultState(): AppState {
     badges: [],
     games: {},
     downloads: { english: null, mathematics: null, management: null },
+    videoProgress: {},
     settings: {
       theme: 'system',
       voiceReplies: false,
@@ -79,6 +80,7 @@ function mergeWithDefaults(raw: unknown): AppState {
     },
     streak: { ...base.streak, ...(value.streak ?? {}) },
     downloads: { ...base.downloads, ...(value.downloads ?? {}) },
+    videoProgress: value.videoProgress ?? {},
     topics: value.topics ?? {},
     srs: value.srs ?? {},
     quizzes: value.quizzes ?? [],
@@ -120,6 +122,7 @@ interface StoreValue {
   updateSettings: (patch: Partial<Omit<Settings, 'ai'>> & { ai?: Partial<AiSettings> }) => void;
   markDownloaded: (subject: SubjectId) => void;
   clearDownloaded: () => void;
+  recordVideoProgress: (videoId: string, watchedSeconds: number, durationSeconds: number) => void;
   recordGame: (gameId: string, score: number) => void;
   awardXp: (amount: number) => void;
   resetAll: () => void;
@@ -430,6 +433,30 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     }));
   }, [commit]);
 
+  const recordVideoProgress = useCallback(
+    (videoId: string, watchedSeconds: number, durationSeconds: number) => {
+      const safeDuration = Math.max(0, durationSeconds || 0);
+      const safeWatched = Math.max(0, Math.min(watchedSeconds || 0, safeDuration || watchedSeconds || 0));
+      const completed = safeDuration > 0 ? safeWatched / safeDuration >= 0.9 : false;
+      commit((prev) => {
+        const existing = prev.videoProgress[videoId];
+        return {
+          ...prev,
+          videoProgress: {
+            ...prev.videoProgress,
+            [videoId]: {
+              watchedSeconds: Math.max(existing?.watchedSeconds ?? 0, safeWatched),
+              durationSeconds: safeDuration || existing?.durationSeconds || 0,
+              completed: Boolean(existing?.completed) || completed,
+              lastWatchedAt: new Date().toISOString(),
+            },
+          },
+        };
+      });
+    },
+    [commit],
+  );
+
   const recordGame = useCallback(
     (gameId: string, score: number) => {
       commit((prev) => ({
@@ -491,6 +518,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       updateSettings,
       markDownloaded,
       clearDownloaded,
+      recordVideoProgress,
       recordGame,
       awardXp,
       resetAll,
@@ -510,6 +538,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     updateSettings,
     markDownloaded,
     clearDownloaded,
+    recordVideoProgress,
     recordGame,
     awardXp,
     resetAll,

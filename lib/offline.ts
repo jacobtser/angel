@@ -9,6 +9,7 @@
  * "Download for offline" and then study on a bus with no data.
  */
 import { allLiterature, subjectById, topicPath, topicsForSubject } from '@/content/subjects';
+import { oralVideos } from '@/content/oral-videos';
 import type { SubjectId } from './types';
 
 export const OFFLINE_CACHE = 'auntie-angel-downloads-v1';
@@ -46,6 +47,7 @@ export function subjectOfflineUrls(subjectId: SubjectId): string[] {
     urls.add('/literature/');
     urls.add('/orals/');
     for (const text of allLiterature) urls.add(`/literature/${text.id}/`);
+    for (const video of oralVideos) urls.add(video.src);
   }
 
   return Array.from(urls);
@@ -93,4 +95,33 @@ export async function cachedCount(): Promise<number> {
   const cache = await caches.open(OFFLINE_CACHE);
   const keys = await cache.keys();
   return keys.length;
+}
+
+export async function isUrlCached(url: string): Promise<boolean> {
+  if (!cachesAvailable()) return false;
+  const match = await caches.match(url);
+  return Boolean(match);
+}
+
+export async function cacheUrlsWithResult(
+  urls: string[],
+  onProgress?: (done: number, total: number) => void,
+): Promise<CacheResult> {
+  return cacheUrls(urls, onProgress);
+}
+
+export async function removeCachedUrl(url: string): Promise<void> {
+  if (!cachesAvailable()) return;
+  const cache = await caches.open(OFFLINE_CACHE);
+  await cache.delete(url);
+}
+
+export async function storageEstimate(): Promise<{ usage: number; quota: number } | null> {
+  if (typeof navigator === 'undefined' || !navigator.storage?.estimate) return null;
+  try {
+    const { usage = 0, quota = 0 } = await navigator.storage.estimate();
+    return { usage, quota };
+  } catch {
+    return null;
+  }
 }

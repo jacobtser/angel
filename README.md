@@ -16,7 +16,7 @@ The app keeps progress on the learner’s device, works after installation/offli
 
 - **Personalized dashboard:** greeting, affirmation, exam countdown (editable/provisional), streak, today/week study time, XP/level, readiness rings, focus card, daily challenge, mood check-in.
 - **Subject hubs and lessons:** English, Core Mathematics, Management in Living topics with lesson flow (analogy/example/worked steps/practice), deeper-dive content, flashcards, quizzes.
-- **English support:** lexis/structure/comprehension/essay/orals content, literature library (set texts + poems) with summaries/themes/characters/quotes/essay guidance, oral English trainer.
+- **English support:** lexis/structure/comprehension/essay/orals content, literature library (set texts + poems) with summaries/themes/characters/quotes/essay guidance, oral English trainer, and a local WASSCE oral exam video module with offline save/progress tracking.
 - **Practice:** quick practice, timed mocks, past-papers browser/viewer, flashcard review (SM-2 spaced repetition helpers), worked items adapted from project sources.
 - **Games:** Word Match, Comprehension Dash, Number Quest, Budget Balance, Flashcard Duel.
 - **Progress & wellbeing:** readiness/analytics, mood trail, weekly journal with local insight generation, breathing reset, burnout/long-study reminders (in-app, configurable).

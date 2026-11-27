@@ -8,6 +8,12 @@
     "build": "next build && node scripts/generate-precache.mjs",
     "start": "py -3 -m http.server 8765 --directory out",
     "typecheck": "tsc --noEmit",
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "validate:content": "node scripts/validate-content.mjs",
+    "videos:manifest": "node scripts/generate-video-manifest.mjs",
     "icons": "py -3 scripts/generate-icons.py"
   },
   "dependencies": {
@@ -17,12 +23,16 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
     "@types/node": "^20.16.11",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.35",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
   }
 }

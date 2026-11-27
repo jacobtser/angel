@@ -41,7 +41,9 @@ function shouldPrecache(relative) {
   const posix = toPosix(relative);
   if (posix === 'sw.js') return false;
   if (posix.endsWith('.pdf') || posix.endsWith('.map')) return false;
+  if (posix.endsWith('.mp4') || posix.endsWith('.webm') || posix.endsWith('.mov')) return false;
   if (posix.startsWith('papers/')) return false;
+  if (posix.startsWith('videos/')) return false;
   if (posix.endsWith('.html')) return true;
   if (posix.startsWith('_next/static/')) return true;
   if (posix.startsWith('icons/')) return true;

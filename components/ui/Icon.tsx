@@ -54,6 +54,7 @@ export type IconName =
   | 'user'
   | 'globe'
   | 'headphones'
+  | 'video'
   | 'bookmark'
   | 'alert'
   | 'grid'
@@ -381,6 +382,12 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M4 14v-2a8 8 0 0 1 16 0v2" />
       <rect x="3" y="13" width="4" height="7" rx="2" />
       <rect x="17" y="13" width="4" height="7" rx="2" />
+    </>
+  ),
+  video: (
+    <>
+      <rect x="2.5" y="5" width="14" height="14" rx="2.5" />
+      <path d="m16.5 9 5-2.5v11l-5-2.5z" />
     </>
   ),
   bookmark: <path d="M6 3h12v18l-6-4-6 4z" />,

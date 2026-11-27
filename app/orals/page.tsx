@@ -1,12 +1,18 @@
 import type { Metadata } from 'next';
 import { OralTrainer } from '@/components/orals/OralTrainer';
+import { OralVideoLibrary } from '@/components/orals/OralVideoLibrary';
 
 export const metadata: Metadata = {
   title: 'Oral English',
   description:
-    'Practise vowel contrasts, consonants, word stress and intonation for the WASSCE English oral component.',
+    'Practise vowel contrasts, consonants, word stress and intonation for the WASSCE English oral component, and watch WASSCE oral exam videos.',
 };
 
 export default function OralsPage() {
-  return <OralTrainer />;
+  return (
+    <div className="space-y-5">
+      <OralVideoLibrary />
+      <OralTrainer />
+    </div>
+  );
 }

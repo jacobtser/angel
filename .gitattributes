@@ -1,0 +1,5 @@
+# Large media files - use Git LFS for better clone performance.
+# Videos are tracked with LFS; existing PDFs are left as regular Git objects.
+public/videos/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+public/videos/**/*.webm filter=lfs diff=lfs merge=lfs -text
+public/videos/**/*.mov filter=lfs diff=lfs merge=lfs -text

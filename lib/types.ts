@@ -140,6 +140,46 @@ export interface OralQuestion {
   category: 'vowels' | 'consonants' | 'stress' | 'intonation';
 }
 
+export type OralVideoSkill = 'vowels' | 'consonants' | 'stress' | 'intonation' | 'rhymes' | 'general';
+
+export interface OralVideo {
+  id: string;
+  title: string;
+  /** YouTube video ID (used for attribution and fallback link). */
+  youtubeId: string;
+  /** Local path under /public, e.g. /videos/english/orals/foo.mp4 */
+  src: string;
+  /** Channel or creator name. */
+  channel: string;
+  /** Short description of what the video covers. */
+  description: string;
+  /** Approximate duration in seconds. */
+  duration: number;
+  /** Year or exam cycle the video targets, if known. */
+  year?: string;
+  /** Oral test numbers covered, e.g. [1,2,3,4]. */
+  tests?: number[];
+  /** Skill focus tags for filtering/recommendations. */
+  skills?: OralVideoSkill[];
+  /** Optional transcript/captions file under /public. */
+  captionsSrc?: string;
+  /** Optional poster/thumbnail image under /public. */
+  posterSrc?: string;
+  /** Approximate file size in bytes, when known. */
+  bytes?: number;
+  /** Optional checksum for integrity verification. */
+  sha256?: string;
+  /** Source URL for attribution. */
+  sourceUrl?: string;
+}
+
+export interface OralVideoProgress {
+  watchedSeconds: number;
+  durationSeconds: number;
+  completed: boolean;
+  lastWatchedAt: string | null;
+}
+
 export interface PastQuestion {
   n: string;
   q: string;
@@ -273,6 +313,7 @@ export interface AppState {
   badges: string[];
   games: Record<string, GameBest>;
   downloads: Record<SubjectId, string | null>;
+  videoProgress: Record<string, OralVideoProgress>;
   settings: Settings;
   createdAt: string;
 }

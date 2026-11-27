@@ -36,6 +36,8 @@ interface PwaValue {
   clearOffline: () => Promise<void>;
   offlineFiles: number;
   refreshOfflineCount: () => Promise<void>;
+  updateAvailable: boolean;
+  applyUpdate: () => void;
 }
 
 const PwaContext = createContext<PwaValue | null>(null);
@@ -56,6 +58,8 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [downloadState, setDownloadState] = useState<Partial<Record<SubjectId, DownloadState>>>({});
   const [offlineFiles, setOfflineFiles] = useState(0);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
 
   const refreshOfflineCount = useCallback(async () => {
     setOfflineFiles(await cachedCount());
@@ -88,10 +92,32 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
       const register = () => {
         void navigator.serviceWorker
           .register('/sw.js', { scope: '/' })
-          .then(() => refreshOfflineCount())
+          .then((reg) => {
+            void refreshOfflineCount();
+            const markWaiting = () => {
+              if (reg.waiting) {
+                setWaitingWorker(reg.waiting);
+                setUpdateAvailable(true);
+              }
+            };
+            markWaiting();
+            reg.addEventListener('updatefound', () => {
+              const next = reg.installing;
+              if (!next) return;
+              next.addEventListener('statechange', () => {
+                if (next.state === 'installed' && navigator.serviceWorker.controller) {
+                  setWaitingWorker(reg.waiting ?? next);
+                  setUpdateAvailable(true);
+                }
+              });
+            });
+          })
           .catch(() => {
             /* an unavailable service worker must never block study */
           });
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
       };
       if (document.readyState === 'complete') register();
       else window.addEventListener('load', register, { once: true });
@@ -172,6 +198,10 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
     await refreshOfflineCount();
   }, [clearDownloaded, refreshOfflineCount]);
 
+  const applyUpdate = useCallback(() => {
+    waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
+  }, [waitingWorker]);
+
   const userAgent = typeof navigator === 'undefined' ? '' : navigator.userAgent;
   const isIos = /iphone|ipad|ipod/i.test(userAgent);
   const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(userAgent);
@@ -189,6 +219,8 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
       clearOffline,
       offlineFiles,
       refreshOfflineCount,
+      updateAvailable,
+      applyUpdate,
     }),
     [
       online,
@@ -202,10 +234,24 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
       clearOffline,
       offlineFiles,
       refreshOfflineCount,
+      updateAvailable,
+      applyUpdate,
     ],
   );
 
-  return <PwaContext.Provider value={value}>{children}</PwaContext.Provider>;
+  return (
+    <PwaContext.Provider value={value}>
+      {children}
+      {updateAvailable && (
+        <div className="fixed inset-x-3 bottom-20 z-[70] mx-auto max-w-xl rounded-2xl border border-line bg-elev p-3 shadow-soft sm:bottom-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[0.82rem] text-ink">A new version of Auntie Angel is ready.</p>
+            <button type="button" onClick={applyUpdate} className="btn btn-primary btn-sm">Reload</button>
+          </div>
+        </div>
+      )}
+    </PwaContext.Provider>
+  );
 }
 
 export function usePwa(): PwaValue {

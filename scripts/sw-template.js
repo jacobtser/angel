@@ -119,9 +119,11 @@ self.addEventListener('fetch', (event) => {
   if (
     url.pathname.startsWith('/_next/static/') ||
     url.pathname.startsWith('/icons/') ||
+    url.pathname.startsWith('/videos/') ||
     url.pathname === '/manifest.webmanifest' ||
     url.pathname === '/og.png' ||
-    url.pathname === '/sw.js'
+    url.pathname === '/sw.js' ||
+    /\.(?:mp4|webm|mov|m4a)$/i.test(url.pathname)
   ) {
     event.respondWith(cacheFirst(request));
   }
