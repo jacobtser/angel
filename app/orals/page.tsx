@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { OralTrainer } from '@/components/orals/OralTrainer';
 import { OralVideoLibrary } from '@/components/orals/OralVideoLibrary';
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
 export default function OralsPage() {
   return (
     <div className="space-y-5">
-      <OralVideoLibrary />
+      <Suspense fallback={<div className="surface p-6 text-sm text-muted">Loading oral videos…</div>}>
+        <OralVideoLibrary />
+      </Suspense>
       <OralTrainer />
     </div>
   );

@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
 import { Brand } from '@/components/ui/Brand';
+import { GlobalSearch } from '@/components/search/GlobalSearch';
 import { Icon } from '@/components/ui/Icon';
 import { ProgressBar } from '@/components/ui/ProgressRing';
 import { cn } from '@/lib/cn';
@@ -52,6 +54,11 @@ export function Sidebar() {
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-[268px] flex-col border-r border-line bg-elev lg:flex">
       <div className="px-5 pb-5 pt-6">
         <Brand />
+        <div className="mt-4">
+          <Suspense fallback={<div className="h-10 rounded-xl border border-line bg-elev" />}>
+            <GlobalSearch />
+          </Suspense>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-3 pb-4">

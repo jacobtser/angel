@@ -38,6 +38,13 @@ export function MobileHeader() {
               <Icon name="flame" size={13} />
               {state.streak.count}
             </span>
+            <Link
+              href="/search/"
+              className="grid h-9 w-9 place-items-center rounded-full text-soft hover:bg-[var(--bg-sunk)] hover:text-ink"
+              aria-label="Search"
+            >
+              <Icon name="search" size={19} />
+            </Link>
             <ThemeToggle compact />
             <button
               type="button"

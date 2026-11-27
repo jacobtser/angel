@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Icon } from '@/components/ui/Icon';
 import { oralVideos } from '@/content/oral-videos';
 import type { OralVideo, OralVideoSkill } from '@/lib/types';
@@ -74,8 +75,16 @@ function VideoCard({
 
 export function OralVideoLibrary() {
   const { state, recordVideoProgress } = useAppStore();
+  const searchParams = useSearchParams();
+  const requestedVideo = searchParams.get('video');
   const [selectedId, setSelectedId] = useState<string>(oralVideos[0]?.id ?? '');
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    if (requestedVideo && oralVideos.some((v) => v.id === requestedVideo)) {
+      setSelectedId(requestedVideo);
+    }
+  }, [requestedVideo]);
   const [year, setYear] = useState('all');
   const [skill, setSkill] = useState<OralVideoSkill | 'all'>('all');
   const [cachedMap, setCachedMap] = useState<Record<string, boolean>>({});
